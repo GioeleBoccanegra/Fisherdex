@@ -26,3 +26,4 @@ frontend/*.local
 *.sw?
 
 
+.env
