@@ -1,0 +1,117 @@
+.fishcard {
+  width: 480px;
+  background: #f0f4f8;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  padding: 16px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fishcard:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+
+/* Numero e rarità, in colonna */
+.fishdex-position {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 60px;
+  user-select: none;
+}
+
+.fishcard-number {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #4a90e2;
+  margin: 0;
+}
+
+.fishcard-rarity {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #e67e22; /* colore arancione per rarità */
+  margin: 0;
+}
+
+/* Descrizione */
+.description {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+}
+
+.fishcard-name {
+  font-size: 1.5rem;
+  color: #333;
+  margin: 0 0 6px 0;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.fishcard-description {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
+  font-style: italic;
+}
+
+/* Immagine */
+.image-section {
+  min-width: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fishcard-image {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #4a90e2;
+  background-color: white;
+}
+
+/* Sezione catturato e upload */
+.captured-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  min-width: 120px;
+  user-select: none;
+}
+
+.fishcard-captured {
+  font-size: 1rem;
+  color: #27ae60; /* verde per catturato */
+  font-weight: 600;
+  margin: 0;
+}
+
+.upload-image {
+  display: inline-block;
+  padding: 6px 12px;
+  background-color: #4a90e2;
+  color: white;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.upload-image:hover {
+  background-color: #357abd;
+}
