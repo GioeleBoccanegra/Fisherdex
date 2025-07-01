@@ -1,19 +1,27 @@
 package com.fisherdex.backend.controller;
 
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import com.fisherdex.backend.model.User;
 import com.fisherdex.backend.service.UserService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/users") // Tutti gli endpoint avranno questo prefisso
@@ -42,8 +50,19 @@ public class UserController {
 
   // POST /api/users
   @PostMapping
-  public User createUser(@RequestBody User user) {
-    return userService.saveUser(user);
+  public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
+    // controlla se mail esiste già
+    if (userService.emailExists(user.getEmail())) {
+      return ResponseEntity.badRequest().body(Map.of("email", "Email già esistente"));
+    }
+    // Hasha la password prima di salvare
+    String rawPassword = user.getPassword();
+    String encodedPassword = userService.encodePassword(rawPassword);
+    user.setPassword(encodedPassword);
+    User savedUser = userService.saveUser(user);
+
+    return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
+
   }
 
   // Delete /api/users/{id}
@@ -52,4 +71,14 @@ public class UserController {
     userService.deleteUser(id);
   }
 
+  @ExceptionHandler(MethodArgumentNotValidException.class)
+  public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+    Map<String, String> errors = new HashMap<>();
+    ex.getBindingResult().getAllErrors().forEach(error -> {
+      String fieldName = ((FieldError) error).getField();
+      String errorMessage = error.getDefaultMessage();
+      errors.put(fieldName, errorMessage);
+    });
+    return ResponseEntity.badRequest().body(errors);
+  }
 }
