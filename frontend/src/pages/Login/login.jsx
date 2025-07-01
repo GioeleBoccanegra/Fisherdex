@@ -31,6 +31,7 @@ function Login( {setIsAuthenticated} ) {
   const data= await res.json();
   // Salva il token (ad esempio un JWT) nel browser dell’utente, in modo persistente (anche dopo un refresh o chiusura del tab).
   localStorage.setItem("token", data.token); // salva il token
+  localStorage.setItem("userId", data.userId);
   setIsAuthenticated(true);
   navigate("/");
 }else{

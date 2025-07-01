@@ -1,7 +1,10 @@
 package com.fisherdex.backend.config;
 
+import java.security.Key;
+import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -9,9 +12,15 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.stereotype.Component;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 
 @Configuration // Indica a Spring che questa classe contiene configurazioni di bean
 public class SecurityConfig {
@@ -84,4 +93,45 @@ public class SecurityConfig {
     return source;
   }
 
+  @Component
+  public class JwtUtils {
+    @Value("${jwt.secret}")
+    private String jwtSecret;
+
+    private final int jwtExpirationMs = 86400000; // 24ore
+
+    private Key getSigningKey() {
+
+      return Keys.hmacShaKeyFor(jwtSecret.getBytes());
+    }
+
+    public String generateJwtToken(String username) {
+      return Jwts.builder()
+          .setSubject(username)
+          .setIssuedAt(new Date())
+          .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
+          .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+          .compact();
+    }
+
+    public String getUserNameFromJwtToken(String token) {
+      return Jwts.parserBuilder()
+          .setSigningKey(getSigningKey())
+          .build()
+          .parseClaimsJws(token)
+          .getBody()
+          .getSubject();
+    }
+
+    public boolean validateJwtToken(String authToken) {
+      try {
+        Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(authToken);
+        return true;
+      } catch (JwtException | IllegalArgumentException e) {
+        // Token non valido o scaduto
+        System.out.println("Invalid JWT: " + e.getMessage());
+      }
+      return false;
+    }
+  }
 }
