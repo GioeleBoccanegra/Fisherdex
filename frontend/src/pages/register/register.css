@@ -1,0 +1,89 @@
+.register-page {
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 40px 30px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #222;
+}
+
+.register-page h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-weight: 800;
+  font-size: 2.2rem;
+  color: #3366cc;
+}
+
+.registerContainer {
+  width: 100%;
+}
+
+.registerForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.registerForm label {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.registerForm input[type="text"],
+.registerForm input[type="email"],
+.registerForm input[type="password"] {
+  padding: 12px 15px;
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.registerForm input[type="text"]:focus,
+.registerForm input[type="email"]:focus,
+.registerForm input[type="password"]:focus {
+  border-color: #3366cc;
+  box-shadow: 0 0 8px rgba(51, 102, 204, 0.3);
+  outline: none;
+}
+
+.registerForm button[type="submit"] {
+  padding: 14px 0;
+  background-color: #3366cc;
+  color: white;
+  font-weight: 700;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+
+.registerForm button[type="submit"]:hover {
+  background-color: #274d9a;
+}
+
+.login-link {
+  margin-top: 25px;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.login-link a {
+  color: #3366cc;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.login-link a:hover {
+  color: #274d9a;
+  text-decoration: underline;
+}

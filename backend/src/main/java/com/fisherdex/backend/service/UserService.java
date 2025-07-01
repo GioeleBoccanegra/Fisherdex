@@ -29,6 +29,10 @@ public class UserService {
     return userRepository.findByEmail(email).isPresent();
   }
 
+  public Boolean usernameExists(String username) {
+    return userRepository.findByUsername(username).isPresent();
+  }
+
   // ritorna tutti gli utenti
   public List<User> getAllUsers() {
     return userRepository.findAll();

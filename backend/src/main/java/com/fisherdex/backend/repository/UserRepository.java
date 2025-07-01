@@ -11,7 +11,7 @@ import com.fisherdex.backend.model.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
   // Puoi aggiungere metodi personalizzati, ad esempio:
-  User findByUsername(String username);
+  Optional<User> findByUsername(String username);
 
   Optional<User> findByEmail(String email);
 }

@@ -1,26 +1,21 @@
 package com.fisherdex.backend.controller;
 
 import java.util.List;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-
 import java.util.Map;
 import java.util.HashMap;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import com.fisherdex.backend.model.User;
@@ -30,7 +25,6 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/users") // Tutti gli endpoint avranno questo prefisso
-@CrossOrigin(origins = "*") // per permettere al frontend React di connettersi
 public class UserController {
 
   private final UserService userService;
@@ -55,17 +49,24 @@ public class UserController {
 
   // POST /api/users
   @PostMapping
-
   public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
     // controlla se mail esiste già
     if (userService.emailExists(user.getEmail())) {
       return ResponseEntity.badRequest().body(Map.of("email", "Email già esistente"));
+    }
+
+    // Controlla se username esiste già (se vuoi)
+    if (userService.usernameExists(user.getUsername())) {
+      return ResponseEntity.badRequest().body(Map.of("username", "Username già esistente"));
     }
     // Hasha la password prima di salvare
     String rawPassword = user.getPassword();
     String encodedPassword = userService.encodePassword(rawPassword);
     user.setPassword(encodedPassword);
     User savedUser = userService.saveUser(user);
+
+    // Non inviare la password nella risposta
+    savedUser.setPassword(null);
 
     return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
 

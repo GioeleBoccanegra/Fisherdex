@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './login.css';
 import { Link } from 'react-router-dom';
+
 
 function Login( {setIsAuthenticated} ) {
 
@@ -10,10 +11,15 @@ function Login( {setIsAuthenticated} ) {
   const [error, setError]= useState("")
   const navigate = useNavigate()
 
+  const location = useLocation();
+ const[successoRegistrazione, setSuccessoRegistrazione]= useState(location.state?.successoRegistrazione || false);
+
   const handleSubmit = async (e) => {
     //e è l'egento generarato da submit del form
     e.preventDefault();
     setError("");
+
+    setSuccessoRegistrazione(false);
 
     try{
       //chiamata a login per verificare esistenza utente
@@ -41,6 +47,7 @@ function Login( {setIsAuthenticated} ) {
     <div className='login-container'>
       <h2>Login</h2>
       {error && <p style={{color: "red"}}>{error}</p>}
+      {successoRegistrazione && <p style={{color: "green"}}>Registrazione effettuata con successo, ora puoi accedere con le tue credenziali</p>}
       <form onSubmit={handleSubmit}>
         <div className='email-forum-data'>
         <label>Email:</label>
