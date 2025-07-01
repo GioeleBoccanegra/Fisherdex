@@ -1,6 +1,9 @@
 import "./user.css"
 import { useNavigate } from "react-router-dom";
 export default function User( {setIsAuthenticated} ) {
+
+
+  
   const navigate = useNavigate();
 
   const handleLogout=()=>{
