@@ -2,6 +2,10 @@ package com.fisherdex.backend.model;
 
 import jakarta.persistence.*;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 // Indica che questa classe è una entità JPA, cioè verrà mappata su una tabella del database
 @Entity
 // Indica il nome della tabella nel database
@@ -14,12 +18,21 @@ public class User {
     private Long id;
 
     // Colonna username, non può essere nulla e deve essere unica
+
+    @NotBlank(message = "nomeutente è obbligatorio")
+    @Size(min = 3, max = 20, message = "Username deve avere tra 3 e 20 caratteri")
     @Column(nullable = false, unique = true)
     private String username;
+
+    @Email(message = "Email deve essere valida")
+    @NotBlank(message = "Email è obbligatoria")
 
     // Colonna email, non può essere nulla e deve essere unica
     @Column(nullable = false, unique = true)
     private String email;
+
+    @NotBlank(message = "Password è obbligatoria")
+    @Size(min = 6, message = "La password deve essere almeno di 6 caratteri")
 
     // Colonna password, non può essere nulla
     @Column(nullable = false)
