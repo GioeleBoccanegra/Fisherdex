@@ -9,20 +9,21 @@ function Register(){
   const navigate = useNavigate();
   const [error, setError]= useState("");
 
+
   const handleRegister = async (e) => {
     e.preventDefault();
     setError("");
     try{
-      const res=await fetch("http://localhost:8080/api/register", {
+      const res=await fetch("http://localhost:8080/api/users", {
         method:"POST",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify({username, email, password})
       })
       if(res.ok){
-        navigate("/login");
+        navigate("/login", {state: {successoRegistrazione:true}});
       }else{
         const errData=await res.text();
-        setError(errData||"errore nel registro")
+        setError(errData||"errore nela registrazione")
       }
       
 
@@ -38,7 +39,7 @@ return(
   <h1>register</h1>
   {error && <p style={{color: "red"}}>{error}</p>}
   <div className="registerContainer">
-    <form className="registerForm">
+    <form className="registerForm" onSubmit={handleRegister}>
       <div>
       <label >Username</label>
       <input type="text" placeholder="pescatore126" value={username} onChange={(e) => setUsername(e.target.value)}></input>
@@ -51,7 +52,7 @@ return(
       <label>password</label>
       <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
       </div>
-      <button type="submit" onClick={handleRegister}>register</button>
+      <button type="submit" >register</button>
     </form>
   </div>
   <div className="login-link">
