@@ -1,6 +1,7 @@
 import "./user.css"
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import defaultImage from "../../assets/user-image.jpeg";
 
 export default function User( {setIsAuthenticated} ) {
 
@@ -53,7 +54,7 @@ export default function User( {setIsAuthenticated} ) {
       {error && <div className="error-message">{error}</div>}
       <h1>User</h1>
       <div className="user-card">
-        <image className="user-image" alt="User"></image>
+        <img className="user-image" alt="User" src={defaultImage}></img>
         <p className="user-data">username: {user?.username}</p>
         <p className="user-data">email: {user?.email}</p>
         <p className="edit-data">Edit data</p>
