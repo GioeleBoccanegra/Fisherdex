@@ -30,6 +30,9 @@ public class SecurityConfig {
         // Disabilita la protezione CSRF (utile per API REST senza sessione browser)
         .csrf(csrf -> csrf.disable())
 
+        // Attiva la configurazione CORS definita nel bean corsConfigurationSource
+        .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+
         // Configura le regole di autorizzazione per le rotte HTTP
         .authorizeHttpRequests(auth -> auth
             // Permette a chiunque (anche non autenticato) di fare POST su /api/users (per
