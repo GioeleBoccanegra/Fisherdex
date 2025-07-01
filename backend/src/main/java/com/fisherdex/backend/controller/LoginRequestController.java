@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fisherdex.backend.config.SecurityConfig.JwtUtils;
+import com.fisherdex.backend.config.JwtUtils;
 import com.fisherdex.backend.model.LoginRequest;
 import com.fisherdex.backend.model.User;
 import com.fisherdex.backend.service.UserService;
