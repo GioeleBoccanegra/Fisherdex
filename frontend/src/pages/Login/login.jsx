@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './login.css';
-function Login( ) {
+import { Link } from 'react-router-dom';
+
+function Login( {setIsAuthenticated} ) {
 
   const [email, setEmail] = useState("")
   const[password, setPassword]=useState("")
@@ -23,6 +25,7 @@ function Login( ) {
   const data= await res.json();
   // Salva il token (ad esempio un JWT) nel browser dell’utente, in modo persistente (anche dopo un refresh o chiusura del tab).
   localStorage.setItem("token", data.token); // salva il token
+  setIsAuthenticated(true);
   navigate("/");
 }else{
   const errData= await res.text();
@@ -34,6 +37,7 @@ function Login( ) {
   }
 
   return(
+    <div className='login-page'>
     <div className='login-container'>
       <h2>Login</h2>
       {error && <p style={{color: "red"}}>{error}</p>}
@@ -51,6 +55,11 @@ function Login( ) {
         </div>
         
       </form>
+    </div>
+
+    <div className='register-link'>
+      <p>Non hai un account? <Link to="/register">Registrati</Link></p>
+    </div>
     </div>
   )
   

@@ -45,6 +45,8 @@ public class SecurityConfig {
 
             .requestMatchers(HttpMethod.POST, "/api/login").permitAll()
 
+            .requestMatchers(HttpMethod.POST, "/api/register").permitAll()
+
             // Tutte le altre richieste devono essere autenticate (login obbligatorio)
             .anyRequest().authenticated())
 
