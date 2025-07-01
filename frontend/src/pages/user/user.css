@@ -4,12 +4,12 @@
   padding: 20px;
   background-color: #f0f4f8;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
   align-items: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  gap: 10px;
+  gap: 12px; /* un po’ più spazio tra elementi */
 }
 
 .user-image {
@@ -20,17 +20,19 @@
   margin-bottom: 16px;
   object-fit: cover;
   border: 3px solid #4a90e2;
+  display: block; /* assicura che sia un blocco */
 }
 
 .user-data {
   font-size: 1rem;
   color: #333;
   font-weight: 500;
-  margin: 4px 0;
+  margin: 6px 0; /* margini verticali uniformi */
+  text-align: center; /* centrato */
 }
 
 .edit-data {
-  margin-top: 12px;
+  margin-top: 16px;
   padding: 8px 16px;
   background-color: #4a90e2;
   color: white;
@@ -38,6 +40,8 @@
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  user-select: none; /* previene selezione testo accidentale */
+  text-align: center;
 }
 
 .edit-data:hover {

@@ -7,6 +7,7 @@ import Login from './pages/Login/login'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import User from './pages/user/user'
 import { useEffect, useState } from 'react'
+import Register from './pages/register/register'
 
 function App() {
 
@@ -25,11 +26,11 @@ function App() {
         <Router>
           <Navbar />
           <Routes>
-          <Route path='/login' element={<Login />} />
-
+          <Route path='/login' element={<Login setIsAuthenticated={setIsAuthenticated}/>} />
+          <Route path='/register' element={<Register />} />
             <Route path='/' element={<ProtectedRoute isAuthenticated={isAuthenticated}><Main /></ProtectedRoute>} />
             <Route path='/fisherdex' element={<ProtectedRoute isAuthenticated={isAuthenticated}><Fisherdex /></ProtectedRoute>} />
-            <Route path='/user' element={<ProtectedRoute isAuthenticated={isAuthenticated}><User /></ProtectedRoute>} />
+            <Route path='/user' element={<ProtectedRoute isAuthenticated={isAuthenticated}><User setIsAuthenticated={setIsAuthenticated}/></ProtectedRoute>} />
             
           </Routes>
         </Router>
