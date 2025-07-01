@@ -19,7 +19,7 @@ function Login( ) {
         method:"POST",
         headers:{"Content-Type":"application/json"},
         body: JSON.stringify({email, password})      });
-    if(!res.ok){
+    if(res.ok){
   const data= await res.json();
   // Salva il token (ad esempio un JWT) nel browser dell’utente, in modo persistente (anche dopo un refresh o chiusura del tab).
   localStorage.setItem("token", data.token); // salva il token
