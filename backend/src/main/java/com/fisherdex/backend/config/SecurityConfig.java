@@ -2,25 +2,49 @@ package com.fisherdex.backend.config;
 
 import java.util.List;
 
+import org.springframework.context.annotation.Lazy;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import com.fisherdex.backend.service.UserService;
 
 @Configuration // Indica a Spring che questa classe contiene configurazioni di bean
 public class SecurityConfig {
 
   // Definisce un bean per codificare (hashare) le password usando BCrypt, molto
   // sicuro e standard
+
+  private final JwtUtils jwtUtils;
+  private final UserService userService;
+
+  // messo lazy se no cre conflitto con userservice
+
+  public SecurityConfig(JwtUtils jwtUtils, @Lazy UserService userService) {
+    this.jwtUtils = jwtUtils;
+    this.userService = userService;
+  }
+
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
+  }
+
+  @Bean
+  public JwtAuthFilter jwtAuthFilter() {
+    return new JwtAuthFilter(jwtUtils, userService);
   }
 
   // Configura la catena di filtri di sicurezza per le richieste HTTP
@@ -49,6 +73,9 @@ public class SecurityConfig {
 
             // Tutte le altre richieste devono essere autenticate (login obbligatorio)
             .anyRequest().authenticated())
+
+        // Aggiungi il filtro JWT prima di tutti gli altri filtri
+        .addFilterBefore(jwtAuthFilter(), UsernamePasswordAuthenticationFilter.class)
 
         // Disabilita il form login di Spring Security (quello HTML classico)
         .formLogin(form -> form.disable())

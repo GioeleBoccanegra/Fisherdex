@@ -2,6 +2,7 @@ package com.fisherdex.backend.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.HashMap;
 
 import org.springframework.http.HttpStatus;
@@ -14,10 +15,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
+import com.fisherdex.backend.config.JwtUtils;
 import com.fisherdex.backend.model.User;
 import com.fisherdex.backend.service.UserService;
 
@@ -28,10 +31,12 @@ import jakarta.validation.Valid;
 public class UserController {
 
   private final UserService userService;
+  private final JwtUtils jwtUtils;
 
   // iniezione service tramite costruttore
-  public UserController(UserService userService) {
+  public UserController(UserService userService, JwtUtils jwtUtils) {
     this.userService = userService;
+    this.jwtUtils = jwtUtils;
   }
 
   // endpoint per ottenere tutti gli utenti
@@ -87,6 +92,33 @@ public class UserController {
       errors.put(fieldName, errorMessage);
     });
     return ResponseEntity.badRequest().body(errors);
+  }
+
+  @GetMapping("/me")
+  public ResponseEntity<?> getCurrentUser(@RequestHeader("Authorization") String authHeader) {
+
+    if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+      return ResponseEntity.status(401).body("token mancante o malformato");
+    }
+
+    String token = authHeader.substring(7);// rimuove bearer
+
+    if (!jwtUtils.validateJwtToken(token)) {
+      return ResponseEntity.status(401).body("token non valido");
+    }
+
+    String username = jwtUtils.getUserNameFromJwtToken(token);
+
+    Optional<User> userOpt = userService.getUserByUsername(username);
+
+    if (userOpt.isEmpty()) {
+      return ResponseEntity.status(404).body("Utente non trovato");
+    }
+
+    User user = userOpt.get();
+
+    user.setPassword(null);
+    return ResponseEntity.ok(user);
   }
 
 }
