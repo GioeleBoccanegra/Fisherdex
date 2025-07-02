@@ -2,8 +2,11 @@ import "./user.css"
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import defaultImage from "../../assets/user-image.jpeg";
+import EditPage from "./editPage/editPage";
 
 export default function User( {setIsAuthenticated} ) {
+
+ const[edit, setEdit]=useState(false);
 
   const[user, setUser]=useState(null);
   const [error, setError]=useState(null);
@@ -37,6 +40,11 @@ export default function User( {setIsAuthenticated} ) {
     fetchUserData();
   },[])
 
+  
+  
+const editData=()=>{
+  setEdit(true);
+}
 
   
   const navigate = useNavigate();
@@ -57,9 +65,10 @@ export default function User( {setIsAuthenticated} ) {
         <img className="user-image" alt="User" src={defaultImage}></img>
         <p className="user-data">username: {user?.username}</p>
         <p className="user-data">email: {user?.email}</p>
-        <p className="edit-data">Edit data</p>
+        <button onClick={()=>editData()} className="edit-data">Edit data</button>
         <button onClick={()=>handleLogout(setIsAuthenticated)}>logout</button>
       </div>
+      {edit && <EditPage user={user}  setEdit={setEdit} />}
     </div>
   );
 }
