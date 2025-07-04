@@ -11,7 +11,7 @@ export default function User( {setIsAuthenticated} ) {
   const[user, setUser]=useState(null);
   const [error, setError]=useState(null);
 
-  useEffect(()=>{
+  
     const fetchUserData=async()=>{
       const token = localStorage.getItem("token");
       if(!token){
@@ -32,11 +32,16 @@ export default function User( {setIsAuthenticated} ) {
         }
 
         const data = await res.json();
+        console.log("dati recuperati", data);
         setUser(data);
       }catch(err){
         setError("Errore nel recupero dei dati: " + (err.message || "Errore sconosciuto"));
       }
     }
+  
+  
+
+  useEffect(()=>{
     fetchUserData();
   },[])
 
@@ -53,7 +58,6 @@ const editData=()=>{
     localStorage.removeItem("token");
     setIsAuthenticated(false);
     navigate("/login");
-    window.location.reload();
   }
   return (
     
@@ -68,7 +72,7 @@ const editData=()=>{
         <button onClick={()=>editData()} className="edit-data">Edit data</button>
         <button onClick={()=>handleLogout(setIsAuthenticated)}>logout</button>
       </div>
-      {edit && <EditPage user={user}  setEdit={setEdit} />}
+      {edit && <EditPage user={user}  setEdit={setEdit}  fetchUserData={fetchUserData}  />}
     </div>
   );
 }
