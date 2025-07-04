@@ -1,12 +1,12 @@
 package com.fisherdex.backend.controller;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.HashMap;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.FieldError;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import com.fisherdex.backend.dto.userUpdateDTO;
 
 import com.fisherdex.backend.config.JwtUtils;
 import com.fisherdex.backend.model.User;
@@ -40,10 +42,12 @@ public class UserController {
   }
 
   // endpoint per ottenere tutti gli utenti
-  @GetMapping
-  public List<User> getAllUsers() {
-    return userService.getAllUsers();
-  }
+  /*
+   * @GetMapping
+   * public List<User> getAllUsers() {
+   * return userService.getAllUsers();
+   * }
+   */
 
   // GET /api/users/{id}
   @GetMapping("/{id}")
@@ -94,6 +98,8 @@ public class UserController {
     return ResponseEntity.badRequest().body(errors);
   }
 
+  // uso @RequestHeader("Authorization") per ottenere token inviato nell header
+
   @GetMapping("/me")
   public ResponseEntity<?> getCurrentUser(@RequestHeader("Authorization") String authHeader) {
 
@@ -107,18 +113,41 @@ public class UserController {
       return ResponseEntity.status(401).body("token non valido");
     }
 
-    String username = jwtUtils.getUserNameFromJwtToken(token);
+    User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-    Optional<User> userOpt = userService.getUserByUsername(username);
+    user.setPassword(null);
+
+    return ResponseEntity.ok(user);
+  }
+
+  @PutMapping("/me")
+
+  public ResponseEntity<?> updateUser(@RequestHeader("Authorization") String authHeader,
+      @Valid @RequestBody userUpdateDTO userUpdateDTO) {
+    if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+      return ResponseEntity.status(401).body("token mancante o malformato");
+    }
+    String token = authHeader.substring(7);
+
+    if (!jwtUtils.validateJwtToken(token)) {
+      return ResponseEntity.status(401).body("token non valido");
+    }
+
+    Long id = jwtUtils.getUserIdFromJwtToken(token);
+    Optional<User> userOpt = userService.getUserById(id);
 
     if (userOpt.isEmpty()) {
       return ResponseEntity.status(404).body("Utente non trovato");
     }
 
-    User user = userOpt.get();
+    userOpt.get().setUsername(userUpdateDTO.getUsername());
+    userOpt.get().setEmail(userUpdateDTO.getEmail());
 
-    user.setPassword(null);
-    return ResponseEntity.ok(user);
+    User updatedUser = userService.saveUser(userOpt.get());
+    updatedUser.setPassword(null);
+
+    return ResponseEntity.ok(updatedUser);
+
   }
 
 }

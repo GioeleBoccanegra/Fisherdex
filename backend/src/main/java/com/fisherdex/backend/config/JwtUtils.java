@@ -23,22 +23,23 @@ public class JwtUtils {
     return Keys.hmacShaKeyFor(jwtSecret.getBytes());
   }
 
-  public String generateJwtToken(String username) {
+  public String generateJwtToken(Long userId) {
     return Jwts.builder()
-        .setSubject(username)
+        .setSubject(userId.toString())
         .setIssuedAt(new Date())
         .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
         .signWith(getSigningKey(), SignatureAlgorithm.HS256)
         .compact();
   }
 
-  public String getUserNameFromJwtToken(String token) {
-    return Jwts.parserBuilder()
+  public Long getUserIdFromJwtToken(String token) {
+    String idStr = Jwts.parserBuilder()
         .setSigningKey(getSigningKey())
         .build()
         .parseClaimsJws(token)
         .getBody()
         .getSubject();
+    return Long.parseLong(idStr);
   }
 
   public boolean validateJwtToken(String authToken) {

@@ -37,7 +37,7 @@ public class LoginRequestController {
     if (userOpt.isPresent()) {
       User user = userOpt.get();
       // Genera il token JWT passando il nome utente o un identificatore unico
-      String token = jwtUtils.generateJwtToken(user.getUsername());
+      String token = jwtUtils.generateJwtToken(user.getId());
 
       // salvo token in mappa e lo restituisco
       Map<String, String> response = new HashMap<>();

@@ -1,0 +1,98 @@
+.edit-page {
+  position: fixed;
+  top: 15vh;
+  left: 15vw;
+  width: 70vw;
+  height: 70vh;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+}
+
+.edit-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.edit-content {
+  display: flex;
+  gap: 40px;
+  flex: 1;
+}
+
+.image-edit-section img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #4a90e2;
+}
+
+.data-edit-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  gap: 16px;
+}
+
+.data-edit-section label {
+  font-weight: 600;
+  color: #444;
+}
+
+.data-edit-section input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.button-section {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.button-section button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.button-section button:first-of-type {
+  background-color: #ccc;
+  color: #333;
+}
+
+.button-section button:first-of-type:hover {
+  background-color: #b3b3b3;
+}
+
+.button-section button:last-of-type {
+  background-color: #4a90e2;
+  color: white;
+}
+
+.button-section button:last-of-type:hover {
+  background-color: #357ab8;
+}
