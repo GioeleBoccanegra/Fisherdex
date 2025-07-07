@@ -32,7 +32,6 @@ export default function User( {setIsAuthenticated} ) {
         }
 
         const data = await res.json();
-        console.log("dati recuperati", data);
         setUser(data);
       }catch(err){
         setError("Errore nel recupero dei dati: " + (err.message || "Errore sconosciuto"));
