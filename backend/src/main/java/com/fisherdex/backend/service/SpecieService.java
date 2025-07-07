@@ -45,6 +45,10 @@ public class SpecieService {
     return specieRepository.findByPeriodo(periodo);
   }
 
+  public Optional<Specie> getSpecieByRarita(int rarita) {
+    return specieRepository.findByRarita(rarita);
+  }
+
   public void deleteSpecie(Long id) {
     specieRepository.deleteById(id);
   }

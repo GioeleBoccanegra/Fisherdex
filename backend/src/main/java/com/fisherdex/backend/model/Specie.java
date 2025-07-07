@@ -21,12 +21,15 @@ public class Specie {
   private String scientificName;
 
   @Column(nullable = false)
+  private int rarita;
+
+  @Column(nullable = false)
   private String imageUrl;
 
   @Column(nullable = false)
   private String periodo;
 
-  @Column(length = 1000, nullable = false)
+  @Column(columnDefinition = "TEXT", nullable = false)
   private String descrizione;
 
   // getters e setters

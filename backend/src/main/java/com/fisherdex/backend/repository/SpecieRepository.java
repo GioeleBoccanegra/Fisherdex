@@ -20,4 +20,7 @@ public interface SpecieRepository extends JpaRepository<Specie, Long> {
   // Metodo per trovare una specie per scientificName
   Optional<Specie> findByScientificName(String scientificName);
 
+  // Metodo per trovare una specie per rarita
+  Optional<Specie> findByRarita(int rarita);
+
 }
