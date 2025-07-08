@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.fisherdex.backend.model.Provincia;
 import com.fisherdex.backend.model.User;
 import com.fisherdex.backend.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -42,6 +43,10 @@ public class UserService {
 
   public Optional<User> getUserByUsername(String username) {
     return userRepository.findByUsername(username);
+  }
+
+  public Optional<User> getUserByProvince(Provincia provincia) {
+    return userRepository.findByProvincia(provincia);
   }
 
   // salva utente

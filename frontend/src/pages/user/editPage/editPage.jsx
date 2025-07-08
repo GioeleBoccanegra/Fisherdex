@@ -1,11 +1,14 @@
 import { useState } from "react";
 import defaultImage from "../../../assets/user-image.jpeg";
 import "./editPage.css";
+import { useEffect } from "react";
 
 export default function EditPage({user, setEdit, fetchUserData}){
   const[username, setUsername]=useState(user.username);
   const[email, setEmail]=useState(user.email);
+  const[province, setProvince]=useState(user.province);
   const[error, setError]=useState(null);
+  const[provinceList, setProvinceList]=useState([]);
 
 
 
@@ -41,8 +44,18 @@ try{
 setEdit(false);
   }
 
-  
-
+  const fetchProvince=async()=>{
+    try{
+      const res=await fetch("http://localhost:8080/api/province/names");
+      const data=await res.json();
+      setProvinceList(data);
+    }catch(err){
+      setError("Errore nel recupero delle province: "+err.message);
+    }
+  }
+  useEffect(()=>{
+    fetchProvince();
+  },[])
 
   return(
     <div className="edit-page" style={{ color: "black" }}>
@@ -64,6 +77,14 @@ setEdit(false);
           minLength={3}
           maxLength={20}
         />
+        <label>Provincia</label>
+        <select value={province} onChange={(e)=> setProvince(e.target.value)}>
+          <option value="">Seleziona una provincia</option>
+          {provinceList.map((nome)=>(
+            <option key={nome} value={nome}>{nome}</option>
+          ))}
+
+        </select>
         <label>Email</label>
         <input
           type="email"

@@ -68,6 +68,7 @@ public class UserController {
     if (userService.usernameExists(user.getUsername())) {
       return ResponseEntity.badRequest().body(Map.of("username", "Username già esistente"));
     }
+
     // Hasha la password prima di salvare
     String rawPassword = user.getPassword();
     String encodedPassword = userService.encodePassword(rawPassword);

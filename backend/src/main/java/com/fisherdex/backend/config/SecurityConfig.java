@@ -67,8 +67,11 @@ public class SecurityConfig {
             // pubblica)
             .requestMatchers(HttpMethod.GET, "/api/users").permitAll()
             .requestMatchers(HttpMethod.GET, "/api/specie").permitAll()
-
+            .requestMatchers(HttpMethod.GET, "/api/province/names").permitAll()
+            .requestMatchers(HttpMethod.GET, "/api/province/{nome}").permitAll()
             .requestMatchers(HttpMethod.POST, "/api/login").permitAll()
+            .requestMatchers(HttpMethod.POST, "/api/users/me").permitAll()
+            .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
 
             .requestMatchers(HttpMethod.POST, "/api/register").permitAll()
 

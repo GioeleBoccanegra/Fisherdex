@@ -23,6 +23,10 @@ public class User {
     @Column(nullable = false, unique = true)
     private String username;
 
+    @ManyToOne
+    @JoinColumn(name = "provincia_id", nullable = false)
+    private Provincia provincia;
+
     @Email(message = "Email deve essere valida")
     @NotBlank(message = "Email è obbligatoria")
     // Colonna email, non può essere nulla e deve essere unica
@@ -40,8 +44,9 @@ public class User {
     }
 
     // Costruttore con parametri (utile per creare oggetti User facilmente)
-    public User(String username, String email, String password) {
+    public User(String username, String email, String password, Provincia provincia) {
         this.username = username;
+        this.provincia = provincia;
         this.email = email;
         this.password = password;
     }
@@ -78,4 +83,13 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public Provincia getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(Provincia province) {
+        this.provincia = province;
+    }
+
 }
