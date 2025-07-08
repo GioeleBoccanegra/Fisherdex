@@ -68,6 +68,7 @@ public class UserController {
     if (userService.usernameExists(user.getUsername())) {
       return ResponseEntity.badRequest().body(Map.of("username", "Username già esistente"));
     }
+
     // Hasha la password prima di salvare
     String rawPassword = user.getPassword();
     String encodedPassword = userService.encodePassword(rawPassword);
@@ -128,6 +129,7 @@ public class UserController {
       return ResponseEntity.status(401).body("token mancante o malformato");
     }
     String token = authHeader.substring(7);
+    System.err.println(userUpdateDTO.getProvincia());
 
     if (!jwtUtils.validateJwtToken(token)) {
       return ResponseEntity.status(401).body("token non valido");
@@ -142,6 +144,7 @@ public class UserController {
 
     userOpt.get().setUsername(userUpdateDTO.getUsername());
     userOpt.get().setEmail(userUpdateDTO.getEmail());
+    userOpt.get().setProvincia(userUpdateDTO.getProvincia());
 
     User updatedUser = userService.saveUser(userOpt.get());
     updatedUser.setPassword(null);

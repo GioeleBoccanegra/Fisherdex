@@ -1,17 +1,31 @@
 import { useState } from "react";
 import defaultImage from "../../../assets/user-image.jpeg";
 import "./editPage.css";
+import { useEffect } from "react";
 
 export default function EditPage({user, setEdit, fetchUserData}){
   const[username, setUsername]=useState(user.username);
   const[email, setEmail]=useState(user.email);
+  const[provincia, setProvincia]=useState(user.provincia.nome);
   const[error, setError]=useState(null);
+  const[provinceList, setProvinceList]=useState([]);
 
 
+
+  const getProvinciaByNome = async (nome) => {
+    const res = await fetch(`http://localhost:8080/api/province/${nome}`);
+    if(!res.ok){
+      throw new Error(`Errore HTTP: ${res.status}`);
+    }
+    const data = await res.json();
+    return data;
+  }
 
   const salva= async(e)=>{
     e.preventDefault();
     setError(null);
+    const provinciaNew=await getProvinciaByNome(provincia);
+    console.log(provinciaNew);
 try{
   const token=localStorage.getItem("token");
   const res=await fetch("http://localhost:8080/api/users/me",{
@@ -21,12 +35,14 @@ try{
     },
     body:JSON.stringify({
       username:username,
-      email:email
+      email:email,
+      provincia:provinciaNew
     })
   })
   if(!res.ok){
     const errData = await res.text();
     setError(errData||"Errore nell'aggiornamento dei dati");
+    return;
   }
   const data=await res.json();
   console.log(data);
@@ -41,9 +57,20 @@ try{
 setEdit(false);
   }
 
+  const fetchProvince=async()=>{
+    try{
+      const res=await fetch("http://localhost:8080/api/province/names");
+      const data=await res.json();
+      setProvinceList(data);
+    }catch(err){
+      setError("Errore nel recupero delle province: "+err.message);
+    }
+  }
+  useEffect(()=>{
+    fetchProvince();
+  },[])
+
   
-
-
   return(
     <div className="edit-page" style={{ color: "black" }}>
   <h2 className="edit-title">Modifica i tuoi dati</h2>
@@ -64,6 +91,14 @@ setEdit(false);
           minLength={3}
           maxLength={20}
         />
+        <label>Provincia</label>
+        <select value={provincia} onChange={(e)=> setProvincia(e.target.value)}>
+          <option value="">Seleziona una provincia</option>
+          {provinceList.map((nome)=>(
+            <option key={nome} value={nome}>{nome}</option>
+          ))}
+
+        </select>
         <label>Email</label>
         <input
           type="email"
