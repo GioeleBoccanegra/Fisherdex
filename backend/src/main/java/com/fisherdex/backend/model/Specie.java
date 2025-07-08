@@ -2,8 +2,6 @@ package com.fisherdex.backend.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -11,13 +9,12 @@ import jakarta.persistence.Table;
 @Table(name = "specie")
 public class Specie {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Column(nullable = false)
   private String name;
 
-  @Column(nullable = false)
+  @Column(nullable = false, unique = true)
   private String scientificName;
 
   @Column(nullable = false)
@@ -69,4 +66,13 @@ public class Specie {
   public void setDescrizione(String descrizione) {
     this.descrizione = descrizione;
   }
+
+  public int getRarita() {
+    return rarita;
+  }
+
+  public void setRarita(int rarita) {
+    this.rarita = rarita;
+  }
+
 }

@@ -1,27 +1,36 @@
-import pesc from "../../../assets/pesc.jpg";
-import "./fishcard.css";
 
-export default function Fishcard() {
+import "./fishcard.css";
+import UploadFish from "../uploadFish/uploadFish";
+import { useState } from "react";
+
+export default function Fishcard( {specie} ) {
+
+  const [showUploadFish, setShowUploadFish] = useState(false);
+
+  let rarity_img = `/specie_img/rarita/stars_${specie.rarita}.png`;
+
+
   return (
     <div className="fishcard">
+      {showUploadFish && <UploadFish setShowUploadFish={setShowUploadFish} specie={specie}/>}
       <div className="fishdex-position">
-      <p className="fishcard-number">number</p>
-      <p className="fishcard-rarity">rarity</p>
+      <p className="fishcard-number">N°{specie.id}</p>
+      <img src={rarity_img} alt="rarità pesce :`${specie.rarita}`" className="rarity-img"></img>
       </div>
       
 <div className="description">
-<h2 className="fishcard-name">name</h2>
-<h3 className="fishcard-description">description</h3>    
+<h2 className="fishcard-name">{specie.name}</h2>
+<h3 className="fishcard-description">specie.descrizione</h3>    
 </div>
     <div className="image-section">
-    <img src={pesc} alt="fish" className="fishcard-image"></img>
+    <img src={specie.imageUrl} alt="fish" className="fishcard-image"></img>
     
     </div>
 
 
 <div className="captured-section">
     <p className="fishcard-captured">captured</p>    
-    <a className="upload-image">upload fish</a>
+    <button className="upload-image" onClick={()=>setShowUploadFish(true)}>upload fish</button>
     </div>
     </div>
   );

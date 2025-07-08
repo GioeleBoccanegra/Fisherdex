@@ -1,0 +1,78 @@
+.upload-fish-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  max-width: 800px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  z-index: 1000;
+}
+
+.upload-fish-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.fish-names h2 {
+  margin: 0;
+  font-size: 1.6rem;
+  color: #2c3e50;
+}
+
+.fish-names p {
+  margin: 4px 0 0;
+  font-style: italic;
+  color: #7f8c8d;
+}
+
+.fish-image img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid #4a90e2;
+}
+
+.upload-fish-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.upload-fish-form-image label {
+  font-weight: 600;
+  margin-bottom: 8px;
+  display: block;
+  color: #4a90e2;
+}
+
+.upload-fish-form-image input[type="file"] {
+  padding: 6px;
+  font-size: 1rem;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  align-self: flex-end;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: #c0392b;
+}
