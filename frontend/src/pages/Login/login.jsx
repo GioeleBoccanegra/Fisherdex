@@ -47,6 +47,7 @@ function Login( {setIsAuthenticated} ) {
     <div className='login-page'>
     <div className='login-container'>
       <h2>Login</h2>
+      {location.state?.sessionExpired && <p style={{color: "red"}}>Sessione scaduta, per favore effettua di nuovo il login</p>}
       {error && <p style={{color: "red"}}>{error}</p>}
       {successoRegistrazione && <p style={{color: "green"}}>Registrazione effettuata con successo, ora puoi accedere con le tue credenziali</p>}
       <form onSubmit={handleSubmit}>

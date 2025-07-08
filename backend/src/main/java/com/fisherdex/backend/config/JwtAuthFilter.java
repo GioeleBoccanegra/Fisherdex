@@ -35,17 +35,22 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     if (authHeader != null && authHeader.startsWith("Bearer ")) {
       String token = authHeader.substring(7);
-      if (jwtUtils.validateJwtToken(token)) {
 
-        Long id = jwtUtils.getUserIdFromJwtToken(token);
-
-        userService.getUserById(id).ifPresent(user -> {
-          UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null,
-              List.of());
-          authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-          SecurityContextHolder.getContext().setAuthentication(authentication);
-        });
+      if (!jwtUtils.validateJwtToken(token)) {
+        // Token non valido o scaduto: blocca la richiesta subito con 401
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.getWriter().write("Token non valido o scaduto");
+        return; // interrompe la catena, non va avanti
       }
+
+      Long id = jwtUtils.getUserIdFromJwtToken(token);
+
+      userService.getUserById(id).ifPresent(user -> {
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null,
+            List.of());
+        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+      });
     }
 
     filterChain.doFilter(request, response);

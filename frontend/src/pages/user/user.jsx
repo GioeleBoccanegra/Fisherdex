@@ -16,6 +16,8 @@ export default function User( {setIsAuthenticated} ) {
       const token = localStorage.getItem("token");
       if(!token){
         setError("Non Autenticato");
+        setIsAuthenticated(false);
+        navigate("/login");
         return;
       }
 
@@ -23,6 +25,13 @@ export default function User( {setIsAuthenticated} ) {
         const res= await fetch("http://localhost:8080/api/users/me",{
           headers:{"Authorization":`Bearer ${token}`}
         })
+
+        if (res.status === 401 || res.status === 403) {
+          localStorage.removeItem("token");
+          setIsAuthenticated(false);
+          navigate("/login", {state: {sessionExpired: true}});
+          return;
+        }
 
 
         if(!res.ok){
