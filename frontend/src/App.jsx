@@ -8,6 +8,7 @@ import { ProtectedRoute } from './components/ProtectedRoute'
 import User from './pages/user/user'
 import { useEffect, useState } from 'react'
 import Register from './pages/register/register'
+import { jwtDecode } from 'jwt-decode'
 
 function App() {
 
@@ -17,11 +18,35 @@ function App() {
 
   //controllo se loggato
 
-  useEffect(()=>{
-    const token=localStorage.getItem('token');
-    setIsAuthenticated(!!token);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+  
+    if (!token) {
+      setIsAuthenticated(false);
+      setCheckingAuth(false);
+      return;
+    }
+  
+    try {
+      const decoded = jwtDecode(token);
+      const now = Date.now() / 1000; // in secondi
+  
+      if (decoded.exp < now) {
+        // Token scaduto
+        localStorage.removeItem("token");
+        setIsAuthenticated(false);
+      } else {
+        setIsAuthenticated(true);
+      }
+    } catch (e) {
+      // Token malformato o errore decodifica
+      localStorage.removeItem("token");
+      console.log(e);
+      setIsAuthenticated(false);
+    }
+  
     setCheckingAuth(false);
-  },[])
+  }, []);
 
   //Finché checkingAuth è true, il componente App non renderizza le rotte e non fa redirect, ma mostra solo un placeholder (ad esempio: "Caricamento..." o uno spinner).
 
@@ -39,8 +64,8 @@ Solo dopo aver controllato il token (quindi quando checkingAuth diventa false) v
           <Routes>
           <Route path='/login' element={<Login setIsAuthenticated={setIsAuthenticated}/>} />
           <Route path='/register' element={<Register />} />
-            <Route path='/' element={<ProtectedRoute isAuthenticated={isAuthenticated}><Main /></ProtectedRoute>} />
-            <Route path='/fisherdex' element={<ProtectedRoute isAuthenticated={isAuthenticated}><Fisherdex /></ProtectedRoute>} />
+            <Route path='/' element={<ProtectedRoute isAuthenticated={isAuthenticated}><Main setIsAuthenticated={setIsAuthenticated}/></ProtectedRoute>} />
+            <Route path='/fisherdex' element={<ProtectedRoute isAuthenticated={isAuthenticated}><Fisherdex setIsAuthenticated={setIsAuthenticated}/></ProtectedRoute>} />
             <Route path='/user' element={<ProtectedRoute isAuthenticated={isAuthenticated}><User setIsAuthenticated={setIsAuthenticated}/></ProtectedRoute>} />
             
           </Routes>
