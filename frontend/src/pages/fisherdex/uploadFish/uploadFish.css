@@ -76,3 +76,11 @@ button {
 button:hover {
   background-color: #c0392b;
 }
+
+
+
+.preview-container img{
+  width: 100px;
+  height: 100px;
+
+}
