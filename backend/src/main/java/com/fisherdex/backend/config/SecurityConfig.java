@@ -74,6 +74,7 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
 
             .requestMatchers(HttpMethod.POST, "/api/register").permitAll()
+            .requestMatchers(HttpMethod.PUT, "/api/users/me").permitAll()
 
             // Tutte le altre richieste devono essere autenticate (login obbligatorio)
             .anyRequest().authenticated())

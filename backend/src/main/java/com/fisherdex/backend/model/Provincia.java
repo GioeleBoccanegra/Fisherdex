@@ -1,5 +1,7 @@
 package com.fisherdex.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
@@ -15,6 +17,7 @@ public class Provincia {
   public Provincia() {
   }
 
+  @JsonCreator
   public Provincia(String nome, String regione) {
     this.nome = nome;
     this.regione = regione;

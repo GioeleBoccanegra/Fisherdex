@@ -76,7 +76,7 @@ const editData=()=>{
       <div className="user-card">
         <img className="user-image" alt="User" src={defaultImage}></img>
         <p className="user-data">username: {user?.username}</p>
-        <p className="user-data">provincia: {user?.province?.nome}</p>
+        <p className="user-data">provincia: {user?.provincia?.nome}</p>
         <p className="user-data">email: {user?.email}</p>
         <button onClick={()=>editData()} className="edit-data">Edit data</button>
         <button onClick={()=>handleLogout(setIsAuthenticated)}>logout</button>
