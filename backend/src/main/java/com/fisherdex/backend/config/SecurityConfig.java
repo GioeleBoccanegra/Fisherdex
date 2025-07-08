@@ -66,6 +66,7 @@ public class SecurityConfig {
             // Permette a chiunque di fare GET su /api/users (ad esempio per lista utenti
             // pubblica)
             .requestMatchers(HttpMethod.GET, "/api/users").permitAll()
+            .requestMatchers(HttpMethod.GET, "/api/specie").permitAll()
 
             .requestMatchers(HttpMethod.POST, "/api/login").permitAll()
 
