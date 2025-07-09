@@ -10,6 +10,7 @@ export default function Fisherdex({setIsAuthenticated}) {
   const [error, setError]=useState(null);
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
+  const [catured, setCaptured]= useState(false);
 
   const [species, setSpecies]=useState([]);
 
@@ -72,7 +73,7 @@ const filteredSpecies = species.filter((specie)=>specie.name.toLowerCase().start
     <div className="fisherdex-container">
       {filteredSpecies.length === 0 && <p className="no-results">No results found</p>}
       {filteredSpecies && filteredSpecies.map((specie) => (
-        <Fishcard key={specie.id} specie={specie} />
+        <Fishcard key={specie.id} specie={specie} setCaptured={setCaptured}/>
       ))}
     </div>
   </div>

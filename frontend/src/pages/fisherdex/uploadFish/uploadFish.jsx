@@ -1,12 +1,31 @@
+import { useNavigate } from "react-router-dom";
 import "./uploadFish.css";
 import { useEffect, useState } from "react";
 
 export default function UploadFish({setShowUploadFish, specie} ) {
 const [previewUrl, setPreviewUrl] = useState(null);
+const [provinciaFoto, setProvinciaFoto]= useState(null);
+const[descrizione, setDescrizione]= useState("");
+const navigate= useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const dataCaricamento = Date();
     console.log("Form submitted");
+    setShowUploadFish(false);
+    navigate("/fisherdex");
+    console.log(provinciaFoto);
+    console.log(dataCaricamento)
+
+
+    //creo tabella catture che accoglie: catchID, userID(relezione con users), date, fishType, provincia, description, imageUrl, city
+    
+
+    
+  };
+
+  const handleChange = (e) => {
+    setDescrizione(e.target.value);
   };
 
   const recuperaPosizione= async()=>{
@@ -24,7 +43,7 @@ const [previewUrl, setPreviewUrl] = useState(null);
     
       const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitudine}&lon=${longitudine}&format=json`)
       const data = await response.json();
-console.log(data.address.county);
+setProvinciaFoto(data.address.county)
 
 
 
@@ -76,6 +95,23 @@ console.log(data.address.county);
             <img src={previewUrl} alt="Anteprima" className="preview-image" />
           </div>
         )}  
+
+        <div className="descrizione-cattura">
+        <label htmlFor="descrizione">Descrizione:</label><br />
+      <textarea
+        id="descrizione"
+        value={descrizione}
+        onChange={handleChange}
+        placeholder="Scrivi qui la tua descrizione..."
+        rows={4}
+        cols={50}
+      />
+      <p><strong>Anteprima:</strong> {descrizione}</p>
+    </div>
+
+        
+
+        
 
 
 

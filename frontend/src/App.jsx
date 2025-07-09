@@ -9,6 +9,7 @@ import User from './pages/user/user'
 import { useEffect, useState } from 'react'
 import Register from './pages/register/register'
 import { jwtDecode } from 'jwt-decode'
+import { PublicRoute } from './components/publicRoute'
 
 function App() {
 
@@ -62,8 +63,15 @@ Solo dopo aver controllato il token (quindi quando checkingAuth diventa false) v
         <Router>
           <Navbar />
           <Routes>
-          <Route path='/login' element={<Login setIsAuthenticated={setIsAuthenticated}/>} />
-          <Route path='/register' element={<Register />} />
+          <Route path='/login' element={<PublicRoute isAuthenticated={isAuthenticated}> <Login setIsAuthenticated={setIsAuthenticated}/></PublicRoute>} />
+          <Route
+    path="/register"
+    element={
+      <PublicRoute isAuthenticated={isAuthenticated}>
+        <Register />
+      </PublicRoute>
+    }
+  />
             <Route path='/' element={<ProtectedRoute isAuthenticated={isAuthenticated}><Main setIsAuthenticated={setIsAuthenticated}/></ProtectedRoute>} />
             <Route path='/fisherdex' element={<ProtectedRoute isAuthenticated={isAuthenticated}><Fisherdex setIsAuthenticated={setIsAuthenticated}/></ProtectedRoute>} />
             <Route path='/user' element={<ProtectedRoute isAuthenticated={isAuthenticated}><User setIsAuthenticated={setIsAuthenticated}/></ProtectedRoute>} />
