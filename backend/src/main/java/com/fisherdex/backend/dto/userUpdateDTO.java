@@ -9,7 +9,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public class userUpdateDTO {
+public class UserUpdateDTO {
+
   @NotBlank(message = "nomeutente è obbligatorio")
   @Size(min = 3, max = 20, message = "Username deve avere tra 3 e 20 caratteri")
   @Column(nullable = false, unique = true)

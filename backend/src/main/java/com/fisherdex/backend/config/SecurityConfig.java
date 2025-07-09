@@ -72,6 +72,8 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.POST, "/api/login").permitAll()
             .requestMatchers(HttpMethod.POST, "/api/users/me").permitAll()
             .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
+            .requestMatchers(HttpMethod.POST, "/api/cattura").permitAll()
+            .requestMatchers(HttpMethod.GET, "/api/cattura").permitAll()
 
             .requestMatchers(HttpMethod.POST, "/api/register").permitAll()
             .requestMatchers(HttpMethod.PUT, "/api/users/me").permitAll()

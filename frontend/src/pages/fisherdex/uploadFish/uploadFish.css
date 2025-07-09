@@ -21,6 +21,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 16px;
+  flex-wrap: wrap; /* evita overflow se schermo stretto */
 }
 
 .fish-names h2 {
@@ -43,10 +44,18 @@
   border: 2px solid #4a90e2;
 }
 
-.upload-fish-form {
+.upload-fish-form-image {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  align-items: center; /* centra orizzontalmente tutti i figli */
+  gap: 8px; /* spazio tra label e input */
+}
+
+.upload-fish-form-image-input{
+  display: inline-block;
+  display: flex;
+  flex-direction: column;
+ 
 }
 
 .upload-fish-form-image label {
@@ -59,6 +68,32 @@
 .upload-fish-form-image input[type="file"] {
   padding: 6px;
   font-size: 1rem;
+
+}
+
+.preview-container {
+  margin-top: 12px;
+}
+
+.preview-container p {
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #34495e;
+}
+
+.preview-container img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.button-section-form {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 12px;
 }
 
 button {
@@ -69,18 +104,22 @@ button {
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
-  align-self: flex-end;
   transition: background-color 0.2s ease;
+  min-width: 100px;
+  text-align: center;
 }
 
 button:hover {
   background-color: #c0392b;
 }
 
-
-
-.preview-container img{
-  width: 100px;
-  height: 100px;
-
+/* Specifica tipo per evitare submit non voluti */
+button[type="button"] {
+  background-color: #7f8c8d;
 }
+
+button[type="button"]:hover {
+  background-color: #606f73;
+}
+
+
