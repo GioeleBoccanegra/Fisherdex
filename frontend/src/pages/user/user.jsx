@@ -3,85 +3,103 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import defaultImage from "../../assets/user-image.jpeg";
 import EditPage from "./editPage/editPage";
+import Loader from "../../components/Loader";
 
-export default function User( {setIsAuthenticated} ) {
 
- const[edit, setEdit]=useState(false);
+export default function User({ setIsAuthenticated }) {
 
-  const[user, setUser]=useState(null);
-  const [error, setError]=useState(null);
+  const [edit, setEdit] = useState(false);
+  const [user, setUser] = useState(null);
+  const [error, setError] = useState(null)
+  const [loading, setLoading] = useState(false);
 
-  
-    const fetchUserData=async()=>{
-      const token = localStorage.getItem("token");
-      if(!token){
-        setError("Non Autenticato");
+
+  const fetchUserData = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setError("Non Autenticato");
+      setIsAuthenticated(false);
+      navigate("/login");
+      return;
+    }
+
+    try {
+      const res = await fetch("http://localhost:8080/api/users/me", {
+        headers: { "Authorization": `Bearer ${token}` }
+      })
+
+      if (res.status === 401 || res.status === 403) {
+        localStorage.removeItem("token");
         setIsAuthenticated(false);
-        navigate("/login");
+        navigate("/login", { state: { sessionExpired: true } });
         return;
       }
 
-      try{
-        const res= await fetch("http://localhost:8080/api/users/me",{
-          headers:{"Authorization":`Bearer ${token}`}
-        })
 
-        if (res.status === 401 || res.status === 403) {
-          localStorage.removeItem("token");
-          setIsAuthenticated(false);
-          navigate("/login", {state: {sessionExpired: true}});
-          return;
-        }
+      if (!res.ok) {
+        const message = await res.text();
+        setError("Errore nel recupero dei dati: " + message);
+        return;
+      }
 
-
-        if(!res.ok){
-          const message = await res.text();
-          setError("Errore nel recupero dei dati: " + message);
-          return;
-        }
-
-        const data = await res.json();
-        setUser(data);
-      }catch(err){
+      const data = await res.json();
+      setUser(data);
+    } catch (err) {
+      if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
+        setError("Impossibile connettersi al server. Verificare che il backend sia attivo.");
+      } else {
         setError("Errore nel recupero dei dati: " + (err.message || "Errore sconosciuto"));
       }
     }
-  
-  
+  }
 
-  useEffect(()=>{
-    fetchUserData();
-  },[])
 
-  
-  
-const editData=()=>{
-  setEdit(true);
-}
 
-  
+  useEffect(() => {
+    const loadData = async () => {
+      setLoading(true);
+      await fetchUserData();
+      setLoading(false)
+    }
+    loadData();
+  }, [])
+
+
+
+  const editData = () => {
+    setEdit(true);
+  }
+
+
   const navigate = useNavigate();
 
-  const handleLogout=()=>{
+  const handleLogout = () => {
     localStorage.removeItem("token");
     setIsAuthenticated(false);
     navigate("/login");
   }
   return (
-    
-    
+
+
     <div>
       {error && <div className="error-message">{error}</div>}
       <h1>User</h1>
-      <div className="user-card">
+      {loading && <Loader />}
+      {!loading && !error && <div className="user-card">
+
+
+
+
         <img className="user-image" alt="User" src={defaultImage}></img>
         <p className="user-data">username: {user?.username}</p>
         <p className="user-data">provincia: {user?.provincia?.nome}</p>
         <p className="user-data">email: {user?.email}</p>
-        <button onClick={()=>editData()} className="edit-data">Edit data</button>
-        <button onClick={()=>handleLogout(setIsAuthenticated)}>logout</button>
-      </div>
-      {edit && <EditPage user={user}  setEdit={setEdit}  fetchUserData={fetchUserData}  />}
+        <button onClick={() => editData()} className="edit-data">Edit data</button>
+        <button onClick={() => handleLogout(setIsAuthenticated)}>logout</button>
+
+      </div>}
+
+      {edit && <EditPage user={user} setEdit={setEdit} fetchUserData={fetchUserData} />}
     </div>
   );
 }
