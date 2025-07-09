@@ -1,0 +1,53 @@
+package com.fisherdex.backend.controller;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.fisherdex.backend.dto.CatturaResponseDTO;
+import com.fisherdex.backend.model.Cattura;
+
+import com.fisherdex.backend.service.CatturaService;
+
+@RestController
+@RequestMapping("api/cattura")
+public class CattureController {
+
+  private final CatturaService catturaService;
+
+  public CattureController(CatturaService catturaService) {
+    this.catturaService = catturaService;
+
+  }
+
+  @GetMapping
+  public ResponseEntity<List<CatturaResponseDTO>> getAllProvince() {
+    List<CatturaResponseDTO> listaCatture = catturaService.getAllCatture();
+
+    if (listaCatture.isEmpty() || listaCatture == null) {
+      return ResponseEntity.noContent().build();
+    }
+
+    return ResponseEntity.ok().body(listaCatture);
+
+  }
+
+  @PostMapping
+  public ResponseEntity<?> createCattura(@RequestBody Cattura cattura) {
+
+    try {
+      CatturaResponseDTO catturaSalvata = catturaService.saveCattura(cattura);
+      return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("risposata", catturaSalvata));
+    } catch (IllegalArgumentException e) {
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
+  }
+
+}

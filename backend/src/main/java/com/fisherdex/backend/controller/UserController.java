@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import com.fisherdex.backend.dto.userUpdateDTO;
+import com.fisherdex.backend.dto.UserUpdateDTO;
 
 import com.fisherdex.backend.config.JwtUtils;
 import com.fisherdex.backend.model.User;
@@ -124,7 +124,7 @@ public class UserController {
   @PutMapping("/me")
 
   public ResponseEntity<?> updateUser(@RequestHeader("Authorization") String authHeader,
-      @Valid @RequestBody userUpdateDTO userUpdateDTO) {
+      @Valid @RequestBody UserUpdateDTO userUpdateDTO) {
     if (authHeader == null || !authHeader.startsWith("Bearer ")) {
       return ResponseEntity.status(401).body("token mancante o malformato");
     }

@@ -11,7 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Catture {
+public class Cattura {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,13 +25,14 @@ public class Catture {
   @JoinColumn(name = "provincia_id", nullable = false)
   private Provincia provincia;
 
-  @Column(nullable = false)
-  private String nomeSpecie;
+  @ManyToOne
+  @JoinColumn(name = "specie_id", nullable = false)
+  private Specie specie;
 
-  @Column(columnDefinition = "TEXT", nullable = false)
+  @Column(nullable = false)
   private Date dataCattura;
 
-  @Column(nullable = false)
+  @Column(columnDefinition = "TEXT", nullable = false)
   private String descrizione;
 
   @Column(nullable = false)
@@ -63,12 +64,12 @@ public class Catture {
     this.provincia = provincia;
   }
 
-  public String getNomeSpecie() {
-    return nomeSpecie;
+  public Specie getNomeSpecie() {
+    return specie;
   }
 
-  public void setNomeSpecie(String nomeSpecie) {
-    this.nomeSpecie = nomeSpecie;
+  public void setNomeSpecie(Specie specie) {
+    this.specie = specie;
   }
 
   public Date getDataCattura() {
@@ -93,6 +94,14 @@ public class Catture {
 
   public void setImageUrl(String imageUrl) {
     this.imageUrl = imageUrl;
+  }
+
+  public Specie getSpecie() {
+    return specie;
+  }
+
+  public void setSpecie(Specie specie) {
+    this.specie = specie;
   }
 
 }

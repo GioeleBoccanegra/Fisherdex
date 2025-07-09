@@ -32,4 +32,8 @@ public class ProvinciaService {
     return provinceRepository.findByNome(nome);
   }
 
+  public Optional<Provincia> getProvinciaById(Long id) {
+    return provinceRepository.findById(id);
+  }
+
 }

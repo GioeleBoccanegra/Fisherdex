@@ -18,7 +18,7 @@ const navigate= useNavigate();
     console.log(dataCaricamento)
 
 
-    //creo tabella catture che accoglie: catchID, userID(relezione con users), date, fishType, provincia, description, imageUrl, city
+    //creo tabella catture che accoglie: catchID, userID(relezione con users), date, specie, provincia, description, imageUrl, city
     
 
     
