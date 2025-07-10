@@ -80,7 +80,7 @@ function Register() {
         navigate("/login", { state: { successoRegistrazione: true } });
       } else {
         const errData = await res.text();
-        setError(errData || "errore nela registrazione")
+        setError(errData || "errore nella registrazione")
       }
 
 

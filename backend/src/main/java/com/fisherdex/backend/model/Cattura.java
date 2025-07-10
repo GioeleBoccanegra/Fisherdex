@@ -1,6 +1,6 @@
 package com.fisherdex.backend.model;
 
-import java.util.Date;
+import java.time.OffsetDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,7 +30,7 @@ public class Cattura {
   private Specie specie;
 
   @Column(nullable = false)
-  private Date dataCattura;
+  private OffsetDateTime dataCattura;
 
   @Column(columnDefinition = "TEXT", nullable = false)
   private String descrizione;
@@ -72,11 +72,11 @@ public class Cattura {
     this.specie = specie;
   }
 
-  public Date getDataCattura() {
+  public OffsetDateTime getDataCattura() {
     return dataCattura;
   }
 
-  public void setDataCattura(Date dataCattura) {
+  public void setDataCattura(OffsetDateTime dataCattura) {
     this.dataCattura = dataCattura;
   }
 

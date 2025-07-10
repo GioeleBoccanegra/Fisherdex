@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import defaultImage from "../../assets/user-image.jpeg";
 import EditPage from "./editPage/editPage";
 import Loader from "../../components/Loader";
+import { fetchUserData } from "../../api/fetchUserData"
 
 
 export default function User({ setIsAuthenticated }) {
@@ -14,51 +15,21 @@ export default function User({ setIsAuthenticated }) {
   const [loading, setLoading] = useState(false);
 
 
-  const fetchUserData = async () => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      setError("Non Autenticato");
-      setIsAuthenticated(false);
-      navigate("/login");
-      return;
-    }
 
-    try {
-      const res = await fetch("http://localhost:8080/api/users/me", {
-        headers: { "Authorization": `Bearer ${token}` }
-      })
-
-      if (res.status === 401 || res.status === 403) {
-        localStorage.removeItem("token");
-        setIsAuthenticated(false);
-        navigate("/login", { state: { sessionExpired: true } });
-        return;
-      }
-
-
-      if (!res.ok) {
-        const message = await res.text();
-        setError("Errore nel recupero dei dati: " + message);
-        return;
-      }
-
-      const data = await res.json();
-      setUser(data);
-    } catch (err) {
-      if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
-        setError("Impossibile connettersi al server. Verificare che il backend sia attivo.");
-      } else {
-        setError("Errore nel recupero dei dati: " + (err.message || "Errore sconosciuto"));
-      }
-    }
-  }
 
 
 
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
-      await fetchUserData();
+      const userData = await fetchUserData(setError, setIsAuthenticated, navigate);
+      if (!userData) {
+        // se fetchUserData fallisce, esci
+        return;
+      }
+
+      setUser(userData);
+
       setLoading(false)
     }
     loadData();

@@ -79,7 +79,7 @@ export default function Fisherdex({ setIsAuthenticated }) {
 
         {filteredSpecies.length === 0 && !loading && <p className="no-results">No results found</p>}
         {filteredSpecies && filteredSpecies.map((specie) => (
-          <Fishcard key={specie.id} specie={specie} />
+          <Fishcard key={specie.id} specie={specie} setIsAuthenticated={setIsAuthenticated} navigate={navigate} />
         ))}
       </div>}
 
