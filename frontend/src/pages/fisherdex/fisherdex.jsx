@@ -17,6 +17,7 @@ export default function Fisherdex({ setIsAuthenticated }) {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState();
   const [postList, setPostList] = useState();
+  const [soloNonCatturati, setSoloNonCatturati] = useState(false);
 
 
 
@@ -91,29 +92,48 @@ export default function Fisherdex({ setIsAuthenticated }) {
 
 
 
+  let filteredSpecies = [];
+  if (soloNonCatturati == true) {
+    const nonCatturati = species.filter(specie => !postList?.some(post => post.specie.id === specie.id));
+    filteredSpecies = nonCatturati.filter((specie) => specie.name.toLowerCase().startsWith(search.toLowerCase()));
 
-  const filteredSpecies = species.filter((specie) => specie.name.toLowerCase().startsWith(search.toLowerCase()));
+  } else {
+    filteredSpecies = species.filter((specie) => specie.name.toLowerCase().startsWith(search.toLowerCase()));
+
+  }
+
 
   return (
     <div className="fisherdex-wrapper">
       <h1 className="fisherdex-title">Your Fisherdex</h1>
       {loading && <Loader />}
       {error && <p className="error-message">{error}</p>}
-      {!loading && !error && <FisherdexFilters search={search} setSearch={setSearch} /> && <div className="fisherdex-container">
+      {!loading && !error && (
+        <>
+          <FisherdexFilters search={search} setSearch={setSearch} setSoloNonCatturati={setSoloNonCatturati} />
+          <div className="fisherdex-container">
+            {filteredSpecies.length === 0 && <p className="no-results">No results found</p>}
+            {filteredSpecies.map((specie) => {
+              const catturata = postList?.some(post => post.specie?.id === specie.id);
+              return (
+                <Fishcard
+                  key={specie.id}
+                  specie={specie}
+                  catturata={catturata}
+                  user={user}
+                />
+              );
+            })}
+          </div>
+        </>
+      )}
 
-        {filteredSpecies.length === 0 && !loading && <p className="no-results">No results found</p>}
-        {filteredSpecies && filteredSpecies.map((specie) => {
-          const catturata = postList?.some(post => post.specie?.id === specie.id);
-
-          return (<Fishcard key={specie.id} specie={specie} catturata={catturata} user={user} />)
-        })}
-      </div>}
 
 
 
 
 
 
-    </div>
+    </div >
   );
 }
