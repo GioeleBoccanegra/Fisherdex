@@ -5,6 +5,7 @@ import { fetchRecuperaProvince } from "../../../api/fetchRecuperaProvince"
 import { fecthProvinaciaByNome } from "../../../api/fetchProvinciaByNome";
 import { fecthPostCattura } from "../../../api/fetchPostCattura";
 import Loader from "../../../components/Loader";
+import { uploadImageToCloudinary } from "../../../utils/uploadImageToCloudinary";
 
 export default function UploadFish({ setShowUploadFish, specie, user }) {
   const [previewUrl, setPreviewUrl] = useState(null);
@@ -32,10 +33,10 @@ export default function UploadFish({ setShowUploadFish, specie, user }) {
       return;
     }
     const provinciaObj = await fecthProvinaciaByNome(provinciaFoto);
+    const urlImmagine = await uploadImageToCloudinary(imageFile);
 
-    console.log(provinciaObj);
     const dataCaricamento = new Date().toISOString();
-    await fecthPostCattura(user, provinciaObj, specie, dataCaricamento, descrizione, imageFile, setError, setShowUploadFish);
+    await fecthPostCattura(user, provinciaObj, specie, dataCaricamento, descrizione, urlImmagine, setError, setShowUploadFish);
     setLoading(false);
   };
 
@@ -105,7 +106,7 @@ export default function UploadFish({ setShowUploadFish, specie, user }) {
                       } else {
                         setError(null);
                         setPreviewUrl(url);
-                        setImageFile("testURL");
+                        setImageFile(file);
                       }
                     }
                   }

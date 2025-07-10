@@ -19,6 +19,8 @@ export const fecthPostCattura = async (user, provincia, specie, dataCattura, des
     if (res.ok) {
       showUploadFish(false);
       console.log("post eseguito")
+      window.location.reload(false);
+
     } else {
       const errData = await res.text();
       setError(errData || "error nell upload post")
