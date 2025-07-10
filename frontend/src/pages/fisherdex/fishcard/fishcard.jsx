@@ -3,7 +3,7 @@ import "./fishcard.css";
 import UploadFish from "../uploadFish/uploadFish";
 import { useState } from "react";
 
-export default function Fishcard( {specie} ) {
+export default function Fishcard({ specie, setIsAuthenticated, navigate }) {
 
   const [showUploadFish, setShowUploadFish] = useState(false);
 
@@ -12,26 +12,26 @@ export default function Fishcard( {specie} ) {
 
   return (
     <div className="fishcard">
-      {showUploadFish && <UploadFish setShowUploadFish={setShowUploadFish} specie={specie}/>}
+      {showUploadFish && <UploadFish setShowUploadFish={setShowUploadFish} specie={specie} setIsAuthenticated={setIsAuthenticated} navigate={navigate} />}
       <div className="fishdex-position">
-      <p className="fishcard-number">N°{specie.id}</p>
-      <img src={rarity_img} alt="rarità pesce :`${specie.rarita}`" className="rarity-img"></img>
+        <p className="fishcard-number">N°{specie.id}</p>
+        <img src={rarity_img} alt="rarità pesce :`${specie.rarita}`" className="rarity-img"></img>
       </div>
-      
-<div className="description">
-<h2 className="fishcard-name">{specie.name}</h2>
-<h3 className="fishcard-description">specie.descrizione</h3>    
-</div>
-    <div className="image-section">
-    <img src={specie.imageUrl} alt="fish" className="fishcard-image"></img>
-    
-    </div>
+
+      <div className="description">
+        <h2 className="fishcard-name">{specie.name}</h2>
+        <h3 className="fishcard-description">specie.descrizione</h3>
+      </div>
+      <div className="image-section">
+        <img src={specie.imageUrl} alt="fish" className="fishcard-image"></img>
+
+      </div>
 
 
-<div className="captured-section">
-    <p className="fishcard-captured">captured</p>    
-    <button className="upload-image" onClick={()=>setShowUploadFish(true)}>upload fish</button>
-    </div>
+      <div className="captured-section">
+        <p className="fishcard-captured">captured</p>
+        <button className="upload-image" onClick={() => setShowUploadFish(true)}>upload fish</button>
+      </div>
     </div>
   );
 }
