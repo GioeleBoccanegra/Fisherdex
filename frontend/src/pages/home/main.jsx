@@ -47,7 +47,7 @@ export default function Main({ setIsAuthenticated }) {
     loadData();
   }, [])
 
-
+  const filteredPosts = posts.filter(post => post.user?.id !== user.id);
 
   return (
 
@@ -57,13 +57,13 @@ export default function Main({ setIsAuthenticated }) {
       {error && <div className="error-message">{error}</div>}
       {loading && <Loader />}
       {!loading && !error && <p>corretto</p>}
-
-      {posts.length == 0 && !loading && <p className="no-posts-results">No results found</p>}
-      {posts.filter(post => post.user?.id != user.id)
-        .map(post => (
+      {filteredPosts.length === 0 ? (
+        <p>Nessun post trovato</p>
+      ) : (
+        filteredPosts.map(post => (
           <Apost key={post.id} post={post} />
-        ))}
-
+        ))
+      )}
 
 
     </div>
