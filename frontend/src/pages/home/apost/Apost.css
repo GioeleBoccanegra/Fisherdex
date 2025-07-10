@@ -1,0 +1,74 @@
+.post-card {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin: 16px auto;
+  max-width: 95%;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+.post-card:hover {
+  transform: translateY(-3px);
+}
+
+.post-img img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+}
+
+.post-info {
+  padding: 16px;
+}
+
+.post-info h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.post-info p {
+  margin: 6px 0;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.post-desc {
+  margin-top: 12px;
+  font-style: italic;
+  color: #333;
+}
+
+/* 💻 Desktop & Tablet layout */
+@media (min-width: 600px) {
+  .post-card {
+    flex-direction: row;
+    max-width: 700px;
+  }
+
+  .post-img {
+    flex: 1;
+    max-width: 50%;
+  }
+
+  .post-img img {
+    height: 100%;
+  }
+
+  .post-info {
+    flex: 1;
+    padding: 20px;
+  }
+
+  .post-info h3 {
+    font-size: 1.4rem;
+  }
+
+  .post-info p {
+    font-size: 1rem;
+  }
+}
