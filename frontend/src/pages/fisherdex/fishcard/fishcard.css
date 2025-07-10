@@ -113,3 +113,7 @@
 .upload-image:hover {
   background-color: #217dbb;
 }
+
+.fishcard-non-captured {
+  color: black;
+}

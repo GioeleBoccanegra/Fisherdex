@@ -3,16 +3,19 @@ import "./fishcard.css";
 import UploadFish from "../uploadFish/uploadFish";
 import { useState } from "react";
 
-export default function Fishcard({ specie, setIsAuthenticated, navigate }) {
+export default function Fishcard({ specie, catturata, user }) {
 
   const [showUploadFish, setShowUploadFish] = useState(false);
+
+
+
 
   let rarity_img = `/specie_img/rarita/stars_${specie.rarita}.png`;
 
 
   return (
     <div className="fishcard">
-      {showUploadFish && <UploadFish setShowUploadFish={setShowUploadFish} specie={specie} setIsAuthenticated={setIsAuthenticated} navigate={navigate} />}
+      {showUploadFish && <UploadFish setShowUploadFish={setShowUploadFish} specie={specie} user={user} />}
       <div className="fishdex-position">
         <p className="fishcard-number">N°{specie.id}</p>
         <img src={rarity_img} alt="rarità pesce :`${specie.rarita}`" className="rarity-img"></img>
@@ -29,8 +32,10 @@ export default function Fishcard({ specie, setIsAuthenticated, navigate }) {
 
 
       <div className="captured-section">
-        <p className="fishcard-captured">captured</p>
-        <button className="upload-image" onClick={() => setShowUploadFish(true)}>upload fish</button>
+        {catturata && <p className="fishcard-captured">captured</p>}
+        {!catturata && <p className="fishcard-non-captured">non catturata</p> && <button className="upload-image" onClick={() => setShowUploadFish(true)}>upload fish</button>}
+
+
       </div>
     </div>
   );
