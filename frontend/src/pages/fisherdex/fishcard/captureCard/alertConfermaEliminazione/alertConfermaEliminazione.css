@@ -1,0 +1,61 @@
+.div-alert-conferma-eliminazione {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  max-width: 600px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 1050;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.div-alert-conferma-eliminazione h2 {
+  font-size: 1.4rem;
+  color: #e74c3c;
+  text-align: center;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.alert-button {
+  display: flex;
+  justify-content: space-around;
+  gap: 16px;
+}
+
+.alert-button button {
+  flex: 1;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s ease;
+  min-width: 100px;
+}
+
+.alert-button button:first-child {
+  background-color: #bdc3c7;
+  color: #2c3e50;
+}
+
+.alert-button button:first-child:hover {
+  background-color: #95a5a6;
+}
+
+.alert-button button:last-child {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.alert-button button:last-child:hover {
+  background-color: #c0392b;
+}

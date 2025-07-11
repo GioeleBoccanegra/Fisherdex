@@ -28,6 +28,8 @@ function App() {
       return;
     }
 
+
+
     try {
       const decoded = jwtDecode(token);
       const now = Date.now() / 1000; // in secondi

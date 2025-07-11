@@ -1,5 +1,5 @@
 import Fishcard from "./fishcard/fishcard";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import "./fisherdex.css"
 import FisherdexFilters from "./fisherdexFilters/fisherdexFiltes";
 import { useNavigate } from "react-router-dom";
@@ -20,12 +20,13 @@ export default function Fisherdex({ setIsAuthenticated }) {
   const [user, setUser] = useState();
   const [postList, setPostList] = useState([]);
   const [soloNonCatturati, setSoloNonCatturati] = useState(false);
+  const [modifica, setModifica] = useState(false);
 
 
 
 
 
-  const getCattureUtente = async () => {
+  const getCattureUtente = useCallback(async () => {
     const userData = await fetchUserData(setError, setIsAuthenticated, navigate)
     if (!userData) {
       // se fetchUserData fallisce, esci
@@ -37,11 +38,11 @@ export default function Fisherdex({ setIsAuthenticated }) {
     setUser(userData)
     const PostsUser = await fetchGetPostsUser(setError, userData)
     setPostList(PostsUser);
-  }
+  }, [setError, setIsAuthenticated, navigate]);
 
 
 
-  const fetchSpeciesData = async () => {
+  const fetchSpeciesData = useCallback(async () => {
     const token = localStorage.getItem("token");
     if (!token) {
       setError("Non Autenticato");
@@ -53,9 +54,12 @@ export default function Fisherdex({ setIsAuthenticated }) {
 
     const datiSpecie = await fetchGetSpecie(token, setIsAuthenticated, navigate, setError);
     setSpecies(datiSpecie);
-  }
+  }, [setError, setIsAuthenticated, navigate])
 
   useEffect(() => {
+
+
+
     setLoading(true)
     const loadData = async () => {
       setLoading(true);
@@ -65,7 +69,7 @@ export default function Fisherdex({ setIsAuthenticated }) {
     }
     loadData();
 
-  }, []);
+  }, [modifica, fetchSpeciesData, getCattureUtente]);
 
 
   //uso useMemo per migliorare performance
@@ -102,6 +106,9 @@ export default function Fisherdex({ setIsAuthenticated }) {
                   specie={specie}
                   catturata={catturata}
                   user={user}
+                  setIsAuthenticated={setIsAuthenticated}
+                  navigate={navigate}
+                  setModifica={setModifica}
                 />
               );
             })}

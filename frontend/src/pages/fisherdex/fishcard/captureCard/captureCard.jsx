@@ -2,13 +2,31 @@ import "./captureCard.css"
 import { useEffect, useState } from "react";
 import { fetchGetCatturaSpecie } from "../../../../api/fetchGetCatturaSpecie"
 import Loader from "../../../../components/Loader"
+import AlertConfermaEliminazione from "./alertConfermaEliminazione/alertConfermEliminazione";
+import { fetchDeleteCatturaSpecie } from "../../../../api/fetchDeleteCatturaSpecie"
+import { getValidToken } from "../../../../utils/getValidToken";
 
-export default function CaptureCard({ specie, user, setShowCapture, showCapture }) {
+export default function CaptureCard({ specie, user, setShowCapture, showCapture, setIsAuthenticated, navigate }) {
   const [error, setError] = useState();
   const [catturaData, setCatturaData] = useState();
   const [loading, setLoading] = useState(false);
+  const [confermaEliminazione, setConfermaEliminazione] = useState(false);
+  const [alertCard, setAlertCard] = useState(false);
 
   //recuperare il catturaData con l'i dell'utente su quella specie
+
+  if (confermaEliminazione) {
+
+    const token = getValidToken(setError, setIsAuthenticated, navigate)
+
+    const eliminizioneAvvenuta = async () => {
+      const avvenuta = await fetchDeleteCatturaSpecie(setError, catturaData.id, token);
+      if (avvenuta) {
+        window.location.reload();
+      }
+    }
+    eliminizioneAvvenuta();
+  }
 
 
   useEffect(() => {
@@ -45,9 +63,10 @@ export default function CaptureCard({ specie, user, setShowCapture, showCapture 
               <p><strong>Data:</strong> {new Date(catturaData.dataCattura).toLocaleDateString()}</p>
               <p className="catturaData-desc">{catturaData.descrizione}</p>
             </div>
+            {alertCard && <AlertConfermaEliminazione setConfermaEliminazione={setConfermaEliminazione} setAlertCard={setAlertCard} />}
 
           </div>
-          <button>elimina</button>
+          <button onClick={() => { setAlertCard(true) }}>elimina</button>
           <button className="close-capture-card-button" onClick={() => { setShowCapture(!showCapture) }}>close</button>
         </div>
       )}

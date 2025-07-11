@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import com.fisherdex.backend.dto.CatturaResponseDTO;
 import com.fisherdex.backend.model.Cattura;
 
 import com.fisherdex.backend.service.CatturaService;
+import com.fisherdex.backend.service.LikesService;
 
 @RestController
 @RequestMapping("api/cattura")
@@ -24,8 +26,11 @@ public class CattureController {
 
   private final CatturaService catturaService;
 
-  public CattureController(CatturaService catturaService) {
+  private final LikesService likesService;
+
+  public CattureController(CatturaService catturaService, LikesService likesService) {
     this.catturaService = catturaService;
+    this.likesService = likesService;
 
   }
 
@@ -69,5 +74,12 @@ public class CattureController {
     }
 
   }
+
+  @DeleteMapping("/post/{catchId}")
+  public ResponseEntity<Void> deleteCattura(@PathVariable("catchId") Long catchId) {
+    likesService.deleteByCatturaId(catchId);
+    catturaService.deleteCattura(catchId);
+    return ResponseEntity.noContent().build();
+  };
 
 }
