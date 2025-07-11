@@ -1,4 +1,4 @@
-export const fecthProvinaciaByNome = async (nome) => {
+export const fecthGetProvinaciaByNome = async (nome) => {
 
   const res = await fetch(`http://localhost:8080/api/province/${nome}`);
   if (!res.ok) {

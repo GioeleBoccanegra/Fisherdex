@@ -1,4 +1,4 @@
-export const fetchRecuperaProvince = async (setError, setProvinceList) => {
+export const fetchRecuperaProvince = async (setError) => {
   try {
     const res = await fetch("http://localhost:8080/api/province/names");
 
@@ -13,9 +13,8 @@ export const fetchRecuperaProvince = async (setError, setProvinceList) => {
     }
 
     const data = JSON.parse(text); // parse manuale
+    return data
 
-    // Usa i dati
-    setProvinceList(data);
   } catch (err) {
     if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
       setError("Impossibile connettersi al server. Verificare che il backend sia attivo.");

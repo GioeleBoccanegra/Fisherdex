@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './login.css';
 import { Link } from 'react-router-dom';
 import Loader from "../../components/Loader"
+import { fetchPostLogin } from '../../api/fetchPostLogin';
 
 
 function Login({ setIsAuthenticated }) {
@@ -24,33 +25,7 @@ function Login({ setIsAuthenticated }) {
     setSuccessoRegistrazione(false);
     setLoading(true);
 
-    try {
-      //chiamata a login per verificare esistenza utente
-      const res = await fetch("http://localhost:8080/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password })
-      });
-      if (res.ok) {
-        const data = await res.json();
-        // Salva il token (ad esempio un JWT) nel browser dell’utente, in modo persistente (anche dopo un refresh o chiusura del tab).
-        localStorage.setItem("token", data.token); // salva il token
-        localStorage.setItem("userId", data.userId);
-        setIsAuthenticated(true);
-        navigate("/");
-      } else {
-        const errData = await res.text();
-        setError(errData || "credenziali non valide")
-      }
-    } catch (err) {
-      if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
-        setError("Impossibile connettersi al server. Verificare che il backend sia attivo.");
-      } else {
-        setError("Errore nel recupero dei dati: " + (err.message || "Errore sconosciuto"));
-      }
-    } finally {
-      setLoading(false);
-    }
+    await fetchPostLogin(email, password, setIsAuthenticated, navigate, setError, setLoading);
   }
 
 
@@ -59,7 +34,6 @@ function Login({ setIsAuthenticated }) {
     <div className='login-page'>
       <div className='login-container'>
         <h2>Login</h2>
-        {location.state?.sessionExpired && <p style={{ color: "red" }}>Sessione scaduta, per favore effettua di nuovo il login</p>}
         {error && <p style={{ color: "red" }}>{error}</p>}
         {successoRegistrazione && <p style={{ color: "green" }}>Registrazione effettuata con successo, ora puoi accedere con le tue credenziali</p>}
         <form onSubmit={handleSubmit}>

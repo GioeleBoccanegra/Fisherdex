@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader"
 import { fetchGetPostsUser } from "../../api/fetchGetPostsUser"
 import { fetchUserData } from "../../api/fetchUserData";
+import { fetchGetSpecie } from "../../api/fetchGetSpecie"
 
 
 
@@ -48,34 +49,8 @@ export default function Fisherdex({ setIsAuthenticated }) {
 
     }
 
-    try {
-      const res = await fetch("http://localhost:8080/api/specie", {
-        headers: { "Authorization": `Bearer ${token}` }
-      });
-      if (res.status === 401 || res.status === 403) {
-        localStorage.removeItem("token");
-        setIsAuthenticated(false);
-        navigate("/login", { state: { sessionExpired: true } });
-        return;
-      }
-
-      if (!res.ok) {
-        const message = await res.text();
-        setError("Errore nel recupero dei dati: " + message);
-        return;
-      }
-
-
-      const data = await res.json();
-      setSpecies(data)
-
-    } catch (err) {
-      if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
-        setError("Impossibile connettersi al server. Verificare che il backend sia attivo.");
-      } else {
-        setError("Errore nel recupero dei dati: " + (err.message || "Errore sconosciuto"));
-      }
-    }
+    const datiSpecie = await fetchGetSpecie(token, setIsAuthenticated, navigate, setError);
+    setSpecies(datiSpecie);
   }
 
   useEffect(() => {
