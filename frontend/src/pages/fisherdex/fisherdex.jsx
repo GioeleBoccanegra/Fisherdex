@@ -7,6 +7,7 @@ import Loader from "../../components/Loader"
 import { fetchGetPostsUser } from "../../api/fetchGetPostsUser"
 import { fetchUserData } from "../../api/fetchUserData";
 import { fetchGetSpecie } from "../../api/fetchGetSpecie"
+import { useMemo } from "react";
 
 
 
@@ -17,8 +18,9 @@ export default function Fisherdex({ setIsAuthenticated }) {
   const [species, setSpecies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState();
-  const [postList, setPostList] = useState();
+  const [postList, setPostList] = useState([]);
   const [soloNonCatturati, setSoloNonCatturati] = useState(false);
+
 
 
 
@@ -59,23 +61,27 @@ export default function Fisherdex({ setIsAuthenticated }) {
       setLoading(true);
       await fetchSpeciesData();
       await getCattureUtente();
+      setLoading(false);
     }
     loadData();
-    setLoading(false);
+
   }, []);
 
 
+  //uso useMemo per migliorare performance
+
+  const filteredSpecies = useMemo(() => {
+    let result = species;
+    if (soloNonCatturati) {
+      result = result.filter(specie => !postList?.some(post => post.specie.id === specie.id));
+    }
+
+    return result.filter((specie) => specie.name.toLowerCase().startsWith(search.toLowerCase()));
+
+  }, [species, postList, search, soloNonCatturati])
 
 
-  let filteredSpecies = [];
-  if (soloNonCatturati == true) {
-    const nonCatturati = species.filter(specie => !postList?.some(post => post.specie.id === specie.id));
-    filteredSpecies = nonCatturati.filter((specie) => specie.name.toLowerCase().startsWith(search.toLowerCase()));
 
-  } else {
-    filteredSpecies = species.filter((specie) => specie.name.toLowerCase().startsWith(search.toLowerCase()));
-
-  }
 
 
   return (

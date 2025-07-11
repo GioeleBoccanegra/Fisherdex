@@ -3,7 +3,7 @@ import defaultImage from "../../../assets/user-image.jpeg";
 import "./editPage.css";
 import { useEffect } from "react";
 import { fetchRecuperaProvince } from "../../../api/fetchRecuperaProvince";
-import { fecthGetProvinaciaByNome } from "../../../api/fetchGetProvinciaByNome";
+import { fetchGetProvinciaByNome } from "../../../api/fetchGetProvinciaByNome";
 import { fecthPutUser } from "../../../api/fetchPutUser"
 
 export default function EditPage({ user, setEdit, fetchUserData }) {
@@ -20,7 +20,7 @@ export default function EditPage({ user, setEdit, fetchUserData }) {
   const salva = async (e) => {
     e.preventDefault();
     setError(null);
-    const provinciaNew = await fecthGetProvinaciaByNome(provincia);
+    const provinciaNew = await fetchGetProvinciaByNome(provincia);
     console.log(provinciaNew);
     await fecthPutUser(username, email, provinciaNew, setError, setEdit, fetchUserData)
 

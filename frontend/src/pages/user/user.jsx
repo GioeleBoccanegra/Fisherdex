@@ -44,11 +44,7 @@ export default function User({ setIsAuthenticated }) {
 
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    setIsAuthenticated(false);
-    navigate("/login");
-  }
+
   return (
 
 
@@ -66,7 +62,6 @@ export default function User({ setIsAuthenticated }) {
         <p className="user-data">provincia: {user?.provincia?.nome}</p>
         <p className="user-data">email: {user?.email}</p>
         <button onClick={() => editData()} className="edit-data">Edit data</button>
-        <button onClick={() => handleLogout(setIsAuthenticated)}>logout</button>
 
       </div>}
 
