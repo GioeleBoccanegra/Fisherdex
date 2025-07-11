@@ -4,7 +4,7 @@ import UploadFish from "./uploadFish/uploadFish";
 import { useState } from "react";
 import CaptureCard from "./captureCard/captureCard";
 
-export default function Fishcard({ specie, catturata, user }) {
+export default function Fishcard({ specie, catturata, user, setIsAuthenticated, navigate }) {
 
   const [showUploadFish, setShowUploadFish] = useState(false);
   const [showCapture, setShowCapture] = useState(false);
@@ -18,7 +18,7 @@ export default function Fishcard({ specie, catturata, user }) {
   return (
     <div className="fishcard">
       {showUploadFish && <UploadFish setShowUploadFish={setShowUploadFish} specie={specie} user={user} />}
-      {showCapture && <CaptureCard specie={specie} user={user} setShowCapture={setShowCapture} showCapture={showCapture} />}
+      {showCapture && <CaptureCard specie={specie} user={user} setShowCapture={setShowCapture} showCapture={showCapture} setIsAuthenticated navigate={navigate} />}
       <div className="fishdex-position">
         <p className="fishcard-number">N°{specie.id}</p>
         <img src={rarity_img} alt="rarità pesce :`${specie.rarita}`" className="rarity-img"></img>

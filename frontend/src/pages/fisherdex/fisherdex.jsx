@@ -102,6 +102,8 @@ export default function Fisherdex({ setIsAuthenticated }) {
                   specie={specie}
                   catturata={catturata}
                   user={user}
+                  setIsAuthenticated={setIsAuthenticated}
+                  navigate={navigate}
                 />
               );
             })}

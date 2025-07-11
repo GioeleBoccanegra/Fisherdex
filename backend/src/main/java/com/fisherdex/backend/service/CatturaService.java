@@ -114,4 +114,9 @@ public class CatturaService {
     return Optional.of(catturaDTO);
   }
 
+  public void deleteCattura(Long catchId) {
+    catturaRepository.deleteById(catchId);
+
+  }
+
 }
