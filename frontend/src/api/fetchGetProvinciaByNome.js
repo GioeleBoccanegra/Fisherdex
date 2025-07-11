@@ -1,4 +1,4 @@
-export const fecthGetProvinaciaByNome = async (nome) => {
+export const fetchGetProvinciaByNome = async (nome) => {
 
   const res = await fetch(`http://localhost:8080/api/province/${nome}`);
   if (!res.ok) {

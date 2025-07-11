@@ -2,7 +2,7 @@
 import "./uploadFish.css";
 import { useEffect, useState } from "react";
 import { fetchRecuperaProvince } from "../../../api/fetchRecuperaProvince"
-import { fecthGetProvinaciaByNome } from "../../../api/fetchGetProvinciaByNome";
+import { fetchGetProvinciaByNome } from "../../../api/fetchGetProvinciaByNome";
 import { fecthPostCattura } from "../../../api/fetchPostCattura";
 import Loader from "../../../components/Loader";
 import { uploadImageToCloudinary } from "../../../utils/uploadImageToCloudinary";
@@ -32,7 +32,7 @@ export default function UploadFish({ setShowUploadFish, specie, user }) {
       setLoading(false);
       return;
     }
-    const provinciaObj = await fecthGetProvinaciaByNome(provinciaFoto);
+    const provinciaObj = await fetchGetProvinciaByNome(provinciaFoto);
     const urlImmagine = await uploadImageToCloudinary(imageFile);
 
     const dataCaricamento = new Date().toISOString();
