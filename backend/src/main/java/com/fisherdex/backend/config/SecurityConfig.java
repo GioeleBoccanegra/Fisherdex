@@ -75,6 +75,7 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.POST, "/api/cattura").permitAll()
             .requestMatchers(HttpMethod.GET, "/api/cattura").permitAll()
             .requestMatchers(HttpMethod.GET, "/api/cattura/user/*").permitAll()
+            .requestMatchers(HttpMethod.GET, "/api/cattura/{userId}/{specieId}").permitAll()
 
             .requestMatchers(HttpMethod.POST, "/api/register").permitAll()
             .requestMatchers(HttpMethod.PUT, "/api/users/me").permitAll()

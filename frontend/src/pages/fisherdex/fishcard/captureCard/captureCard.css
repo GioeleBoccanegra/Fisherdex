@@ -1,0 +1,89 @@
+.capture-card {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  max-width: 800px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  z-index: 1000;
+}
+
+/* Contenitore per i bottoni */
+.button-section-button-card {
+  display: flex;
+  justify-content: flex-end;
+  /* Allinea i bottoni a destra */
+  gap: 12px;
+}
+
+/* Stile per il bottone elimina */
+.button-section-button-card button:first-child {
+  background-color: #e67e22;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 10px 20px;
+  transition: background-color 0.2s ease;
+}
+
+.button-section-button-card button:first-child:hover {
+  background-color: #d35400;
+}
+
+/* Bottone chiudi */
+.close-capture-card-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 10px 20px;
+  transition: background-color 0.2s ease;
+}
+
+.close-capture-card-button:hover {
+  background-color: #c0392b;
+}
+
+/* Aggiungo un po' di margine tra immagine e info */
+.capture-card-data {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  /* per mobile */
+}
+
+.catturaData-img img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid #4a90e2;
+}
+
+/* Info testo */
+.catturaData-info {
+  flex: 1;
+}
+
+.catturaData-info h3 {
+  margin-top: 0;
+  color: #2c3e50;
+}
+
+.catturaData-desc {
+  margin-top: 12px;
+  font-style: italic;
+  color: #7f8c8d;
+}

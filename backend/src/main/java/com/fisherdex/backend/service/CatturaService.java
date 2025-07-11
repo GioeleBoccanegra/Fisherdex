@@ -2,6 +2,7 @@ package com.fisherdex.backend.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -83,11 +84,34 @@ public class CatturaService {
     return catturaDTO;
   }
 
-  public Optional<List<Cattura>> getCatturaByUserId(Long userId) {
+  public Optional<List<CatturaResponseDTO>> getCatturaByUserId(Long userId) {
     Optional<User> userOpt = userRepository.findById(userId);
     if (userOpt.isEmpty())
       return Optional.empty();
-    return catturaRepository.findByUser(userOpt.get());
+    Optional<List<Cattura>> listaCatturaOpt = catturaRepository.findByUser(userOpt.get());
+    if (listaCatturaOpt.isEmpty()) {
+      return Optional.empty();
+    }
+    List<CatturaResponseDTO> dtoList = listaCatturaOpt.get().stream().map(cattura -> {
+      UserResponseDTO userDTO = new UserResponseDTO(cattura.getUser().getId(), cattura.getUser().getUsername());
+      CatturaResponseDTO catturaDTO = new CatturaResponseDTO(cattura.getCatchId(), cattura.getDescrizione(),
+          cattura.getProvincia(), cattura.getImageUrl(), userDTO, cattura.getSpecie());
+      return catturaDTO;
+    }).collect(Collectors.toList());
+    return Optional.of(dtoList);
+  }
+
+  public Optional<CatturaResponseDTO> trovaCatturaByUserIdAndSpecieId(Long userId, Long specieId) {
+    Optional<Cattura> catturaUtenteSpecie = catturaRepository.findByUserIdAndSpecieId(userId, specieId);
+    if (catturaUtenteSpecie.isEmpty()) {
+      return Optional.empty();
+    }
+    Cattura cattura = catturaUtenteSpecie.get();
+    UserResponseDTO userDTO = new UserResponseDTO(cattura.getUser().getId(), cattura.getUser().getUsername());
+    CatturaResponseDTO catturaDTO = new CatturaResponseDTO(cattura.getCatchId(), cattura.getDescrizione(),
+        cattura.getProvincia(), cattura.getImageUrl(), userDTO, cattura.getSpecie());
+
+    return Optional.of(catturaDTO);
   }
 
 }

@@ -9,8 +9,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
+// impedisoc che ci possnao essere 2 catture della stessa specie per lo stesso
+// utente
+@Table(name = "cattura", uniqueConstraints = {
+    @UniqueConstraint(columnNames = { "user_id", "specie_id" })
+})
 public class Cattura {
 
   @Id

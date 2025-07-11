@@ -1,11 +1,11 @@
 
 import "./uploadFish.css";
 import { useEffect, useState } from "react";
-import { fetchRecuperaProvince } from "../../../api/fetchRecuperaProvince"
-import { fetchGetProvinciaByNome } from "../../../api/fetchGetProvinciaByNome";
-import { fecthPostCattura } from "../../../api/fetchPostCattura";
-import Loader from "../../../components/Loader";
-import { uploadImageToCloudinary } from "../../../utils/uploadImageToCloudinary";
+import { fetchRecuperaProvince } from "../../../../api/fetchRecuperaProvince"
+import { fetchGetProvinciaByNome } from "../../../../api/fetchGetProvinciaByNome";
+import { fecthPostCattura } from "../../../../api/fetchPostCattura";
+import Loader from "../../../../components/Loader";
+import { uploadImageToCloudinary } from "../../../../utils/uploadImageToCloudinary";
 
 export default function UploadFish({ setShowUploadFish, specie, user }) {
   const [previewUrl, setPreviewUrl] = useState(null);

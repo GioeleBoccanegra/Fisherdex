@@ -2,6 +2,7 @@ package com.fisherdex.backend.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,9 +53,21 @@ public class CattureController {
   }
 
   @GetMapping("/user/{userId}")
-  public ResponseEntity<List<Cattura>> getCattureUser(@PathVariable("userId") Long userId) {
+  public ResponseEntity<List<CatturaResponseDTO>> getCattureUser(@PathVariable("userId") Long userId) {
 
     return catturaService.getCatturaByUserId(userId).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+  }
+
+  @GetMapping("/{userId}/{specieId}")
+  public ResponseEntity<CatturaResponseDTO> getCatturaSpecieUser(@PathVariable("userId") Long userId,
+      @PathVariable("specieId") Long specieId) {
+    Optional<CatturaResponseDTO> cattura = catturaService.trovaCatturaByUserIdAndSpecieId(userId, specieId);
+    if (cattura.isPresent()) {
+      return ResponseEntity.ok(cattura.get());
+    } else {
+      return ResponseEntity.notFound().build();
+    }
+
   }
 
 }
