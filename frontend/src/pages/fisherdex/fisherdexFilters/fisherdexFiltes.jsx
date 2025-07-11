@@ -1,8 +1,13 @@
 import "./fisherdexFilters.css";
 import { useState } from "react";
 
-export default function FisherdexFilters({search, setSearch}) {
+export default function FisherdexFilters({ search, setSearch, setSoloNonCatturati }) {
   const [checked, setChecked] = useState(false);
+
+  const handleCheckboxChange = () => {
+    setChecked(!checked);
+    setSoloNonCatturati(!checked);
+  };
 
 
 
@@ -13,12 +18,13 @@ export default function FisherdexFilters({search, setSearch}) {
         <input type="text" placeholder="Search by fish name" value={search} onChange={(e) => setSearch(e.target.value)} />
       </div>
       <div className="captured-fish">
-          <a>captured</a>
-          <input
-        type="checkbox"
-        checked={checked}
-        onChange={() => setChecked(!checked)}
-      />
+        <a>non captured</a>
+        <input
+          id="non-captured-checkbox"
+          type="checkbox"
+          checked={checked}
+          onChange={handleCheckboxChange}
+        />
 
       </div>
     </div>

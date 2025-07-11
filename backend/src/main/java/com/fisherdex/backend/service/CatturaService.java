@@ -83,8 +83,11 @@ public class CatturaService {
     return catturaDTO;
   }
 
-  public Optional<List<Cattura>> getCattureByUser(User user) {
-    return catturaRepository.findByUser(user);
+  public Optional<List<Cattura>> getCatturaByUserId(Long userId) {
+    Optional<User> userOpt = userRepository.findById(userId);
+    if (userOpt.isEmpty())
+      return Optional.empty();
+    return catturaRepository.findByUser(userOpt.get());
   }
 
 }

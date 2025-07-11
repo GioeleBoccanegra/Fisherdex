@@ -10,15 +10,17 @@ export const fecthPostCattura = async (user, provincia, specie, dataCattura, des
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        "user": { "id": 1 },
-        "provincia": { "id": 105 },
-        "specie": { "id": 1 }, dataCattura, descrizione, imageUrl
+        "user": { "id": user.id },
+        "provincia": { "id": provincia.id },
+        "specie": { "id": specie.id }, dataCattura, descrizione, imageUrl
       })
     })
 
     if (res.ok) {
       showUploadFish(false);
       console.log("post eseguito")
+      window.location.reload(false);
+
     } else {
       const errData = await res.text();
       setError(errData || "error nell upload post")

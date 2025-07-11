@@ -1,19 +1,18 @@
 
 import "./uploadFish.css";
 import { useEffect, useState } from "react";
-import { fetchUserData } from "../../../api/fetchUserData";
 import { fetchRecuperaProvince } from "../../../api/fetchRecuperaProvince"
-import { fecthProvinaciaByNome } from "../../../api/fetchProvinciaByNome";
+import { fecthGetProvinaciaByNome } from "../../../api/fetchGetProvinciaByNome";
 import { fecthPostCattura } from "../../../api/fetchPostCattura";
 import Loader from "../../../components/Loader";
+import { uploadImageToCloudinary } from "../../../utils/uploadImageToCloudinary";
 
-export default function UploadFish({ setShowUploadFish, specie, setIsAuthenticated, navigate }) {
+export default function UploadFish({ setShowUploadFish, specie, user }) {
   const [previewUrl, setPreviewUrl] = useState(null);
   const [provinciaFoto, setProvinciaFoto] = useState();
   const [descrizione, setDescrizione] = useState("");
   const [error, setError] = useState(false);
   const [provinceList, setProvinceList] = useState([]);
-  const [user, setUser] = useState();
   const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -33,11 +32,11 @@ export default function UploadFish({ setShowUploadFish, specie, setIsAuthenticat
       setLoading(false);
       return;
     }
-    const provinciaObj = await fecthProvinaciaByNome(provinciaFoto);
+    const provinciaObj = await fecthGetProvinaciaByNome(provinciaFoto);
+    const urlImmagine = await uploadImageToCloudinary(imageFile);
 
-    console.log(provinciaObj);
     const dataCaricamento = new Date().toISOString();
-    await fecthPostCattura(user, provinciaObj, specie, dataCaricamento, descrizione, imageFile, setError, setShowUploadFish);
+    await fecthPostCattura(user, provinciaObj, specie, dataCaricamento, descrizione, urlImmagine, setError, setShowUploadFish);
     setLoading(false);
   };
 
@@ -53,14 +52,9 @@ export default function UploadFish({ setShowUploadFish, specie, setIsAuthenticat
 
   useEffect(() => {
     const loadData = async () => {
-      const userData = await fetchUserData(setError, setIsAuthenticated, navigate)
-      if (!userData) {
-        // se fetchUserData fallisce, esci
-        setError("impossibile verificare l'utente")
-        return;
-      }
-      setProvinciaFoto(userData.provincia.nome)
-      setUser(userData)
+
+      setProvinciaFoto(user.provincia.nome)
+
 
 
       await fetchRecuperaProvince(setError, setProvinceList)
@@ -112,7 +106,7 @@ export default function UploadFish({ setShowUploadFish, specie, setIsAuthenticat
                       } else {
                         setError(null);
                         setPreviewUrl(url);
-                        setImageFile("testURL");
+                        setImageFile(file);
                       }
                     }
                   }

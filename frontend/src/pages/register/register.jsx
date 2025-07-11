@@ -4,6 +4,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Loader from "../../components/Loader"
+import { fetchGetProvinciaByNome } from "../../api/fetchGetProvinciaByNome"
+import { fetchRecuperaProvince } from "../../api/fetchRecuperaProvince"
+import { fetchPostUser } from "../../api/fetchPostUser";
 
 
 function Register() {
@@ -17,48 +20,17 @@ function Register() {
   const [loading, setLoading] = useState("");
 
 
-  const fetchProvince = async () => {
-    try {
-      const res = await fetch("http://localhost:8080/api/province/names");
 
-      if (!res.ok) {
-        throw new Error(`Errore HTTP: ${res.status}`);
-      }
 
-      // Controlla se la risposta ha body
-      const text = await res.text(); // prendi come testo per sicurezza
-      if (!text) {
-        throw new Error("Risposta vuota dal server");
-      }
 
-      const data = JSON.parse(text); // parse manuale
-
-      // Usa i dati
-      setProvinceList(data);
-    } catch (err) {
-      if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
-        setError("Impossibile connettersi al server. Verificare che il backend sia attivo.");
-      } else {
-        setError("Errore nel recupero dei dati: " + (err.message || "Errore sconosciuto"));
-      }
-    }
-  }
-
-  const getProvinciaByNome = async (nome) => {
-    const res = await fetch(`http://localhost:8080/api/province/${nome}`);
-    if (!res.ok) {
-      throw new Error(`Errore HTTP: ${res.status}`);
-    }
-    const data = await res.json();
-    return data;
-  }
 
 
 
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
-      await fetchProvince();
+      const listaProvince = await fetchRecuperaProvince();
+      setProvinceList(listaProvince);
       setLoading(false);
     }
     loadData();
@@ -69,26 +41,8 @@ function Register() {
     e.preventDefault();
     setError("");
     setLoading(true);
-    const provincia = await getProvinciaByNome(selectedProvince);
-    try {
-      const res = await fetch("http://localhost:8080/api/users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, provincia, email, password })
-      })
-      if (res.ok) {
-        navigate("/login", { state: { successoRegistrazione: true } });
-      } else {
-        const errData = await res.text();
-        setError(errData || "errore nella registrazione")
-      }
-
-
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
+    const provincia = await fetchGetProvinciaByNome(selectedProvince);
+    await fetchPostUser(username, provincia, email, password, navigate, setError, setLoading);
 
 
   }
