@@ -1,6 +1,12 @@
 export const fetchGetPostsUser = async (setError, user) => {
   try {
-    const res = await fetch(`http://localhost:8080/api/cattura/user/${user.id}`);
+    const token = localStorage.getItem("token");
+    const res = await fetch(`http://localhost:8080/api/cattura/user/${user.id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+    });
 
     if (!res.ok) {
       throw new Error(`Errore HTTP: ${res.status}`);

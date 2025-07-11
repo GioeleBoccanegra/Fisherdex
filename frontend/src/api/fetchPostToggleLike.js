@@ -1,7 +1,12 @@
 export const fetchPostToggleLike = async (userId, catchId, setError) => {
   try {
+    const token = localStorage.getItem("token");
     const res = await fetch(`http://localhost:8080/api/likes/${userId}/${catchId}`, {
-      method: "POST"
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
     });
 
 

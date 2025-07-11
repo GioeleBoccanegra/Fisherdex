@@ -3,8 +3,9 @@ export const fetchDeleteCatturaSpecie = async (setError, catchId, token) => {
     const res = await fetch(`http://localhost:8080/api/cattura/post/${catchId}`, {
       method: "DELETE",
       headers: {
+        "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`
-      }
+      },
     });
     if (res.ok) {
       // risposta con status 2xx

@@ -66,22 +66,11 @@ public class SecurityConfig {
             // Permette a chiunque di fare GET su /api/users (ad esempio per lista utenti
             // pubblica)
             .requestMatchers(HttpMethod.GET, "/api/users").permitAll()
-            .requestMatchers(HttpMethod.GET, "/api/specie").permitAll()
             .requestMatchers(HttpMethod.GET, "/api/province/names").permitAll()
             .requestMatchers(HttpMethod.GET, "/api/province/{nome}").permitAll()
             .requestMatchers(HttpMethod.POST, "/api/login").permitAll()
-            .requestMatchers(HttpMethod.POST, "/api/users/me").permitAll()
             .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
-            .requestMatchers(HttpMethod.POST, "/api/cattura").permitAll()
-            .requestMatchers(HttpMethod.GET, "/api/cattura").permitAll()
-            .requestMatchers(HttpMethod.GET, "/api/cattura/user/*").permitAll()
-            .requestMatchers(HttpMethod.GET, "/api/cattura/{userId}/{specieId}").permitAll()
-            .requestMatchers(HttpMethod.DELETE, "/api/cattura/post/{catchId}").permitAll()
-            .requestMatchers(HttpMethod.POST, "/api/likes/**").permitAll()
-            .requestMatchers(HttpMethod.GET, "/api/likes/**").permitAll()
-
             .requestMatchers(HttpMethod.POST, "/api/register").permitAll()
-            .requestMatchers(HttpMethod.PUT, "/api/users/me").permitAll()
 
             // Tutte le altre richieste devono essere autenticate (login obbligatorio)
             .anyRequest().authenticated())
