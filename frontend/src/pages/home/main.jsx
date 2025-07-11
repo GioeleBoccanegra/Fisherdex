@@ -5,6 +5,7 @@ import Loader from "../../components/Loader";
 import { fetchGetAllPosts } from "../../api/fetchGetAllPosts";
 import { fetchUserData } from "../../api/fetchUserData"
 import Apost from "./apost/Apost"
+import { getValidToken } from "../../utils/getValidToken";
 
 
 export default function Main({ setIsAuthenticated }) {
@@ -16,22 +17,16 @@ export default function Main({ setIsAuthenticated }) {
 
 
   const getPosts = async () => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      setError("Non Autenticato");
-      setIsAuthenticated(false);
-      navigate("/login", { state: { sessionExpired: true } });
-      return;
-    }
+    const token = getValidToken(setError, setIsAuthenticated, navigate);
 
-    const userData = await fetchUserData(setError, setIsAuthenticated, navigate);
+    const userData = await fetchUserData(setError, setIsAuthenticated, navigate, token);
     if (!userData) {
       setError("recuper user fallito");
       return;
     }
     setUser(userData);
 
-    const tuttiPosts = await fetchGetAllPosts(userData);
+    const tuttiPosts = await fetchGetAllPosts(userData, token);
     setPosts(tuttiPosts);
   }
 
@@ -61,7 +56,7 @@ export default function Main({ setIsAuthenticated }) {
         <p>Nessun post trovato</p>
       ) : (
         filteredPosts.map(post => (
-          <Apost key={post.id} post={post} user={user} />
+          <Apost key={post.id} post={post} user={user} setIsAuthenticated={setIsAuthenticated} navigate={navigate} />
         ))
       )}
 

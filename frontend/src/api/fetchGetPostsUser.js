@@ -1,6 +1,5 @@
-export const fetchGetPostsUser = async (setError, user) => {
+export const fetchGetPostsUser = async (setError, user, token) => {
   try {
-    const token = localStorage.getItem("token");
     const res = await fetch(`http://localhost:8080/api/cattura/user/${user.id}`, {
       headers: {
         "Content-Type": "application/json",

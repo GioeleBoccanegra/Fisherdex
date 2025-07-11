@@ -1,5 +1,5 @@
-export const fetchGetHasLiked = async (userId, catchId, setError) => {
-  const token = localStorage.getItem("token");
+export const fetchGetHasLiked = async (userId, catchId, setError, token) => {
+
   try {
     const res = await fetch(`http://localhost:8080/api/likes/check/${userId}/${catchId}`, {
       headers: {

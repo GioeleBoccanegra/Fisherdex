@@ -1,6 +1,6 @@
-export const fetchGetLikeCount = async (catchId, setError) => {
+export const fetchGetLikeCount = async (catchId, setError, token) => {
   try {
-    const token = localStorage.getItem("token");
+
     const res = await fetch(`http://localhost:8080/api/likes/count/${catchId}`, {
       headers: {
         "Content-Type": "application/json",

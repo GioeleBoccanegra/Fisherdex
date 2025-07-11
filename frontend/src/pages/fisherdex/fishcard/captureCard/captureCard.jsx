@@ -33,8 +33,8 @@ export default function CaptureCard({ specie, user, setShowCapture, showCapture,
     const fetchCattura = async () => {
       setLoading(true);
 
-
-      const datiCattura = await fetchGetCatturaSpecie(setError, user.id, specie.id);
+      const token = getValidToken(setError, setIsAuthenticated, navigate);
+      const datiCattura = await fetchGetCatturaSpecie(setError, user.id, specie.id, token);
       setCatturaData(datiCattura);
       setLoading(false);
     }

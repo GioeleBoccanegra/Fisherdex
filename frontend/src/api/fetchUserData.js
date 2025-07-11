@@ -1,7 +1,6 @@
-import { getValidToken } from "../utils/getValidToken";
-export const fetchUserData = async (setError, setIsAuthenticated, navigate) => {
-  const token = getValidToken(setError, setIsAuthenticated, navigate);
-  if (!token) return;
+
+export const fetchUserData = async (setError, setIsAuthenticated, navigate, token) => {
+
 
   try {
     const res = await fetch("http://localhost:8080/api/users/me", {

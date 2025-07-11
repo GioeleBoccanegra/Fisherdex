@@ -1,5 +1,5 @@
 
-export const fecthPutUser = async (username, email, provinciaNew, setError, setEdit, fetchUserData) => {
+export const fecthPutUser = async (username, email, provinciaNew, setError, setEdit, fetchUserData, setIsAuthenticated, navigate) => {
   try {
     const token = localStorage.getItem("token");
     const res = await fetch("http://localhost:8080/api/users/me", {
@@ -20,12 +20,10 @@ export const fecthPutUser = async (username, email, provinciaNew, setError, setE
       return;
     }
     const data = await res.json();
-    console.log(data);
+    console.log(data)
 
     setEdit(false);
-    fetchUserData();
-    window.location.reload();
-
+    fetchUserData(setError, setIsAuthenticated, navigate, token);
   } catch (err) {
     setError("Errore nell'aggiornamento dei dati: " + err.message);
   }

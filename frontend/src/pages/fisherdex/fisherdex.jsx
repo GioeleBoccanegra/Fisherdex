@@ -8,6 +8,7 @@ import { fetchGetPostsUser } from "../../api/fetchGetPostsUser"
 import { fetchUserData } from "../../api/fetchUserData";
 import { fetchGetSpecie } from "../../api/fetchGetSpecie"
 import { useMemo } from "react";
+import { getValidToken } from "../../utils/getValidToken";
 
 
 
@@ -27,7 +28,8 @@ export default function Fisherdex({ setIsAuthenticated }) {
 
 
   const getCattureUtente = useCallback(async () => {
-    const userData = await fetchUserData(setError, setIsAuthenticated, navigate)
+    const token = getValidToken(setError, setIsAuthenticated, navigate);
+    const userData = await fetchUserData(setError, setIsAuthenticated, navigate, token)
     if (!userData) {
       // se fetchUserData fallisce, esci
       setError("impossibile verificare l'utente")
@@ -36,21 +38,15 @@ export default function Fisherdex({ setIsAuthenticated }) {
 
 
     setUser(userData)
-    const PostsUser = await fetchGetPostsUser(setError, userData)
+
+    const PostsUser = await fetchGetPostsUser(setError, userData, token)
     setPostList(PostsUser);
   }, [setError, setIsAuthenticated, navigate]);
 
 
 
   const fetchSpeciesData = useCallback(async () => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      setError("Non Autenticato");
-      setIsAuthenticated(false); // <- aggiorna stato autenticazione
-      navigate("/login", { state: { sessionExpired: true } });
-      return;
-
-    }
+    const token = getValidToken(setError, setIsAuthenticated, navigate);
 
     const datiSpecie = await fetchGetSpecie(token, setIsAuthenticated, navigate, setError);
     setSpecies(datiSpecie);

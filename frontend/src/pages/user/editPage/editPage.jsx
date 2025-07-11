@@ -5,8 +5,9 @@ import { useEffect } from "react";
 import { fetchRecuperaProvince } from "../../../api/fetchRecuperaProvince";
 import { fetchGetProvinciaByNome } from "../../../api/fetchGetProvinciaByNome";
 import { fecthPutUser } from "../../../api/fetchPutUser"
+import { getValidToken } from "../../../utils/getValidToken"
 
-export default function EditPage({ user, setEdit, fetchUserData }) {
+export default function EditPage({ user, setEdit, fetchUserData, setIsAuthenticated, navigate }) {
   const [username, setUsername] = useState(user.username);
   const [email, setEmail] = useState(user.email);
   const [provincia, setProvincia] = useState(user.provincia.nome);
@@ -22,7 +23,8 @@ export default function EditPage({ user, setEdit, fetchUserData }) {
     setError(null);
     const provinciaNew = await fetchGetProvinciaByNome(provincia);
     console.log(provinciaNew);
-    await fecthPutUser(username, email, provinciaNew, setError, setEdit, fetchUserData)
+    const token = getValidToken(setError, setIsAuthenticated, navigate);
+    await fecthPutUser(username, email, provinciaNew, setError, setEdit, fetchUserData, token, setIsAuthenticated, navigate)
 
 
   }

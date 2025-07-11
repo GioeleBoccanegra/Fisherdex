@@ -5,6 +5,7 @@ import defaultImage from "../../assets/user-image.jpeg";
 import EditPage from "./editPage/editPage";
 import Loader from "../../components/Loader";
 import { fetchUserData } from "../../api/fetchUserData"
+import { getValidToken } from "../../utils/getValidToken";
 
 
 export default function User({ setIsAuthenticated }) {
@@ -13,6 +14,7 @@ export default function User({ setIsAuthenticated }) {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
 
 
@@ -22,7 +24,10 @@ export default function User({ setIsAuthenticated }) {
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
-      const userData = await fetchUserData(setError, setIsAuthenticated, navigate);
+      console.log("dentro1");
+      const token = getValidToken(setError, setIsAuthenticated, navigate);
+      console.log("dentro2");
+      const userData = await fetchUserData(setError, setIsAuthenticated, navigate, token);
       if (!userData) {
         // se fetchUserData fallisce, esci
         return;
@@ -33,7 +38,7 @@ export default function User({ setIsAuthenticated }) {
       setLoading(false)
     }
     loadData();
-  }, [])
+  }, [edit])
 
 
 
@@ -42,7 +47,7 @@ export default function User({ setIsAuthenticated }) {
   }
 
 
-  const navigate = useNavigate();
+
 
 
   return (
@@ -65,7 +70,7 @@ export default function User({ setIsAuthenticated }) {
 
       </div>}
 
-      {edit && <EditPage user={user} setEdit={setEdit} fetchUserData={fetchUserData} />}
+      {edit && <EditPage user={user} setEdit={setEdit} fetchUserData={fetchUserData} setIsAuthenticated={setIsAuthenticated} navigate={navigate} />}
     </div>
   );
 }

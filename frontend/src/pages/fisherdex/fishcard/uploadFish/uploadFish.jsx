@@ -6,8 +6,9 @@ import { fetchGetProvinciaByNome } from "../../../../api/fetchGetProvinciaByNome
 import { fecthPostCattura } from "../../../../api/fetchPostCattura";
 import Loader from "../../../../components/Loader";
 import { uploadImageToCloudinary } from "../../../../utils/uploadImageToCloudinary";
+import { getValidToken } from "../../../../utils/getValidToken";
 
-export default function UploadFish({ setShowUploadFish, specie, user, setModifica }) {
+export default function UploadFish({ setShowUploadFish, specie, user, setModifica, setIsAuthenticated, navigate }) {
   const [previewUrl, setPreviewUrl] = useState(null);
   const [provinciaFoto, setProvinciaFoto] = useState();
   const [descrizione, setDescrizione] = useState("");
@@ -21,6 +22,7 @@ export default function UploadFish({ setShowUploadFish, specie, user, setModific
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
+    const token = getValidToken(setError, setIsAuthenticated, navigate);
     if (!imageFile) {
       setError("Devi caricare un'immagine per proseguire");
       setLoading(false);
@@ -42,7 +44,7 @@ export default function UploadFish({ setShowUploadFish, specie, user, setModific
     const urlImmagine = await uploadImageToCloudinary(imageFile);
 
     const dataCaricamento = new Date().toISOString();
-    await fecthPostCattura(user, provinciaObj, specie, dataCaricamento, descrizione, urlImmagine, setError, setShowUploadFish);
+    await fecthPostCattura(user, provinciaObj, specie, dataCaricamento, descrizione, urlImmagine, setError, setShowUploadFish, token);
     setModifica(true);
     setLoading(false);
   };
@@ -155,14 +157,14 @@ export default function UploadFish({ setShowUploadFish, specie, user, setModific
 
 
 
+            {loading && <Loader />}
 
+            {!loading && <div className="button-section-form">
 
-
-            <div className="button-section-form">
-              {loading && <Loader />}
               <button type="submit" >Upload</button>
               <button onClick={() => setShowUploadFish(false)} >Close</button>
-            </div>
+            </div>}
+
           </div>
 
 

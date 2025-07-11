@@ -17,7 +17,7 @@ export default function Fishcard({ specie, catturata, user, setIsAuthenticated, 
 
   return (
     <div className="fishcard">
-      {showUploadFish && <UploadFish setShowUploadFish={setShowUploadFish} specie={specie} user={user} setModifica={setModifica} />}
+      {showUploadFish && <UploadFish setShowUploadFish={setShowUploadFish} specie={specie} user={user} setModifica={setModifica} setIsAuthenticated={setIsAuthenticated} navigate={navigate} />}
       {showCapture && <CaptureCard specie={specie} user={user} setShowCapture={setShowCapture} showCapture={showCapture} setIsAuthenticated={setIsAuthenticated} navigate={navigate} />}
       <div className="fishdex-position">
         <p className="fishcard-number">N°{specie.id}</p>

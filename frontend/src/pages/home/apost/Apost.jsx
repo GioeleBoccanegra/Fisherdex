@@ -3,8 +3,9 @@ import { useEffect, useState } from "react";
 import { fetchGetLikeCount } from "../../../api/fetchGetLikeCount"
 import { fetchGetHasLiked } from "../../../api/fetchgetHasLike";
 import { fetchPostToggleLike } from "../../../api/fetchPostToggleLike"
+import { getValidToken } from "../../../utils/getValidToken";
 
-export default function Apost({ post, user }) {
+export default function Apost({ post, user, setIsAuthenticated, navigate }) {
   const [error, setError] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
   const [hasLiked, setHasLiked] = useState(false);
@@ -15,10 +16,11 @@ export default function Apost({ post, user }) {
   useEffect(() => {
 
     const loadLikeData = async () => {
-      const count = await fetchGetLikeCount(post.id, setError)
+      const token = getValidToken(setError, setIsAuthenticated, navigate);
+      const count = await fetchGetLikeCount(post.id, setError, token)
       setLikeCount(count);
 
-      const liked = await fetchGetHasLiked(user.id, post.id, setError);
+      const liked = await fetchGetHasLiked(user.id, post.id, setError, token);
       setHasLiked(liked);
     };
     if (post?.id) {
@@ -31,11 +33,12 @@ export default function Apost({ post, user }) {
 
 
   const handleLike = async () => {
-    await fetchPostToggleLike(user.id, post.id, setError);
+    const token = getValidToken(setError, setIsAuthenticated, navigate);
+    await fetchPostToggleLike(user.id, post.id, setError, token);
     // ricarico stato dei like
 
-    const count = await fetchGetLikeCount(post.id, setError);
-    const liked = await fetchGetHasLiked(user.id, post.id, setError);
+    const count = await fetchGetLikeCount(post.id, setError, token);
+    const liked = await fetchGetHasLiked(user.id, post.id, setError, token);
     setLikeCount(count);
     setHasLiked(liked)
 

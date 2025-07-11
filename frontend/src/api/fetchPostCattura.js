@@ -1,7 +1,6 @@
-export const fecthPostCattura = async (user, provincia, specie, dataCattura, descrizione, imageUrl, setError, showUploadFish) => {
+export const fecthPostCattura = async (user, provincia, specie, dataCattura, descrizione, imageUrl, setError, showUploadFish, token) => {
 
   try {
-    const token = localStorage.getItem("token");
     const res = await fetch("http://localhost:8080/api/cattura", {
       method: "POST",
       headers: {

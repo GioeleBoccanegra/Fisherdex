@@ -1,5 +1,5 @@
-export const fetchGetCatturaSpecie = async (setError, userId, specieId) => {
-  const token = localStorage.getItem("token");
+export const fetchGetCatturaSpecie = async (setError, userId, specieId, token) => {
+
   const res = await fetch(`http://localhost:8080/api/cattura/${userId}/${specieId}`, {
     headers: {
       "Content-Type": "application/json",
