@@ -61,7 +61,7 @@ Solo dopo aver controllato il token (quindi quando checkingAuth diventa false) v
   return (
 
     <Router>
-      <Navbar setIsAuthenticated={setIsAuthenticated} />
+      <Navbar setIsAuthenticated={setIsAuthenticated} isAuthenticated={isAuthenticated} />
       <Routes>
         <Route path='/login' element={<PublicRoute isAuthenticated={isAuthenticated}> <Login setIsAuthenticated={setIsAuthenticated} /></PublicRoute>} />
         <Route
