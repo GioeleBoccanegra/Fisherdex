@@ -13,7 +13,7 @@ import { PublicRoute } from './components/publicRoute'
 
 function App() {
 
-  const[isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [checkingAuth, setCheckingAuth] = useState(true);
 
 
@@ -21,17 +21,17 @@ function App() {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-  
+
     if (!token) {
       setIsAuthenticated(false);
       setCheckingAuth(false);
       return;
     }
-  
+
     try {
       const decoded = jwtDecode(token);
       const now = Date.now() / 1000; // in secondi
-  
+
       if (decoded.exp < now) {
         // Token scaduto
         localStorage.removeItem("token");
@@ -45,7 +45,7 @@ function App() {
       console.log(e);
       setIsAuthenticated(false);
     }
-  
+
     setCheckingAuth(false);
   }, []);
 
@@ -59,26 +59,26 @@ Solo dopo aver controllato il token (quindi quando checkingAuth diventa false) v
   }
 
   return (
-    
-        <Router>
-          <Navbar />
-          <Routes>
-          <Route path='/login' element={<PublicRoute isAuthenticated={isAuthenticated}> <Login setIsAuthenticated={setIsAuthenticated}/></PublicRoute>} />
-          <Route
-    path="/register"
-    element={
-      <PublicRoute isAuthenticated={isAuthenticated}>
-        <Register />
-      </PublicRoute>
-    }
-  />
-            <Route path='/' element={<ProtectedRoute isAuthenticated={isAuthenticated}><Main setIsAuthenticated={setIsAuthenticated}/></ProtectedRoute>} />
-            <Route path='/fisherdex' element={<ProtectedRoute isAuthenticated={isAuthenticated}><Fisherdex setIsAuthenticated={setIsAuthenticated}/></ProtectedRoute>} />
-            <Route path='/user' element={<ProtectedRoute isAuthenticated={isAuthenticated}><User setIsAuthenticated={setIsAuthenticated}/></ProtectedRoute>} />
-            
-          </Routes>
-        </Router>
-  
+
+    <Router>
+      <Navbar setIsAuthenticated={setIsAuthenticated} />
+      <Routes>
+        <Route path='/login' element={<PublicRoute isAuthenticated={isAuthenticated}> <Login setIsAuthenticated={setIsAuthenticated} /></PublicRoute>} />
+        <Route
+          path="/register"
+          element={
+            <PublicRoute isAuthenticated={isAuthenticated}>
+              <Register />
+            </PublicRoute>
+          }
+        />
+        <Route path='/' element={<ProtectedRoute isAuthenticated={isAuthenticated}><Main setIsAuthenticated={setIsAuthenticated} /></ProtectedRoute>} />
+        <Route path='/fisherdex' element={<ProtectedRoute isAuthenticated={isAuthenticated}><Fisherdex setIsAuthenticated={setIsAuthenticated} /></ProtectedRoute>} />
+        <Route path='/user' element={<ProtectedRoute isAuthenticated={isAuthenticated}><User setIsAuthenticated={setIsAuthenticated} /></ProtectedRoute>} />
+
+      </Routes>
+    </Router>
+
   )
 }
 
