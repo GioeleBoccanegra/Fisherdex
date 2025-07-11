@@ -61,7 +61,7 @@ export default function Main({ setIsAuthenticated }) {
         <p>Nessun post trovato</p>
       ) : (
         filteredPosts.map(post => (
-          <Apost key={post.id} post={post} />
+          <Apost key={post.id} post={post} user={user} />
         ))
       )}
 

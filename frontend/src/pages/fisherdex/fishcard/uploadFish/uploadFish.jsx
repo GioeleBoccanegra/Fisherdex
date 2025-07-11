@@ -7,7 +7,7 @@ import { fecthPostCattura } from "../../../../api/fetchPostCattura";
 import Loader from "../../../../components/Loader";
 import { uploadImageToCloudinary } from "../../../../utils/uploadImageToCloudinary";
 
-export default function UploadFish({ setShowUploadFish, specie, user }) {
+export default function UploadFish({ setShowUploadFish, specie, user, setModifica }) {
   const [previewUrl, setPreviewUrl] = useState(null);
   const [provinciaFoto, setProvinciaFoto] = useState();
   const [descrizione, setDescrizione] = useState("");
@@ -32,11 +32,18 @@ export default function UploadFish({ setShowUploadFish, specie, user }) {
       setLoading(false);
       return;
     }
+
+    if (!provinciaFoto) {
+      setError("Devi inserire una provincia");
+      setLoading(false);
+      return;
+    }
     const provinciaObj = await fetchGetProvinciaByNome(provinciaFoto);
     const urlImmagine = await uploadImageToCloudinary(imageFile);
 
     const dataCaricamento = new Date().toISOString();
     await fecthPostCattura(user, provinciaObj, specie, dataCaricamento, descrizione, urlImmagine, setError, setShowUploadFish);
+    setModifica(true);
     setLoading(false);
   };
 
@@ -57,7 +64,8 @@ export default function UploadFish({ setShowUploadFish, specie, user }) {
 
 
 
-      await fetchRecuperaProvince(setError, setProvinceList)
+      const dataProvince = await fetchRecuperaProvince(setError)
+      setProvinceList(dataProvince)
 
 
     }

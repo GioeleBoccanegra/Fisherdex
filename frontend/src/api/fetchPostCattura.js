@@ -1,11 +1,7 @@
 export const fecthPostCattura = async (user, provincia, specie, dataCattura, descrizione, imageUrl, setError, showUploadFish) => {
 
   try {
-    console.log(JSON.stringify({
-      "user": { "id": 1 },
-      "provincia": { "id": 105 },
-      "specie": { "id": 1 }, dataCattura, descrizione, imageUrl
-    }))
+
     const res = await fetch("http://localhost:8080/api/cattura", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -18,8 +14,6 @@ export const fecthPostCattura = async (user, provincia, specie, dataCattura, des
 
     if (res.ok) {
       showUploadFish(false);
-      console.log("post eseguito")
-      window.location.reload(false);
 
     } else {
       const errData = await res.text();

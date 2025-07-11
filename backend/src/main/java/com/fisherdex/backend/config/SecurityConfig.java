@@ -77,6 +77,8 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.GET, "/api/cattura/user/*").permitAll()
             .requestMatchers(HttpMethod.GET, "/api/cattura/{userId}/{specieId}").permitAll()
             .requestMatchers(HttpMethod.DELETE, "/api/cattura/post/{catchId}").permitAll()
+            .requestMatchers(HttpMethod.POST, "/api/likes/**").permitAll()
+            .requestMatchers(HttpMethod.GET, "/api/likes/**").permitAll()
 
             .requestMatchers(HttpMethod.POST, "/api/register").permitAll()
             .requestMatchers(HttpMethod.PUT, "/api/users/me").permitAll()
