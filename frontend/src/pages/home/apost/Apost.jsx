@@ -36,7 +36,7 @@ export default function Apost({ post, user, setIsAuthenticated, navigate }) {
     }
 
 
-  }, [post])
+  }, [post, navigate, setIsAuthenticated, user.id])
 
 
 

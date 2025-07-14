@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import Loader from "../../components/Loader";
 import { fetchGetAllPosts } from "../../api/fetchGetAllPosts";
 import { fetchUserData } from "../../api/fetchUserData"
@@ -16,7 +16,7 @@ export default function Main({ setIsAuthenticated }) {
   const [user, setUser] = useState(null);
 
 
-  const getPosts = async () => {
+  const getPosts = useCallback(async () => {
     const token = getValidToken(setError, setIsAuthenticated, navigate);
 
     const userData = await fetchUserData(setError, setIsAuthenticated, navigate, token);
@@ -28,7 +28,7 @@ export default function Main({ setIsAuthenticated }) {
 
     const tuttiPosts = await fetchGetAllPosts(userData, token);
     setPosts(tuttiPosts);
-  }
+  }, [setIsAuthenticated, navigate])
 
 
 
@@ -40,7 +40,7 @@ export default function Main({ setIsAuthenticated }) {
       setLoading(false);
     }
     loadData();
-  }, [])
+  }, [getPosts])
 
   const sameProvincePosts = posts
     .filter(post =>

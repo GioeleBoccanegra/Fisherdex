@@ -36,7 +36,7 @@ export default function User({ setIsAuthenticated }) {
       setLoading(false)
     }
     loadData();
-  }, [edit])
+  }, [edit, navigate, setIsAuthenticated])
 
 
 

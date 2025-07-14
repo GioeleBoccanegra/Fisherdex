@@ -45,7 +45,7 @@ export default function CaptureCard({ specie, user, setShowCapture, showCapture,
       document.body.style.overflow = "auto";
     };
 
-  }, [])
+  }, [navigate, setIsAuthenticated, specie.id, user.id])
 
 
 

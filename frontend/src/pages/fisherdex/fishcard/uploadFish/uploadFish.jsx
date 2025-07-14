@@ -78,7 +78,7 @@ export default function UploadFish({ setShowUploadFish, specie, user, setModific
       document.body.style.overflow = "auto";
     };
 
-  }, [])
+  }, [user.provincia.nome])
 
 
 
