@@ -1,70 +1,174 @@
 .post-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  margin: 16px auto;
-  max-width: 95%;
-  overflow: hidden;
-  transition: transform 0.2s ease;
+  gap: 12px;
+  width: 85vw;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-bottom: 25px;
+  justify-content: center;
+  align-items: center;
 }
 
-.post-card:hover {
-  transform: translateY(-3px);
+/* 🧑 Utente e data in cima */
+.post-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  justify-content: center;
+  align-items: center;
 }
 
+.post-username {
+  font-weight: 600;
+  font-size: 1.5rem;
+  color: #2c3e50;
+}
+
+.post-date {
+  font-size: 0.85rem;
+  color: #7f8c8d;
+}
+
+/* 📷 Immagine */
 .post-img img {
-  width: 100%;
+  width: 300px;
   height: auto;
+  max-height: 300px;
   object-fit: cover;
-  display: block;
+  border-radius: 12px;
+  border: 1px solid #ddd;
 }
 
-.post-info {
-  padding: 16px;
-}
-
+/* ℹ️ Info specie, provincia, descrizione */
 .post-info h3 {
+  margin: 8px 0 4px;
   font-size: 1.2rem;
-  margin-bottom: 10px;
-  color: #222;
+  color: #2980b9;
 }
 
 .post-info p {
-  margin: 6px 0;
+  margin: 4px 0;
+  color: #34495e;
   font-size: 0.95rem;
-  color: #444;
 }
 
 .post-desc {
-  margin-top: 12px;
+  background-color: #f7f9fa;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #eee;
   font-style: italic;
-  color: #333;
+  color: #555;
+  word-break: break-word;
+  /* 🔁 Frammenta le parole troppo lunghe */
+  white-space: pre-wrap;
+  /* 🔁 Preserva gli spazi e va a capo */
+  overflow-wrap: break-word;
+  /* 🔁 Compatibilità */
+  max-width: 80vw;
+  text-align: center;
 }
 
-/* 💻 Desktop & Tablet layout */
-@media (min-width: 600px) {
+/* ❤️ Like section */
+.like-sectionj {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.like-sectionj button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  background-color: #fff;
+  border: 1px solid #e74c3c;
+  color: #e74c3c;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 20px;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 6px rgba(231, 76, 60, 0.1);
+}
+
+.like-sectionj button:hover {
+  background-color: #fdecea;
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.2);
+}
+
+.like-sectionj button.liked {
+  background-color: #e74c3c;
+  color: white;
+  border-color: #e74c3c;
+}
+
+.like-sectionj button.liked:hover {
+  background-color: #c0392b;
+}
+
+.like-icon {
+  font-size: 1.2rem;
+}
+
+.like-count {
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+/* Messaggio errore */
+.error-message {
+  color: #e74c3c;
+  font-weight: 600;
+  background-color: #fdecea;
+  padding: 8px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+/* 🖥 Desktop layout */
+@media (min-width: 1024px) {
   .post-card {
-    flex-direction: column;
-    max-width: 700px;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
   }
 
+  .post-header {
+    flex-direction: column;
+  }
+
+  .post-img {
+    flex: 1;
+  }
 
   .post-img img {
     height: 100%;
+    max-height: 100%;
   }
 
   .post-info {
-    flex: 1;
-    padding: 20px;
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
   }
 
-  .post-info h3 {
-    font-size: 1.4rem;
+  .like-sectionj {
+    justify-content: flex-start;
   }
 
-  .post-info p {
-    font-size: 1rem;
+  .post-desc {
+
+    max-width: 40vw;
+
   }
 }

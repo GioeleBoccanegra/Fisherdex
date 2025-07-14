@@ -1,3 +1,17 @@
+.div-alert-conferma-eliminazione-all {
+  position: fixed;
+  top: 10vh;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
 .div-alert-conferma-eliminazione {
   position: fixed;
   top: 50%;

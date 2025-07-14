@@ -1,0 +1,71 @@
+.fisherdex-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Search bar - input testo */
+.search-bar-fish-name {
+  flex: 1 1 100%;
+  /* su mobile prende tutta la larghezza */
+}
+
+.search-bar-fish-name input[type="text"] {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 1rem;
+  border: 2px solid #b0c4de;
+  /* azzurro chiaro */
+  border-radius: 12px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: inset 0 2px 5px rgba(33, 150, 243, 0.05);
+  appearance: none;
+  cursor: text;
+}
+
+.search-bar-fish-name input[type="text"]:focus {
+  border-color: #2196f3;
+  box-shadow: 0 0 10px rgba(33, 150, 243, 0.4);
+  outline: none;
+  background-color: #131313b6;
+}
+
+/* Checkbox filtro catturati */
+.captured-fish {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: #4a90e2;
+  cursor: pointer;
+  user-select: none;
+  font-size: 0.95rem;
+  flex: 0 0 auto;
+  /* dimensione fissa */
+}
+
+.captured-fish a {
+  text-decoration: none;
+  color: #4a90e2;
+}
+
+.captured-fish input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #4a90e2;
+}
+
+/* Su schermi più grandi sistema l'input e checkbox in riga */
+@media (min-width: 600px) {
+  .search-bar-fish-name {
+    flex: 1 1 auto;
+    /* lascia spazio affianco checkbox */
+  }
+}

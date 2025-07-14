@@ -22,7 +22,6 @@ export default function EditPage({ user, setEdit, fetchUserData, setIsAuthentica
     e.preventDefault();
     setError(null);
     const provinciaNew = await fetchGetProvinciaByNome(provincia);
-    console.log(provinciaNew);
     const token = getValidToken(setError, setIsAuthenticated, navigate);
     await fecthPutUser(username, email, provinciaNew, setError, setEdit, fetchUserData, token, setIsAuthenticated, navigate)
 

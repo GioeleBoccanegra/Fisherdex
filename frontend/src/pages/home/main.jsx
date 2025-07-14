@@ -5,8 +5,8 @@ import Loader from "../../components/Loader";
 import { fetchGetAllPosts } from "../../api/fetchGetAllPosts";
 import { fetchUserData } from "../../api/fetchUserData"
 import Apost from "./apost/Apost"
-import { getValidToken } from "../../utils/getValidToken";
-
+import { getValidToken } from "../../utils/getValidToken"; import "./main.css";
+import "./main.css";
 
 export default function Main({ setIsAuthenticated }) {
   const [error, setError] = useState(null);
@@ -42,17 +42,32 @@ export default function Main({ setIsAuthenticated }) {
     loadData();
   }, [])
 
-  const filteredPosts = posts.filter(post => post.user?.id !== user.id);
+  const sameProvincePosts = posts
+    .filter(post =>
+      post.user?.id !== user.id &&
+      post.provincia?.id === user.provincia?.id
+    )
+    .sort((a, b) => new Date(b.dataCattura) - new Date(a.dataCattura));
+
+  const otherPosts = posts
+    .filter(post =>
+      post.user?.id !== user.id &&
+      post.provincia?.id !== user.provincia?.id
+    )
+    .sort((a, b) => new Date(b.dataCattura) - new Date(a.dataCattura));
+
+  const filteredPosts = [...sameProvincePosts, ...otherPosts];
+
+
 
   return (
 
-    <div>
+    <div className="main-all">
 
-      <h1>Fisherdex</h1>
+      <h1 className="main-title">Fisherdex</h1>
       {error && <div className="error-message">{error}</div>}
       {loading && <Loader />}
-      {!loading && !error && <p>corretto</p>}
-      {filteredPosts.length === 0 ? (
+      {!loading && filteredPosts.length === 0 ? (
         <p>Nessun post trovato</p>
       ) : (
         filteredPosts.map(post => (

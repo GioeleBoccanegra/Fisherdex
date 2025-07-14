@@ -24,9 +24,7 @@ export default function User({ setIsAuthenticated }) {
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
-      console.log("dentro1");
       const token = getValidToken(setError, setIsAuthenticated, navigate);
-      console.log("dentro2");
       const userData = await fetchUserData(setError, setIsAuthenticated, navigate, token);
       if (!userData) {
         // se fetchUserData fallisce, esci
@@ -53,7 +51,7 @@ export default function User({ setIsAuthenticated }) {
   return (
 
 
-    <div>
+    <div className="user-container">
       {error && <div className="error-message">{error}</div>}
       <h1>User</h1>
       {loading && <Loader />}

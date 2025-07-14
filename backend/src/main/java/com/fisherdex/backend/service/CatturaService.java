@@ -50,7 +50,8 @@ public class CatturaService {
           cattura.getProvincia(),
           cattura.getImageUrl(),
           userDTO,
-          cattura.getSpecie());
+          cattura.getSpecie(),
+          cattura.getDataCattura());
     }).toList();
   }
 
@@ -79,7 +80,7 @@ public class CatturaService {
     UserResponseDTO userDTO = new UserResponseDTO(user.getId(), user.getUsername());
 
     CatturaResponseDTO catturaDTO = new CatturaResponseDTO(catturaSalvata.getCatchId(), catturaSalvata.getDescrizione(),
-        catturaSalvata.getProvincia(), cattura.getImageUrl(), userDTO, cattura.getSpecie());
+        catturaSalvata.getProvincia(), cattura.getImageUrl(), userDTO, cattura.getSpecie(), cattura.getDataCattura());
 
     return catturaDTO;
   }
@@ -95,7 +96,7 @@ public class CatturaService {
     List<CatturaResponseDTO> dtoList = listaCatturaOpt.get().stream().map(cattura -> {
       UserResponseDTO userDTO = new UserResponseDTO(cattura.getUser().getId(), cattura.getUser().getUsername());
       CatturaResponseDTO catturaDTO = new CatturaResponseDTO(cattura.getCatchId(), cattura.getDescrizione(),
-          cattura.getProvincia(), cattura.getImageUrl(), userDTO, cattura.getSpecie());
+          cattura.getProvincia(), cattura.getImageUrl(), userDTO, cattura.getSpecie(), cattura.getDataCattura());
       return catturaDTO;
     }).collect(Collectors.toList());
     return Optional.of(dtoList);
@@ -109,7 +110,7 @@ public class CatturaService {
     Cattura cattura = catturaUtenteSpecie.get();
     UserResponseDTO userDTO = new UserResponseDTO(cattura.getUser().getId(), cattura.getUser().getUsername());
     CatturaResponseDTO catturaDTO = new CatturaResponseDTO(cattura.getCatchId(), cattura.getDescrizione(),
-        cattura.getProvincia(), cattura.getImageUrl(), userDTO, cattura.getSpecie());
+        cattura.getProvincia(), cattura.getImageUrl(), userDTO, cattura.getSpecie(), cattura.getDataCattura());
 
     return Optional.of(catturaDTO);
   }

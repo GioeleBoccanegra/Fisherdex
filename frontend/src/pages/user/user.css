@@ -1,18 +1,29 @@
 .user-container {
   padding: 40px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1 {
+  font-size: 2rem;
   text-align: center;
+  margin-bottom: 16px;
+  color: #e2e2e2;
+  font-weight: 700;
 }
 
 .user-title {
   font-size: 2rem;
   margin-bottom: 20px;
   color: #2c3e50;
+  text-align: center;
 }
 
 .user-card {
   width: 100%;
   max-width: 350px;
-  margin: 0 auto;
   padding: 24px;
   background-color: #f0f4f8;
   border-radius: 16px;
@@ -20,8 +31,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   gap: 14px;
+  text-align: center;
+  transition: all 0.3s ease;
 }
 
 .user-image {
@@ -49,7 +61,7 @@
   border: none;
   cursor: pointer;
   user-select: none;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .edit-data {
@@ -59,24 +71,44 @@
 
 .edit-data:hover {
   background-color: #357ab8;
-}
-
-.logout-button {
-  background-color: #e74c3c;
-  color: white;
-}
-
-.logout-button:hover {
-  background-color: #c0392b;
+  transform: scale(1.02);
 }
 
 .error-message {
   background-color: #ffcccc;
   color: #c0392b;
   padding: 10px;
-  margin-bottom: 16px;
   border-radius: 8px;
   max-width: 400px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto 16px auto;
+  text-align: center;
+}
+
+
+@media (min-width: 768px) {
+  .user-card {
+    max-width: 500px;
+    padding: 36px;
+    gap: 20px;
+  }
+
+  .user-image {
+    width: 140px;
+    height: 140px;
+  }
+
+  .user-data {
+    font-size: 1.2rem;
+  }
+
+  .edit-data,
+  .logout-button {
+    font-size: 1.05rem;
+    padding: 12px 20px;
+    border-radius: 10px;
+  }
+
+  .user-title {
+    font-size: 2.4rem;
+  }
 }

@@ -49,24 +49,28 @@ function Register() {
 
   return (
     <div className='register-page'>
-      <h1>register</h1>
+      <h1>registrati</h1>
       {error && <p style={{ color: "red" }}>{error}</p>}
 
       <div className="registerContainer">
         <form className="registerForm" onSubmit={handleRegister}>
           <div>
             <label >Username</label>
-            <input type="text" placeholder="pescatore126" value={username} onChange={(e) => setUsername(e.target.value)}></input>
+            <input className="username-input" type="text" placeholder="pescatore126" value={username} onChange={(e) => setUsername(e.target.value)}></input>
           </div>
           <div>
             <label>Provincia</label>
-            <select value={selectedProvince}
-              onChange={(e) => setSelectedProvince(e.target.value)}>
+            <select
+              className="form-select"
+              value={selectedProvince}
+              onChange={(e) => setSelectedProvince(e.target.value)}
+            >
               <option value="">Seleziona una provincia</option>
               {provinceList.map((nome) => (
-                <option key={nome} value={nome}>{nome}</option>
+                <option key={nome} value={nome}>
+                  {nome}
+                </option>
               ))}
-
             </select>
           </div>
           <div>
@@ -82,7 +86,7 @@ function Register() {
       </div>
       {loading && <Loader />}
       <div className="login-link">
-        <p>Already have an account? <Link to="/login">Login</Link></p>
+        <p>Hai già un account? <Link to="/login">Login</Link></p>
       </div>
 
 

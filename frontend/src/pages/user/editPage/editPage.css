@@ -1,37 +1,47 @@
 .edit-page {
-  position: fixed;
+  position: absolute;
   top: 15vh;
-  left: 15vw;
+  left: 50%;
+  transform: translateX(-50%);
   width: 70vw;
-  height: 70vh;
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+  padding: 40px 30px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(33, 150, 243, 0.2);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
+  color: #222;
+  transition: box-shadow 0.3s ease;
   z-index: 1000;
 }
 
+.edit-page:hover {
+  box-shadow: 0 14px 40px rgba(33, 150, 243, 0.35);
+}
+
 .edit-title {
-  margin: 0;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 20px;
+  text-align: center;
+  margin-bottom: 30px;
+  font-weight: 800;
+  font-size: 2rem;
+  color: #2196f3;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  text-shadow: 0 1px 2px rgba(33, 150, 243, 0.6);
 }
 
 .edit-form {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  gap: 24px;
 }
 
 .edit-content {
   display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 40px;
-  flex: 1;
 }
 
 .image-edit-section img {
@@ -39,60 +49,150 @@
   height: 140px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #4a90e2;
+  border: 3px solid #2196f3;
 }
 
 .data-edit-section {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   flex: 1;
+  min-width: 240px;
   gap: 16px;
 }
 
 .data-edit-section label {
   font-weight: 600;
-  color: #444;
-}
-
-.data-edit-section input {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
   font-size: 1rem;
+  color: #333;
+  margin-bottom: 6px;
+  user-select: none;
 }
 
+/* Input e Select come in .register-page */
+.data-edit-section input[type="text"],
+.data-edit-section input[type="email"],
+.data-edit-section select {
+  padding: 14px 18px;
+  font-size: 1rem;
+  border: 2px solid #b0c4de;
+  border-radius: 12px;
+  transition: all 0.35s ease;
+  box-shadow: inset 0 2px 5px rgba(33, 150, 243, 0.05);
+  background-color: #131313da;
+  color: #fff;
+  width: 100%;
+  box-sizing: border-box;
+  appearance: none;
+  cursor: pointer;
+}
+
+/* Hover & focus */
+.data-edit-section input:focus,
+.data-edit-section select:focus {
+  border-color: #2196f3;
+  box-shadow: 0 0 10px rgba(33, 150, 243, 0.4);
+  outline: none;
+  background-color: #131313b6;
+}
+
+.data-edit-section input::placeholder {
+  color: #ffffff;
+}
+
+/* Select freccia */
+.data-edit-section select {
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7'%3e%3cpolygon points='0,0 10,0 5,7' fill='%232196f3'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 10px 7px;
+  padding-right: 40px;
+}
+
+/* Options */
+.data-edit-section select option {
+  color: #000;
+  background-color: #fff;
+}
+
+/* Pulsanti */
 .button-section {
   display: flex;
   justify-content: flex-end;
-  gap: 12px;
-  margin-top: 24px;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 20px;
 }
 
 .button-section button {
-  padding: 10px 16px;
+  padding: 14px 20px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 14px;
   border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.button-section button:first-of-type {
+/* Annulla */
+.button-section button[type="button"] {
   background-color: #ccc;
   color: #333;
 }
 
-.button-section button:first-of-type:hover {
+.button-section button[type="button"]:hover {
   background-color: #b3b3b3;
 }
 
-.button-section button:last-of-type {
-  background-color: #4a90e2;
+/* Salva */
+.button-section button[type="submit"] {
+  background-color: #2196f3;
   color: white;
+  box-shadow: 0 6px 15px rgba(33, 150, 243, 0.4);
 }
 
-.button-section button:last-of-type:hover {
-  background-color: #357ab8;
+.button-section button[type="submit"]:hover {
+  background-color: #1769aa;
+  box-shadow: 0 8px 20px rgba(23, 105, 170, 0.6);
+}
+
+@media screen and (min-width: 1024px) {
+  .edit-page {
+    max-width: 900px;
+    height: auto;
+    max-height: 80vh;
+    padding: 48px 40px;
+  }
+
+  .edit-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+  }
+
+
+
+  .data-edit-section {
+    max-width: 420px;
+  }
+
+  .edit-title {
+    font-size: 2.4rem;
+  }
+
+  .data-edit-section input,
+  .data-edit-section select {
+    font-size: 1.1rem;
+    padding: 16px 20px;
+  }
+
+  .button-section {
+    justify-content: center;
+    margin-top: 32px;
+  }
+
+  .button-section button {
+    min-width: 160px;
+  }
 }

@@ -60,6 +60,7 @@ export default function UploadFish({ setShowUploadFish, specie, user, setModific
 
 
   useEffect(() => {
+    document.body.style.overflow = "hidden";
     const loadData = async () => {
 
       setProvinciaFoto(user.provincia.nome)
@@ -72,6 +73,10 @@ export default function UploadFish({ setShowUploadFish, specie, user, setModific
 
     }
     loadData();
+    return () => {
+      // Riabilita scroll quando il componente viene smontato
+      document.body.style.overflow = "auto";
+    };
 
   }, [])
 
@@ -79,100 +84,104 @@ export default function UploadFish({ setShowUploadFish, specie, user, setModific
 
 
   return (
-    <div className="upload-fish-container">
-      {error && <p className="error-message">{error}</p>}
-      <div className="upload-fish-info">
-        <div className="fish-names">
-          <h2>cattura di {specie.name}</h2>
-          <p>{specie.scientificName}</p>
-        </div>
-        <div className="fish-image">
-          <img src={specie.imageUrl} alt="fish" />
-        </div>
-        <div className="upload-fish-form"></div>
+    <div className="upload-fish-container-all" onClick={() => setShowUploadFish(false)}>
+      <div className="upload-fish-container" onClick={(e) => e.stopPropagation()}>
 
-        <form onSubmit={handleSubmit}>
-          <div className="upload-fish-form-image">
-            <label>Upload Fish</label>
+        <div className="upload-fish-info">
+          <div className="fish-names">
+            <h2>cattura di {specie.name}</h2>
+            <p>{specie.scientificName}</p>
+          </div>
+          <div className="fish-image">
+            <img src={specie.imageUrl} alt="fish" />
+          </div>
+          <div className="upload-fish-form"></div>
 
-            <div className="upload-fish-form-image-input">
-              <input
-                type="file"
-                accept="image/*"
-                capture="environment"
-                onChange={(e) => {
-                  const file = e.target.files[0];
-                  if (file) {
+          <form onSubmit={handleSubmit}>
+            <div className="upload-fish-form-image">
+              <label>Upload Fish</label>
 
-                    const url = URL.createObjectURL(file);
-                    setPreviewUrl(URL.createObjectURL(file)); // genera l'anteprima
-                    const img = new Image();
-                    img.src = url;
-                    img.onload = () => {
-                      if (img.width < img.height) {
-                        setError("per favore scatta l'immagine in orizzontale")
-                        setPreviewUrl(null);
-                        setImageFile(null);
-                      } else {
-                        setError(null);
-                        setPreviewUrl(url);
-                        setImageFile(file);
+              <div className="upload-fish-form-image-input">
+                <input
+                  type="file"
+                  accept="image/*"
+                  capture="environment"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+
+                      const url = URL.createObjectURL(file);
+                      setPreviewUrl(URL.createObjectURL(file)); // genera l'anteprima
+                      const img = new Image();
+                      img.src = url;
+                      img.onload = () => {
+                        if (img.width < img.height) {
+                          setError("per favore scatta l'immagine in orizzontale")
+                          setPreviewUrl(null);
+                          setImageFile(null);
+                        } else {
+                          setError(null);
+                          setPreviewUrl(url);
+                          setImageFile(file);
+                        }
                       }
                     }
-                  }
-                }}
-              />
-            </div>
-
-            {previewUrl && (
-              <div className="preview-container">
-                <p>Anteprima:</p>
-                <img src={previewUrl} alt="Anteprima" className="preview-image" />
+                  }}
+                />
               </div>
-            )}
+
+              {previewUrl && (
+                <div className="preview-container">
+                  <p>Anteprima:</p>
+                  <img src={previewUrl} alt="Anteprima" className="preview-image" />
+                </div>
+              )}
 
 
-            <label>Provincia</label>
-            <select value={provinciaFoto} onChange={(e) => setProvinciaFoto(e.target.value)}>
-              <option value="">Seleziona una provincia</option>
-              {provinceList.map((nome) => (
-                <option key={nome} value={nome}>{nome}</option>
-              ))}
+              <label>Provincia</label>
+              <select value={provinciaFoto} onChange={(e) => setProvinciaFoto(e.target.value)}>
+                <option value="">Seleziona una provincia</option>
+                {provinceList.map((nome) => (
+                  <option key={nome} value={nome}>{nome}</option>
+                ))}
 
-            </select>
+              </select>
 
-            <div className="descrizione-cattura">
-              <label htmlFor="descrizione">Descrizione:</label><br />
-              <textarea
-                id="descrizione"
-                value={descrizione}
-                onChange={handleChange}
-                placeholder="Scrivi qui la tua descrizione..."
-                rows={4}
-                cols={50}
-              />
-              <p><strong>Anteprima:</strong> {descrizione}</p>
+              <div className="descrizione-cattura">
+                <label htmlFor="descrizione">Descrizione:</label><br />
+                <textarea
+                  id="descrizione"
+                  value={descrizione}
+                  onChange={handleChange}
+                  placeholder="Scrivi qui la tua descrizione..."
+                  rows={4}
+                  cols={50}
+                  className="input-descrizione"
+                />
+              </div>
+
+              {error && <p className="error-message">{error}</p>}
+
+
+
+
+              {loading && <Loader />}
+
+              {!loading && <div className="button-section-form">
+
+                <button type="submit" >Upload</button>
+                <button onClick={() => setShowUploadFish(false)} >Close</button>
+              </div>}
+
             </div>
 
 
+          </form>
+        </div>
 
 
-            {loading && <Loader />}
 
-            {!loading && <div className="button-section-form">
-
-              <button type="submit" >Upload</button>
-              <button onClick={() => setShowUploadFish(false)} >Close</button>
-            </div>}
-
-          </div>
-
-
-        </form>
       </div>
-
-
-
-    </div>
+    </ div>
   );
 }

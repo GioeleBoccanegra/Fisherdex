@@ -1,5 +1,7 @@
 package com.fisherdex.backend.dto;
 
+import java.time.OffsetDateTime;
+
 import com.fisherdex.backend.model.Provincia;
 import com.fisherdex.backend.model.Specie;
 
@@ -10,18 +12,20 @@ public class CatturaResponseDTO {
   private String imageUrl;
   private UserResponseDTO user;
   private Specie specie;
+  private OffsetDateTime dataCattura;
 
   public CatturaResponseDTO() {
   }
 
   public CatturaResponseDTO(Long id, String descrizione, Provincia provincia, String imageUrl, UserResponseDTO user,
-      Specie specie) {
+      Specie specie, OffsetDateTime dataCattura) {
     this.id = id;
     this.descrizione = descrizione;
     this.provincia = provincia;
     this.imageUrl = imageUrl;
     this.user = user;
     this.specie = specie;
+    this.dataCattura = dataCattura;
   }
 
   public Long getId() {
@@ -70,6 +74,14 @@ public class CatturaResponseDTO {
 
   public void setSpecie(Specie specie) {
     this.specie = specie;
+  }
+
+  public OffsetDateTime getDataCattura() {
+    return dataCattura;
+  }
+
+  public void setDataCattura(OffsetDateTime dataCattura) {
+    this.dataCattura = dataCattura;
   }
 
 }

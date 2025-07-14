@@ -1,89 +1,110 @@
-.capture-card {
+.captured-card-all {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90vw;
-  max-width: 800px;
-  background-color: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  top: 10vh;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.capture-card {
+  max-width: 80vw;
+  max-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  /* sopra tutto */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.button-section-button-card {
+  background: #f9fbfd;
   padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  max-width: 95vw;
+  width: 100%;
+  max-width: 600px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  z-index: 1000;
+  gap: 16px;
+  position: relative;
 }
 
-/* Contenitore per i bottoni */
-.button-section-button-card {
-  display: flex;
-  justify-content: flex-end;
-  /* Allinea i bottoni a destra */
-  gap: 12px;
-}
-
-/* Stile per il bottone elimina */
-.button-section-button-card button:first-child {
-  background-color: #e67e22;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  padding: 10px 20px;
-  transition: background-color 0.2s ease;
-}
-
-.button-section-button-card button:first-child:hover {
-  background-color: #d35400;
-}
-
-/* Bottone chiudi */
-.close-capture-card-button {
-  background-color: #e74c3c;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  padding: 10px 20px;
-  transition: background-color 0.2s ease;
-}
-
-.close-capture-card-button:hover {
-  background-color: #c0392b;
-}
-
-/* Aggiungo un po' di margine tra immagine e info */
 .capture-card-data {
   display: flex;
-  gap: 24px;
-  flex-wrap: wrap;
-  /* per mobile */
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
 }
 
 .catturaData-img img {
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
+  width: 100%;
+  max-width: 400px;
+  height: auto;
   border-radius: 12px;
-  border: 2px solid #4a90e2;
+  object-fit: cover;
 }
 
-/* Info testo */
 .catturaData-info {
-  flex: 1;
+  text-align: center;
 }
 
 .catturaData-info h3 {
-  margin-top: 0;
-  color: #2c3e50;
+  font-size: 1.2rem;
+  margin: 8px 0;
+  color: #2a2a2a;
+}
+
+.catturaData-info p {
+  font-size: 1rem;
+  margin: 4px 0;
+  color: #444;
 }
 
 .catturaData-desc {
-  margin-top: 12px;
+  margin-top: 8px;
   font-style: italic;
-  color: #7f8c8d;
+  color: #666;
+  word-break: break-word;
+  /* 🔁 Frammenta le parole troppo lunghe */
+  white-space: pre-wrap;
+  /* 🔁 Preserva gli spazi e va a capo */
+  overflow-wrap: break-word;
+  /* 🔁 Compatibilità */
+  max-width: 80vw;
+  text-align: center;
+}
+
+.error-message {
+  color: #d33;
+  font-weight: bold;
+  text-align: center;
+}
+
+button {
+  padding: 10px 16px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #1e88e5;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: #1565c0;
+}
+
+.close-capture-card-button {
+  background-color: #777;
+}
+
+.close-capture-card-button:hover {
+  background-color: #555;
 }

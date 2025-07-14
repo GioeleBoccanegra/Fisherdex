@@ -1,51 +1,51 @@
 .fishcard {
-  width: 100%;
-  max-width: 700px;
+  width: 70vw;
   background: #f9fbfd;
   border-radius: 16px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-  padding: 20px;
+  padding: 15px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 16px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1rem;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-
-
 
 .fishdex-position {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 70px;
-  gap: 8px;
+  gap: 6px;
   user-select: none;
 }
 
 .fishcard-number {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: bold;
   color: #3498db;
   margin: 0;
 }
 
 .rarity-img {
-  width: 60px;
-  height: auto;
+  margin: 0;
+  width: 80px;
+  height: 40px;
+  object-fit: cover;
+
 }
 
 .description {
-  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 6px;
-  text-align: left;
-  max-width: 300px;
+  text-align: center;
+  max-width: 100%;
 }
 
 .fishcard-name {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: #2c3e50;
   margin: 0;
@@ -60,7 +60,6 @@
   max-height: 6.5em;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: -webkit-box;
   font-style: italic;
 }
 
@@ -68,12 +67,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 160px;
 }
 
 .fishcard-image {
-  width: 160px;
-  height: 160px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid #3498db;
@@ -88,9 +86,8 @@
 .captured-section {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
   gap: 10px;
-  min-width: 130px;
 }
 
 .fishcard-captured {
@@ -116,4 +113,37 @@
 
 .fishcard-non-captured {
   color: black;
+}
+
+@media (min-width: 768px) {
+  .fishcard {
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 20px;
+    max-width: 700px;
+  }
+
+  .description {
+    text-align: left;
+    max-width: 300px;
+  }
+
+  .image-section {
+    min-width: 160px;
+  }
+
+  .captured-section {
+    align-items: flex-end;
+    min-width: 130px;
+  }
+
+  .fishdex-position {
+    min-width: 70px;
+  }
+
+  .fishcard-image {
+    width: 150px;
+    height: 150px;
+  }
 }

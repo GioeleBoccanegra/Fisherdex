@@ -30,6 +30,7 @@ export default function CaptureCard({ specie, user, setShowCapture, showCapture,
 
 
   useEffect(() => {
+    document.body.style.overflow = "hidden";
     const fetchCattura = async () => {
       setLoading(true);
 
@@ -39,7 +40,10 @@ export default function CaptureCard({ specie, user, setShowCapture, showCapture,
       setLoading(false);
     }
     fetchCattura();
-
+    return () => {
+      // Riabilita scroll quando il componente viene smontato
+      document.body.style.overflow = "auto";
+    };
 
   }, [])
 
@@ -47,30 +51,35 @@ export default function CaptureCard({ specie, user, setShowCapture, showCapture,
 
 
   return (
-    <div className="capture-card">
-      {loading && <Loader />}
-      {error && <p className="error-message">{error}</p>}
-      {!loading && catturaData && (
-        <div className="button-section-button-card">
-          <div className="capture-card-data">
-            <div className="catturaData-img">
-              <img src={catturaData?.imageUrl} alt={catturaData.specie?.name || "specie"} />
-            </div>
-            <div className="catturaData-info">
-              <h3>{catturaData.specie?.name} ({catturaData.specie?.scientificName})</h3>
-              <p><strong>Utente:</strong> {catturaData.user?.username}</p>
-              <p><strong>Provincia:</strong> {catturaData.provincia?.nome}</p>
-              <p><strong>Data:</strong> {new Date(catturaData.dataCattura).toLocaleDateString()}</p>
-              <p className="catturaData-desc">{catturaData.descrizione}</p>
-            </div>
-            {alertCard && <AlertConfermaEliminazione setConfermaEliminazione={setConfermaEliminazione} setAlertCard={setAlertCard} />}
+    <div className="captured-card-all" onClick={() => setShowCapture(false)}>
 
+
+      <div className="capture-card" onClick={(e) => e.stopPropagation()} >
+        {loading && <Loader />}
+        {error && <p className="error-message">{error}</p>}
+        {!loading && catturaData && (
+          <div className="button-section-button-card">
+            <div className="capture-card-data">
+              <div className="catturaData-img">
+                <img src={catturaData?.imageUrl} alt={catturaData.specie?.name || "specie"} />
+              </div>
+              <div className="catturaData-info">
+                <h3>{catturaData.specie?.name} ({catturaData.specie?.scientificName})</h3>
+                <p><strong>Utente:</strong> {catturaData.user?.username}</p>
+                <p><strong>Provincia:</strong> {catturaData.provincia?.nome}</p>
+                <p><strong>Data:</strong> {new Date(catturaData.dataCattura).toLocaleDateString()}</p>
+                <p className="catturaData-desc"><strong>Descrizione cattura:</strong>{catturaData.descrizione}</p>
+              </div>
+              {alertCard && <AlertConfermaEliminazione setConfermaEliminazione={setConfermaEliminazione} setAlertCard={setAlertCard} />}
+
+            </div>
+            <button onClick={() => { setAlertCard(true) }}>elimina</button>
+            <button className="close-capture-card-button" onClick={() => { setShowCapture(!showCapture) }}>chiudi</button>
           </div>
-          <button onClick={() => { setAlertCard(true) }}>elimina</button>
-          <button className="close-capture-card-button" onClick={() => { setShowCapture(!showCapture) }}>close</button>
-        </div>
-      )}
 
+        )}
+
+      </div>
     </div>
 
   )

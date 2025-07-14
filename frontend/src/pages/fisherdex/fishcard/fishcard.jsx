@@ -12,6 +12,7 @@ export default function Fishcard({ specie, catturata, user, setIsAuthenticated, 
 
 
 
+
   let rarity_img = `/specie_img/rarita/stars_${specie.rarita}.png`;
 
 
@@ -21,13 +22,13 @@ export default function Fishcard({ specie, catturata, user, setIsAuthenticated, 
       {showCapture && <CaptureCard specie={specie} user={user} setShowCapture={setShowCapture} showCapture={showCapture} setIsAuthenticated={setIsAuthenticated} navigate={navigate} />}
       <div className="fishdex-position">
         <p className="fishcard-number">N°{specie.id}</p>
+        <div className="description">
+          <h2 className="fishcard-name">{specie.name}</h2>
+        </div>
         <img src={rarity_img} alt="rarità pesce :`${specie.rarita}`" className="rarity-img"></img>
       </div>
 
-      <div className="description">
-        <h2 className="fishcard-name">{specie.name}</h2>
-        <h3 className="fishcard-description">specie.descrizione</h3>
-      </div>
+
       <div className="image-section">
         <img src={specie.imageUrl} alt="fish" className="fishcard-image"></img>
 
@@ -37,7 +38,6 @@ export default function Fishcard({ specie, catturata, user, setIsAuthenticated, 
       <div className="captured-section">
         {catturata && (
           <div className="captured-div">
-            <p className="fishcard-captured">captured</p>
             <button onClick={() => { setShowCapture(!showCapture) }}>visualizza cattura</button>
           </div>)}
         {!catturata && <p className="fishcard-non-captured">non catturata</p> && <button className="upload-image" onClick={() => setShowUploadFish(true)}>upload fish</button>}

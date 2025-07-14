@@ -1,67 +1,156 @@
+/* Mobile first: base per tutti i dispositivi */
+
 /* Contenitore esterno */
 .fisherdex-wrapper {
-  max-width: 1200px;
   margin: 0 auto;
-  padding: 20px 16px;
+  padding: 16px 12px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 /* Titolo principale */
 .fisherdex-title {
-  font-size: 2.5rem;
+  font-size: 2rem;
   text-align: center;
-  margin-bottom: 20px;
-  color: #2c3e50;
+  margin-bottom: 16px;
+  color: #e2e2e2;
+  font-weight: 700;
 }
 
 /* Messaggio errore */
 .error-message {
-  color: red;
+  color: #d93025;
+  /* rosso più morbido */
   text-align: center;
-  margin-bottom: 20px;
-  font-weight: bold;
+  margin-bottom: 16px;
+  font-weight: 700;
+  font-size: 1rem;
 }
 
 /* Sezione filtri */
 .filters {
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-start;
   align-items: center;
-  gap: 16px;
-  padding-bottom: 12px;
+  gap: 12px;
+  padding-bottom: 10px;
   border-bottom: 1px solid #ddd;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 /* Singolo filtro "captured" */
 .captured-fish {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   font-weight: 600;
   color: #4a90e2;
   cursor: pointer;
   user-select: none;
+  font-size: 0.9rem;
 }
 
 .captured-fish a {
   text-decoration: none;
   color: #4a90e2;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
 .captured-fish input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   cursor: pointer;
   accent-color: #4a90e2;
 }
 
 /* Griglia delle card */
 .fisherdex-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-  gap: 24px;
-  justify-items: center;
-  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* Media query per tablet e oltre */
+@media (min-width: 600px) {
+  .fisherdex-wrapper {
+    max-width: 720px;
+    padding: 0px 16px;
+  }
+
+  .fisherdex-title {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+  }
+
+  .error-message {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+  }
+
+  .filters {
+    gap: 16px;
+    padding-bottom: 12px;
+    margin-bottom: 24px;
+  }
+
+  .captured-fish {
+    font-size: 1rem;
+    gap: 8px;
+  }
+
+  .captured-fish input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+  }
+
+  .fisherdex-container {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+}
+
+/* Media query per desktop e schermi larghi */
+@media (min-width: 1024px) {
+  .fisherdex-wrapper {
+    max-width: 1200px;
+    padding: 24px 20px;
+  }
+
+  .fisherdex-title {
+    font-size: 2.5rem;
+    margin-bottom: 24px;
+  }
+
+  .error-message {
+    font-size: 1.2rem;
+    margin-bottom: 24px;
+  }
+
+  .filters {
+    gap: 24px;
+    padding-bottom: 14px;
+    margin-bottom: 28px;
+  }
+
+  .captured-fish {
+    font-size: 1.1rem;
+    gap: 10px;
+  }
+
+  .captured-fish input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+  }
+
+  .fisherdex-container {
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 24px;
+  }
 }

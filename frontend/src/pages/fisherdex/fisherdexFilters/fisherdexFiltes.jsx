@@ -18,7 +18,7 @@ export default function FisherdexFilters({ search, setSearch, setSoloNonCatturat
         <input type="text" placeholder="Search by fish name" value={search} onChange={(e) => setSearch(e.target.value)} />
       </div>
       <div className="captured-fish">
-        <a>non captured</a>
+        <a>non catturati</a>
         <input
           id="non-captured-checkbox"
           type="checkbox"

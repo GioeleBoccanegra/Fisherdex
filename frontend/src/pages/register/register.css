@@ -4,17 +4,27 @@
   padding: 40px 30px;
   background: #fff;
   border-radius: 14px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 25px rgba(33, 150, 243, 0.2);
+  /* ombra blu navbar */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #222;
+  transition: box-shadow 0.3s ease;
+}
+
+.register-page:hover {
+  box-shadow: 0 14px 40px rgba(33, 150, 243, 0.35);
 }
 
 .register-page h1 {
   text-align: center;
   margin-bottom: 30px;
   font-weight: 800;
-  font-size: 2.2rem;
-  color: #3366cc;
+  font-size: 2.4rem;
+  color: #2196f3;
+  /* colore navbar */
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  text-shadow: 0 1px 2px rgba(33, 150, 243, 0.6);
 }
 
 .registerContainer {
@@ -24,66 +34,104 @@
 .registerForm {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 22px;
 }
 
 .registerForm label {
   font-weight: 600;
   font-size: 1rem;
-  color: #444;
+  color: #333;
   margin-bottom: 6px;
   display: block;
+  user-select: none;
 }
 
+/* Input text, email, password, select (unificati) */
 .registerForm input[type="text"],
 .registerForm input[type="email"],
-.registerForm input[type="password"] {
-  padding: 12px 15px;
+.registerForm input[type="password"],
+.registerForm .form-select {
+  padding: 14px 18px;
   font-size: 1rem;
-  border: 2px solid #ccc;
-  border-radius: 10px;
-  transition: all 0.3s ease;
+  border: 2px solid #b0c4de;
+  /* azzurro chiaro */
+  border-radius: 12px;
+  transition: all 0.35s ease;
+  box-shadow: inset 0 2px 5px rgba(33, 150, 243, 0.05);
+  background-color: #131313da;
+  appearance: none;
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
 }
 
+/* Focus per input e select */
 .registerForm input[type="text"]:focus,
 .registerForm input[type="email"]:focus,
-.registerForm input[type="password"]:focus {
-  border-color: #3366cc;
-  box-shadow: 0 0 8px rgba(51, 102, 204, 0.3);
+.registerForm input[type="password"]:focus,
+.registerForm .form-select:focus {
+  border-color: #2196f3;
+  box-shadow: 0 0 10px rgba(33, 150, 243, 0.4);
   outline: none;
+  background-color: #131313b6;
+
+}
+
+.registerForm input[type="text"]::placeholder {
+  color: #ffffff;
+}
+
+/* Freccia personalizzata solo per select */
+.registerForm .form-select {
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7'%3e%3cpolygon points='0,0 10,0 5,7' fill='%232196f3'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 10px 7px;
+  padding-right: 40px;
+}
+
+/* Option standard */
+.registerForm .form-select option {
+  color: #000;
+  background-color: #fff;
 }
 
 .registerForm button[type="submit"] {
-  padding: 14px 0;
-  background-color: #3366cc;
+  padding: 16px 0;
+  background-color: #2196f3;
   color: white;
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   border: none;
-  border-radius: 12px;
+  border-radius: 14px;
   cursor: pointer;
-  transition: background-color 0.25s ease;
+  box-shadow: 0 6px 15px rgba(33, 150, 243, 0.4);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .registerForm button[type="submit"]:hover {
-  background-color: #274d9a;
+  background-color: #1769aa;
+  /* blu più scuro */
+  box-shadow: 0 8px 20px rgba(23, 105, 170, 0.6);
 }
 
 .login-link {
-  margin-top: 25px;
+  margin-top: 28px;
   text-align: center;
-  font-size: 0.95rem;
-  color: #555;
+  font-size: 1rem;
+  color: #444;
 }
 
 .login-link a {
-  color: #3366cc;
+  color: #2196f3;
   text-decoration: none;
   font-weight: 600;
   transition: color 0.3s ease;
 }
 
 .login-link a:hover {
-  color: #274d9a;
+  color: #1769aa;
   text-decoration: underline;
 }
