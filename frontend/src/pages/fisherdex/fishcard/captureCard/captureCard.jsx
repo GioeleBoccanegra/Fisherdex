@@ -6,7 +6,7 @@ import AlertConfermaEliminazione from "./alertConfermaEliminazione/alertConfermE
 import { fetchDeleteCatturaSpecie } from "../../../../api/fetchDeleteCatturaSpecie"
 import { getValidToken } from "../../../../utils/getValidToken";
 
-export default function CaptureCard({ specie, user, setShowCapture, showCapture, setIsAuthenticated, navigate }) {
+export default function CaptureCard({ specie, user, setShowCapture, showCapture }) {
   const [error, setError] = useState();
   const [catturaData, setCatturaData] = useState();
   const [loading, setLoading] = useState(false);
@@ -17,12 +17,16 @@ export default function CaptureCard({ specie, user, setShowCapture, showCapture,
 
   if (confermaEliminazione) {
 
-    const token = getValidToken(setError, setIsAuthenticated, navigate)
+    const token = getValidToken()
 
     const eliminizioneAvvenuta = async () => {
-      const avvenuta = await fetchDeleteCatturaSpecie(setError, catturaData.id, token);
-      if (avvenuta) {
-        window.location.reload();
+      try {
+        const avvenuta = await fetchDeleteCatturaSpecie(catturaData.id, token);
+        if (avvenuta) {
+          window.location.reload();
+        }
+      } catch (err) {
+        setError(err.message)
       }
     }
     eliminizioneAvvenuta();
@@ -34,9 +38,16 @@ export default function CaptureCard({ specie, user, setShowCapture, showCapture,
     const fetchCattura = async () => {
       setLoading(true);
 
-      const token = getValidToken(setError, setIsAuthenticated, navigate);
-      const datiCattura = await fetchGetCatturaSpecie(setError, user.id, specie.id, token);
-      setCatturaData(datiCattura);
+      const token = getValidToken();
+      try {
+
+        const datiCattura = await fetchGetCatturaSpecie(user.id, specie.id, token);
+        setCatturaData(datiCattura);
+      }
+      catch (err) {
+        setError(err.message);
+      }
+
       setLoading(false);
     }
     fetchCattura();
@@ -45,7 +56,7 @@ export default function CaptureCard({ specie, user, setShowCapture, showCapture,
       document.body.style.overflow = "auto";
     };
 
-  }, [navigate, setIsAuthenticated, specie.id, user.id])
+  }, [specie.id, user.id])
 
 
 

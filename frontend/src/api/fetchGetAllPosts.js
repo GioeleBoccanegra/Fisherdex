@@ -1,4 +1,4 @@
-export const fetchGetAllPosts = async (setError, token) => {
+export const fetchGetAllPosts = async (token) => {
 
   try {
 
@@ -23,9 +23,9 @@ export const fetchGetAllPosts = async (setError, token) => {
     return data
   } catch (err) {
     if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
-      setError("Impossibile connettersi al server. Verificare che il backend sia attivo.");
+      throw new Error("Impossibile connettersi al server. Verificare che il backend sia attivo.");
     } else {
-      setError("Errore nel recupero dei dati: " + (err.message || "Errore sconosciuto"));
+      throw new Error("Errore nel recupero dei dati: " + (err.message || "Errore sconosciuto"));
     }
   }
 

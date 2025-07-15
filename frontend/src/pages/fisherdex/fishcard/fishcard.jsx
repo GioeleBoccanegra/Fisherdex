@@ -4,10 +4,12 @@ import UploadFish from "./uploadFish/uploadFish";
 import { useState } from "react";
 import CaptureCard from "./captureCard/captureCard";
 
-export default function Fishcard({ specie, catturata, user, setIsAuthenticated, navigate, setModifica }) {
+
+export default function Fishcard({ specie, catturata, user, setModifica }) {
 
   const [showUploadFish, setShowUploadFish] = useState(false);
   const [showCapture, setShowCapture] = useState(false);
+
 
 
 
@@ -18,8 +20,8 @@ export default function Fishcard({ specie, catturata, user, setIsAuthenticated, 
 
   return (
     <div className="fishcard">
-      {showUploadFish && <UploadFish setShowUploadFish={setShowUploadFish} specie={specie} user={user} setModifica={setModifica} setIsAuthenticated={setIsAuthenticated} navigate={navigate} />}
-      {showCapture && <CaptureCard specie={specie} user={user} setShowCapture={setShowCapture} showCapture={showCapture} setIsAuthenticated={setIsAuthenticated} navigate={navigate} />}
+      {showUploadFish && <UploadFish setShowUploadFish={setShowUploadFish} specie={specie} user={user} setModifica={setModifica} />}
+      {showCapture && <CaptureCard specie={specie} user={user} setShowCapture={setShowCapture} showCapture={showCapture} />}
       <div className="fishdex-position">
         <p className="fishcard-number">N°{specie.id}</p>
         <div className="description">

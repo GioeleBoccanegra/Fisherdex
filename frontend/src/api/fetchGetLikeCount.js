@@ -1,4 +1,4 @@
-export const fetchGetLikeCount = async (catchId, setError, token) => {
+export const fetchGetLikeCount = async (catchId, token) => {
   try {
 
     const res = await fetch(`http://localhost:8080/api/likes/count/${catchId}`, {
@@ -11,9 +11,9 @@ export const fetchGetLikeCount = async (catchId, setError, token) => {
     return await res.json();
   } catch (err) {
     if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
-      setError("Impossibile connettersi al server. Verificare che il backend sia attivo.");
+      throw new Error("Impossibile connettersi al server. Verificare che il backend sia attivo.");
     } else {
-      setError("Errore nel recupero dei dati: " + (err.message || "Errore sconosciuto"));
+      throw new Error("Errore nel recupero dei dati: " + (err.message || "Errore sconosciuto"));
     }
   }
 };

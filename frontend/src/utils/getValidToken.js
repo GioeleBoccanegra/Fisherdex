@@ -1,9 +1,15 @@
-export const getValidToken = (setError, setIsAuthenticated, navigate) => {
+
+import { logout } from '../features/authSlice';
+import store from "../app/store";
+
+
+
+export const getValidToken = () => {
   const token = localStorage.getItem("token");
   if (!token) {
-    setError("Non Autenticato");
-    setIsAuthenticated(false);
-    navigate("/login");
+    store.dispatch(logout());
+    window.location.href = "/login";
+
     return null;
   }
   return token;

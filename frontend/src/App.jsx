@@ -10,11 +10,14 @@ import { useEffect, useState } from 'react'
 import Register from './pages/register/register'
 import { jwtDecode } from 'jwt-decode'
 import { PublicRoute } from './components/publicRoute'
+import { useDispatch, useSelector } from "react-redux";
+import { login, logout } from "./features/authSlice"
 
 function App() {
 
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const [checkingAuth, setCheckingAuth] = useState(true);
+  const dispatch = useDispatch();
 
 
   //controllo se loggato
@@ -23,7 +26,7 @@ function App() {
     const token = localStorage.getItem("token");
 
     if (!token) {
-      setIsAuthenticated(false);
+      dispatch(logout());
       setCheckingAuth(false);
       return;
     }
@@ -37,19 +40,19 @@ function App() {
       if (decoded.exp < now) {
         // Token scaduto
         localStorage.removeItem("token");
-        setIsAuthenticated(false);
+        dispatch(logout());
       } else {
-        setIsAuthenticated(true);
+        dispatch(login());
       }
     } catch (e) {
       // Token malformato o errore decodifica
       localStorage.removeItem("token");
       console.log(e);
-      setIsAuthenticated(false);
+      dispatch(logout());
     }
 
     setCheckingAuth(false);
-  }, []);
+  }, [dispatch]);
 
   //Finché checkingAuth è true, il componente App non renderizza le rotte e non fa redirect, ma mostra solo un placeholder (ad esempio: "Caricamento..." o uno spinner).
 
@@ -63,9 +66,9 @@ Solo dopo aver controllato il token (quindi quando checkingAuth diventa false) v
   return (
 
     <Router>
-      <Navbar setIsAuthenticated={setIsAuthenticated} isAuthenticated={isAuthenticated} />
+      <Navbar isAuthenticated={isAuthenticated} />
       <Routes>
-        <Route path='/login' element={<PublicRoute isAuthenticated={isAuthenticated}> <Login setIsAuthenticated={setIsAuthenticated} /></PublicRoute>} />
+        <Route path='/login' element={<PublicRoute isAuthenticated={isAuthenticated}> <Login /></PublicRoute>} />
         <Route
           path="/register"
           element={
@@ -74,9 +77,9 @@ Solo dopo aver controllato il token (quindi quando checkingAuth diventa false) v
             </PublicRoute>
           }
         />
-        <Route path='/' element={<ProtectedRoute isAuthenticated={isAuthenticated}><Main setIsAuthenticated={setIsAuthenticated} /></ProtectedRoute>} />
-        <Route path='/fisherdex' element={<ProtectedRoute isAuthenticated={isAuthenticated}><Fisherdex setIsAuthenticated={setIsAuthenticated} /></ProtectedRoute>} />
-        <Route path='/user' element={<ProtectedRoute isAuthenticated={isAuthenticated}><User setIsAuthenticated={setIsAuthenticated} /></ProtectedRoute>} />
+        <Route path='/' element={<ProtectedRoute isAuthenticated={isAuthenticated}><Main /></ProtectedRoute>} />
+        <Route path='/fisherdex' element={<ProtectedRoute isAuthenticated={isAuthenticated}><Fisherdex /></ProtectedRoute>} />
+        <Route path='/user' element={<ProtectedRoute isAuthenticated={isAuthenticated}><User /></ProtectedRoute>} />
 
       </Routes>
     </Router>

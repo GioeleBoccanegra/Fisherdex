@@ -1,5 +1,5 @@
 
-export const fetchUserData = async (setError, setIsAuthenticated, navigate, token) => {
+export const fetchUserData = async (token) => {
 
 
   try {
@@ -11,26 +11,25 @@ export const fetchUserData = async (setError, setIsAuthenticated, navigate, toke
     })
 
     if (res.status === 401 || res.status === 403) {
-      localStorage.removeItem("token");
-      setIsAuthenticated(false);
-      navigate("/login", { state: { sessionExpired: true } });
-      return;
+      //localStorage.removeItem("token");
+      //setIsAuthenticated(false);
+      //navigate("/login", { state: { sessionExpired: true } });
+      throw new Error("Unauthorized");
     }
 
 
     if (!res.ok) {
       const message = await res.text();
-      setError("Errore nel recupero dei dati: " + message);
-      return;
+      throw new Error("Errore nel recupero dei dati: " + message);
     }
 
     const data = await res.json();
     return data
   } catch (err) {
     if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
-      setError("Impossibile connettersi al server. Verificare che il backend sia attivo.");
+      throw new Error("Impossibile connettersi al server. Verificare che il backend sia attivo.");
     } else {
-      setError("Errore nel recupero dei dati: " + (err.message || "Errore sconosciuto"));
+      throw new Error("Errore nel recupero dei dati: " + (err.message || "Errore sconosciuto"));
     }
   }
 

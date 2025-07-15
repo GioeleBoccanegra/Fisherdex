@@ -1,7 +1,7 @@
 
-export const fecthPutUser = async (username, email, provinciaNew, setError, setEdit, fetchUserData, setIsAuthenticated, navigate) => {
+
+export const fecthPutUser = async (username, email, provinciaNew, token) => {
   try {
-    const token = localStorage.getItem("token");
     const res = await fetch("http://localhost:8080/api/users/me", {
       method: "PUT",
       headers: {
@@ -16,15 +16,12 @@ export const fecthPutUser = async (username, email, provinciaNew, setError, setE
     })
     if (!res.ok) {
       const errData = await res.text();
-      setError(errData || "Errore nell'aggiornamento dei dati");
-      return;
+      throw new Error(errData || "Errore nell'aggiornamento dei dati");
     }
-    const data = await res.json();
-    console.log(data)
 
-    setEdit(false);
-    fetchUserData(setError, setIsAuthenticated, navigate, token);
+
+    //fetchUserData(token);
   } catch (err) {
-    setError("Errore nell'aggiornamento dei dati: " + err.message);
+    throw new Error("Errore nell'aggiornamento dei dati: " + err.message);
   }
 }

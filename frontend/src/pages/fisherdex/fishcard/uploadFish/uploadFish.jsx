@@ -8,7 +8,8 @@ import Loader from "../../../../components/Loader";
 import { uploadImageToCloudinary } from "../../../../utils/uploadImageToCloudinary";
 import { getValidToken } from "../../../../utils/getValidToken";
 
-export default function UploadFish({ setShowUploadFish, specie, user, setModifica, setIsAuthenticated, navigate }) {
+
+export default function UploadFish({ setShowUploadFish, specie, user, setModifica }) {
   const [previewUrl, setPreviewUrl] = useState(null);
   const [provinciaFoto, setProvinciaFoto] = useState();
   const [descrizione, setDescrizione] = useState("");
@@ -19,10 +20,11 @@ export default function UploadFish({ setShowUploadFish, specie, user, setModific
 
 
 
+
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
-    const token = getValidToken(setError, setIsAuthenticated, navigate);
+    const token = getValidToken();
     if (!imageFile) {
       setError("Devi caricare un'immagine per proseguire");
       setLoading(false);
@@ -44,9 +46,14 @@ export default function UploadFish({ setShowUploadFish, specie, user, setModific
     const urlImmagine = await uploadImageToCloudinary(imageFile);
 
     const dataCaricamento = new Date().toISOString();
-    await fecthPostCattura(user, provinciaObj, specie, dataCaricamento, descrizione, urlImmagine, setError, setShowUploadFish, token);
-    setModifica(true);
-    setLoading(false);
+    try {
+      await fecthPostCattura(user, provinciaObj, specie, dataCaricamento, descrizione, urlImmagine, setShowUploadFish, token);
+      setModifica(true);
+      setLoading(false);
+    } catch (err) {
+      setError(err.message)
+    }
+
   };
 
   const handleChange = (e) => {
@@ -66,9 +73,13 @@ export default function UploadFish({ setShowUploadFish, specie, user, setModific
       setProvinciaFoto(user.provincia.nome)
 
 
+      try {
+        const dataProvince = await fetchRecuperaProvince()
+        setProvinceList(dataProvince)
+      } catch (err) {
+        setError(err.message)
+      }
 
-      const dataProvince = await fetchRecuperaProvince(setError)
-      setProvinceList(dataProvince)
 
 
     }

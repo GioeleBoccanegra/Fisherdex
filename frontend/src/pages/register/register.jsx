@@ -1,7 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./register.css";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Loader from "../../components/Loader"
 import { fetchGetProvinciaByNome } from "../../api/fetchGetProvinciaByNome"
@@ -13,11 +12,11 @@ function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
   const [error, setError] = useState("");
   const [provinceList, setProvinceList] = useState([]);
   const [selectedProvince, setSelectedProvince] = useState("");
-  const [loading, setLoading] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
 
 
@@ -29,8 +28,13 @@ function Register() {
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
-      const listaProvince = await fetchRecuperaProvince();
-      setProvinceList(listaProvince);
+      try {
+        const listaProvince = await fetchRecuperaProvince();
+        setProvinceList(listaProvince);
+      } catch (err) {
+        setError(err.message)
+      }
+
       setLoading(false);
     }
     loadData();
@@ -41,8 +45,18 @@ function Register() {
     e.preventDefault();
     setError("");
     setLoading(true);
-    const provincia = await fetchGetProvinciaByNome(selectedProvince);
-    await fetchPostUser(username, provincia, email, password, navigate, setError, setLoading);
+    try {
+      const provincia = await fetchGetProvinciaByNome(selectedProvince);
+      const result = await fetchPostUser(username, provincia, email, password);
+      if (result) {
+        navigate("/login", { state: { successoRegistrazione: true } })
+      }
+
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false);
+    }
 
 
   }

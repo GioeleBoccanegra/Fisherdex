@@ -1,4 +1,4 @@
-export const fecthPostCattura = async (user, provincia, specie, dataCattura, descrizione, imageUrl, setError, showUploadFish, token) => {
+export const fecthPostCattura = async (user, provincia, specie, dataCattura, descrizione, imageUrl, showUploadFish, token) => {
 
   try {
     const res = await fetch("http://localhost:8080/api/cattura", {
@@ -19,11 +19,11 @@ export const fecthPostCattura = async (user, provincia, specie, dataCattura, des
 
     } else {
       const errData = await res.text();
-      setError(errData || "error nell upload post")
+      throw new Error(errData || "error nell upload post")
     }
 
-  } catch (err) {
-    console.log(err);
+  } catch {
+    throw new Error("error nell upload post")
   }
 
 

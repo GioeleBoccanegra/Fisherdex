@@ -7,28 +7,40 @@ import { fetchUserData } from "../../api/fetchUserData"
 import Apost from "./apost/Apost"
 import { getValidToken } from "../../utils/getValidToken"; import "./main.css";
 import "./main.css";
+import { useDispatch } from "react-redux";
+import { logout } from "../../features/authSlice";
 
-export default function Main({ setIsAuthenticated }) {
+export default function Main() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
+  const dispatch = useDispatch();
 
 
   const getPosts = useCallback(async () => {
-    const token = getValidToken(setError, setIsAuthenticated, navigate);
+    const token = getValidToken();
+    try {
+      const userData = await fetchUserData(token);
+      if (!userData) {
+        setError("recuper user fallito");
+        return;
+      }
+      setUser(userData);
 
-    const userData = await fetchUserData(setError, setIsAuthenticated, navigate, token);
-    if (!userData) {
-      setError("recuper user fallito");
-      return;
+      const tuttiPosts = await fetchGetAllPosts(token);
+      setPosts(tuttiPosts);
+    } catch (err) {
+      if (err.message === "Unauthorized") {
+        localStorage.removeItem("token");
+        dispatch(logout())
+        navigate("/login", { state: { sessionExpired: true } });
+      } else {
+        setError(err.message);
+      }
     }
-    setUser(userData);
-
-    const tuttiPosts = await fetchGetAllPosts(userData, token);
-    setPosts(tuttiPosts);
-  }, [setIsAuthenticated, navigate])
+  }, [dispatch, navigate])
 
 
 
@@ -71,7 +83,7 @@ export default function Main({ setIsAuthenticated }) {
         <p>Nessun post trovato</p>
       ) : (
         filteredPosts.map(post => (
-          <Apost key={post.id} post={post} user={user} setIsAuthenticated={setIsAuthenticated} navigate={navigate} />
+          <Apost key={post.id} post={post} user={user} />
         ))
       )}
 

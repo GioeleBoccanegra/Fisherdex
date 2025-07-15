@@ -4,15 +4,18 @@ import './login.css';
 import { Link } from 'react-router-dom';
 import Loader from "../../components/Loader"
 import { fetchPostLogin } from '../../api/fetchPostLogin';
+import { useDispatch } from 'react-redux';
+import { login } from '../../features/authSlice';
 
 
-function Login({ setIsAuthenticated }) {
+function Login() {
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const location = useLocation();
   const [successoRegistrazione, setSuccessoRegistrazione] = useState(location.state?.successoRegistrazione || false);
@@ -24,8 +27,19 @@ function Login({ setIsAuthenticated }) {
 
     setSuccessoRegistrazione(false);
     setLoading(true);
+    try {
+      const data = await fetchPostLogin(email, password);
+      localStorage.setItem("token", data.token); // salva il token
+      localStorage.setItem("userId", data.userId);
+      dispatch(login());
+      navigate("/");
 
-    await fetchPostLogin(email, password, setIsAuthenticated, navigate, setError, setLoading);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+
   }
 
 

@@ -6,15 +6,18 @@ import EditPage from "./editPage/editPage";
 import Loader from "../../components/Loader";
 import { fetchUserData } from "../../api/fetchUserData"
 import { getValidToken } from "../../utils/getValidToken";
+import { useDispatch } from "react-redux";
+import { logout } from "../../features/authSlice";
 
 
-export default function User({ setIsAuthenticated }) {
+export default function User() {
 
   const [edit, setEdit] = useState(false);
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
 
 
@@ -24,19 +27,27 @@ export default function User({ setIsAuthenticated }) {
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
-      const token = getValidToken(setError, setIsAuthenticated, navigate);
-      const userData = await fetchUserData(setError, setIsAuthenticated, navigate, token);
-      if (!userData) {
-        // se fetchUserData fallisce, esci
-        return;
+      const token = getValidToken();
+      try {
+        const userData = await fetchUserData(token);
+        setUser(userData);
+
+        setUser(userData);
+      } catch (err) {
+        if (err.message === "Unauthorized") {
+          localStorage.removeItem("token");
+          dispatch(logout())
+          navigate("/login", { state: { sessionExpired: true } });
+        } else {
+          setError(err.message)
+        }
+
+      } finally {
+        setLoading(false)
       }
-
-      setUser(userData);
-
-      setLoading(false)
     }
     loadData();
-  }, [edit, navigate, setIsAuthenticated])
+  }, [edit, navigate, dispatch])
 
 
 
@@ -68,7 +79,7 @@ export default function User({ setIsAuthenticated }) {
 
       </div>}
 
-      {edit && <EditPage user={user} setEdit={setEdit} fetchUserData={fetchUserData} setIsAuthenticated={setIsAuthenticated} navigate={navigate} />}
+      {edit && <EditPage user={user} setEdit={setEdit} />}
     </div>
   );
 }

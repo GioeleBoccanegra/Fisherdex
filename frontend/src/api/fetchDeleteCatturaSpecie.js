@@ -1,4 +1,4 @@
-export const fetchDeleteCatturaSpecie = async (setError, catchId, token) => {
+export const fetchDeleteCatturaSpecie = async (catchId, token) => {
   try {
     const res = await fetch(`http://localhost:8080/api/cattura/post/${catchId}`, {
       method: "DELETE",
@@ -15,16 +15,15 @@ export const fetchDeleteCatturaSpecie = async (setError, catchId, token) => {
     else {
       // errore dal server
       const errorText = await res.text();
-      console.error("Errore nella cancellazione:", errorText);
-      return false;
+      throw new Error("Errore nella cancellazione:", errorText);
     }
 
 
   } catch (err) {
     if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
-      setError("Impossibile connettersi al server. Verificare che il backend sia attivo.");
+      throw new Error("Impossibile connettersi al server. Verificare che il backend sia attivo.");
     } else {
-      setError("Errore nel recupero dei dati: " + (err.message || "Errore sconosciuto"));
+      throw new Error("Errore nel recupero dei dati: " + (err.message || "Errore sconosciuto"));
     }
   }
 

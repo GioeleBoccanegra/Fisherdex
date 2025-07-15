@@ -1,4 +1,4 @@
-export const fetchRecuperaProvince = async (setError) => {
+export const fetchRecuperaProvince = async () => {
   try {
     const res = await fetch("http://localhost:8080/api/province/names");
 
@@ -17,9 +17,9 @@ export const fetchRecuperaProvince = async (setError) => {
 
   } catch (err) {
     if (err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
-      setError("Impossibile connettersi al server. Verificare che il backend sia attivo.");
+      throw new Error("Impossibile connettersi al server. Verificare che il backend sia attivo.");
     } else {
-      setError("Errore nel recupero dei dati: " + (err.message || "Errore sconosciuto"));
+      throw new Error("Errore nel recupero dei dati: " + (err.message || "Errore sconosciuto"));
     }
   }
 }

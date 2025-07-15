@@ -6,13 +6,18 @@ import { fetchRecuperaProvince } from "../../../api/fetchRecuperaProvince";
 import { fetchGetProvinciaByNome } from "../../../api/fetchGetProvinciaByNome";
 import { fecthPutUser } from "../../../api/fetchPutUser"
 import { getValidToken } from "../../../utils/getValidToken"
+import { useDispatch } from "react-redux";
+import { logout } from "../../../features/authSlice";
+import { useNavigate } from "react-router-dom";
 
-export default function EditPage({ user, setEdit, fetchUserData, setIsAuthenticated, navigate }) {
+export default function EditPage({ user, setEdit }) {
   const [username, setUsername] = useState(user.username);
   const [email, setEmail] = useState(user.email);
   const [provincia, setProvincia] = useState(user.provincia.nome);
   const [error, setError] = useState(null);
   const [provinceList, setProvinceList] = useState([]);
+  const dispatch = useDispatch()
+  const navigate = useNavigate();
 
 
 
@@ -22,8 +27,19 @@ export default function EditPage({ user, setEdit, fetchUserData, setIsAuthentica
     e.preventDefault();
     setError(null);
     const provinciaNew = await fetchGetProvinciaByNome(provincia);
-    const token = getValidToken(setError, setIsAuthenticated, navigate);
-    await fecthPutUser(username, email, provinciaNew, setError, setEdit, fetchUserData, token, setIsAuthenticated, navigate)
+    const token = getValidToken();
+    try {
+      await fecthPutUser(username, email, provinciaNew, token)
+      setEdit(false);
+    } catch (err) {
+      if (err.message === "Unauthorized") {
+        localStorage.removeItem("token");
+        dispatch(logout())
+        navigate("/login", { state: { sessionExpired: true } });
+      } else {
+        setError(err.message)
+      }
+    }
 
 
   }

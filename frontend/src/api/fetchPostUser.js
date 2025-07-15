@@ -1,5 +1,5 @@
 
-export const fetchPostUser = async (username, provincia, email, password, navigate, setError, setLoading) => {
+export const fetchPostUser = async (username, provincia, email, password) => {
   try {
     const res = await fetch("http://localhost:8080/api/users", {
       method: "POST",
@@ -9,16 +9,14 @@ export const fetchPostUser = async (username, provincia, email, password, naviga
       body: JSON.stringify({ username, provincia, email, password })
     })
     if (res.ok) {
-      navigate("/login", { state: { successoRegistrazione: true } });
+      return true;
     } else {
       const errData = await res.text();
-      setError(errData || "errore nella registrazione")
+      throw new Error(errData || "errore nella registrazione")
     }
 
 
-  } catch (err) {
-    console.log(err);
-  } finally {
-    setLoading(false);
+  } catch {
+    throw new Error("errore duarnte la registrazione, riprovare")
   }
 }

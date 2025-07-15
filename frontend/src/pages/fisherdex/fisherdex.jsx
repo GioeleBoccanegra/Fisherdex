@@ -9,10 +9,12 @@ import { fetchUserData } from "../../api/fetchUserData";
 import { fetchGetSpecie } from "../../api/fetchGetSpecie"
 import { useMemo } from "react";
 import { getValidToken } from "../../utils/getValidToken";
+import { useDispatch } from "react-redux";
+import { logout } from "../../features/authSlice";
 
 
 
-export default function Fisherdex({ setIsAuthenticated }) {
+export default function Fisherdex() {
   const [error, setError] = useState(null);
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
@@ -22,35 +24,55 @@ export default function Fisherdex({ setIsAuthenticated }) {
   const [postList, setPostList] = useState([]);
   const [soloNonCatturati, setSoloNonCatturati] = useState(false);
   const [modifica, setModifica] = useState(false);
+  const dispatch = useDispatch();
 
 
 
 
 
   const getCattureUtente = useCallback(async () => {
-    const token = getValidToken(setError, setIsAuthenticated, navigate);
-    const userData = await fetchUserData(setError, setIsAuthenticated, navigate, token)
-    if (!userData) {
-      // se fetchUserData fallisce, esci
-      setError("impossibile verificare l'utente")
-      return;
+    const token = getValidToken();
+    try {
+      const userData = await fetchUserData(token)
+      if (!userData) {
+        // se fetchUserData fallisce, esci
+        setError("impossibile verificare l'utente")
+        return;
+      }
+
+
+      setUser(userData)
+
+      const PostsUser = await fetchGetPostsUser(userData, token)
+      setPostList(PostsUser);
+    } catch (err) {
+      if (err.message === "Unauthorized") {
+        localStorage.removeItem("token");
+        dispatch(logout())
+        navigate("/login", { state: { sessionExpired: true } });
+      } else {
+        setError(err.message)
+      }
     }
-
-
-    setUser(userData)
-
-    const PostsUser = await fetchGetPostsUser(setError, userData, token)
-    setPostList(PostsUser);
-  }, [setError, setIsAuthenticated, navigate]);
+  }, [setError, dispatch, navigate]);
 
 
 
   const fetchSpeciesData = useCallback(async () => {
-    const token = getValidToken(setError, setIsAuthenticated, navigate);
-
-    const datiSpecie = await fetchGetSpecie(token, setIsAuthenticated, navigate, setError);
-    setSpecies(datiSpecie);
-  }, [setError, setIsAuthenticated, navigate])
+    const token = getValidToken();
+    try {
+      const datiSpecie = await fetchGetSpecie(token);
+      setSpecies(datiSpecie);
+    } catch (err) {
+      if (err.message === "Unauthorized") {
+        localStorage.removeItem("token");
+        dispatch(logout())
+        navigate("/login", { state: { sessionExpired: true } });
+      } else {
+        setError(err.message)
+      }
+    }
+  }, [setError, dispatch, navigate])
 
   useEffect(() => {
 
@@ -102,7 +124,6 @@ export default function Fisherdex({ setIsAuthenticated }) {
                   specie={specie}
                   catturata={catturata}
                   user={user}
-                  setIsAuthenticated={setIsAuthenticated}
                   navigate={navigate}
                   setModifica={setModifica}
                 />

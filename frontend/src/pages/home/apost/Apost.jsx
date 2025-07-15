@@ -4,11 +4,13 @@ import { fetchGetLikeCount } from "../../../api/fetchGetLikeCount"
 import { fetchGetHasLiked } from "../../../api/fetchgetHasLike";
 import { fetchPostToggleLike } from "../../../api/fetchPostToggleLike"
 import { getValidToken } from "../../../utils/getValidToken";
+import { useNavigate } from "react-router-dom";
 
-export default function Apost({ post, user, setIsAuthenticated, navigate }) {
+export default function Apost({ post, user }) {
   const [error, setError] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
   const [hasLiked, setHasLiked] = useState(false);
+  const navigate = useNavigate();
 
 
   function formatSqlDate(dataCattura) {
@@ -24,33 +26,38 @@ export default function Apost({ post, user, setIsAuthenticated, navigate }) {
   useEffect(() => {
 
     const loadLikeData = async () => {
-      const token = getValidToken(setError, setIsAuthenticated, navigate);
-      const count = await fetchGetLikeCount(post.id, setError, token)
-      setLikeCount(count);
+      const token = getValidToken();
+      try {
+        const count = await fetchGetLikeCount(post.id, token)
+        setLikeCount(count);
 
-      const liked = await fetchGetHasLiked(user.id, post.id, setError, token);
-      setHasLiked(liked);
+        const liked = await fetchGetHasLiked(user.id, post.id, token);
+        setHasLiked(liked);
+      } catch (err) {
+        setError(err.message)
+      }
     };
     if (post?.id) {
       loadLikeData()
     }
 
 
-  }, [post, navigate, setIsAuthenticated, user.id])
+  }, [post, navigate, user.id])
 
 
 
   const handleLike = async () => {
-    const token = getValidToken(setError, setIsAuthenticated, navigate);
-    await fetchPostToggleLike(user.id, post.id, setError, token);
-    console.log(post.dataCattura)
-    // ricarico stato dei like
+    const token = getValidToken();
+    try {
+      await fetchPostToggleLike(user.id, post.id, token);
 
-    const count = await fetchGetLikeCount(post.id, setError, token);
-    const liked = await fetchGetHasLiked(user.id, post.id, setError, token);
-    setLikeCount(count);
-    setHasLiked(liked)
-
+      const count = await fetchGetLikeCount(post.id, token);
+      const liked = await fetchGetHasLiked(user.id, post.id, token);
+      setLikeCount(count);
+      setHasLiked(liked)
+    } catch (err) {
+      setError(err.message)
+    }
   }
 
 
