@@ -9,7 +9,7 @@ import User from './pages/user/user'
 import { useEffect, useState } from 'react'
 import Register from './pages/register/register'
 import { jwtDecode } from 'jwt-decode'
-import { PublicRoute } from './components/publicRoute'
+import { PublicRoute } from './components/PublicRoute'
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "./features/authSlice"
 
