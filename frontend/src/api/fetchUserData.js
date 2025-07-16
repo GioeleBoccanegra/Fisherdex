@@ -11,9 +11,7 @@ export const fetchUserData = async (token) => {
     })
 
     if (res.status === 401 || res.status === 403) {
-      //localStorage.removeItem("token");
-      //setIsAuthenticated(false);
-      //navigate("/login", { state: { sessionExpired: true } });
+
       throw new Error("Unauthorized");
     }
 

@@ -129,7 +129,6 @@ public class UserController {
       return ResponseEntity.status(401).body("token mancante o malformato");
     }
     String token = authHeader.substring(7);
-    System.err.println(userUpdateDTO.getProvincia());
 
     if (!jwtUtils.validateJwtToken(token)) {
       return ResponseEntity.status(401).body("token non valido");
@@ -142,8 +141,20 @@ public class UserController {
       return ResponseEntity.status(404).body("Utente non trovato");
     }
 
-    userOpt.get().setUsername(userUpdateDTO.getUsername());
-    userOpt.get().setEmail(userUpdateDTO.getEmail());
+    if (!userOpt.get().getUsername().equals(userUpdateDTO.getUsername())) {
+      if (userService.usernameExists(userUpdateDTO.getUsername())) {
+        return ResponseEntity.status(409).body("nome utente già presente");
+      }
+      userOpt.get().setUsername(userUpdateDTO.getUsername());
+    }
+
+    if (!userOpt.get().getEmail().equals(userUpdateDTO.getEmail())) {
+      if (userService.emailExists(userUpdateDTO.getEmail())) {
+        return ResponseEntity.status(409).body("mail già presente");
+      }
+      userOpt.get().setEmail(userUpdateDTO.getEmail());
+    }
+
     userOpt.get().setProvincia(userUpdateDTO.getProvincia());
 
     User updatedUser = userService.saveUser(userOpt.get());
