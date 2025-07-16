@@ -47,20 +47,20 @@ function Login() {
   return (
     <div className='login-page'>
       <div className='login-container'>
-        <h2>Login</h2>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        {successoRegistrazione && <p style={{ color: "green" }}>Registrazione effettuata con successo, ora puoi accedere con le tue credenziali</p>}
+        <h2>Accedi</h2>
+        {error && <p style={{ color: "red" }} aria-live="assertive">{error}</p>}
+        {successoRegistrazione && <p style={{ color: "green" }} aria-live="polite">Registrazione effettuata con successo, ora puoi accedere con le tue credenziali</p>}
         <form onSubmit={handleSubmit}>
           <div className='email-forum-data'>
-            <label>Email:</label>
-            <input value={email} type='email' onChange={(e) => setEmail(e.target.value)} />
+            <label htmlFor='email'>Email:</label>
+            <input id='email' value={email} type='email' onChange={(e) => setEmail(e.target.value)} required />
           </div>
           <div className='password-forum-data'>
-            <label>Password:</label>
-            <input value={password} type='password' onChange={(e) => setPassword(e.target.value)} />
+            <label htmlFor='password'>Password:</label>
+            <input id='password' value={password} type='password' onChange={(e) => setPassword(e.target.value)} required />
           </div>
           <div className='button-forum'>
-            <button type='submit'>Login</button>
+            <button type='submit'>Accedi</button>
           </div>
           {loading && <Loader />}
 

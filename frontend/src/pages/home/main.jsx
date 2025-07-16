@@ -18,6 +18,10 @@ export default function Main() {
   const [user, setUser] = useState(null);
   const dispatch = useDispatch();
 
+  const now = new Date();
+  const sevenDaysAgo = new Date(now);
+  sevenDaysAgo.setDate(now.getDate() - 7);
+
 
   const getPosts = useCallback(async () => {
     const token = getValidToken();
@@ -54,30 +58,32 @@ export default function Main() {
     loadData();
   }, [getPosts])
 
-  const sameProvincePosts = posts
+  const recentSameProvincePosts = posts
     .filter(post =>
       post.user?.id !== user.id &&
-      post.provincia?.id === user.provincia?.id
+      post.provincia?.id === user.provincia?.id &&
+      new Date(post.dataCattura) >= sevenDaysAgo
     )
     .sort((a, b) => new Date(b.dataCattura) - new Date(a.dataCattura));
 
   const otherPosts = posts
     .filter(post =>
       post.user?.id !== user.id &&
-      post.provincia?.id !== user.provincia?.id
+      (
+        post.provincia?.id !== user.provincia?.id ||
+        new Date(post.dataCattura) < sevenDaysAgo
+      )
     )
     .sort((a, b) => new Date(b.dataCattura) - new Date(a.dataCattura));
 
-  const filteredPosts = [...sameProvincePosts, ...otherPosts];
-
-
+  const filteredPosts = [...recentSameProvincePosts, ...otherPosts];
 
   return (
 
     <div className="main-all">
 
-      <h1 className="main-title">Fisherdex</h1>
-      {error && <div className="error-message">{error}</div>}
+      <h1 className="main-title">Nuove catture</h1>
+      {error && <div className="error-message" aria-live="assertive">{error}</div>}
       {loading && <Loader />}
       {!loading && filteredPosts.length === 0 ? (
         <p>Nessun post trovato</p>

@@ -61,14 +61,14 @@ export default function EditPage({ user, setEdit }) {
   return (
     <div className="edit-page" style={{ color: "black" }}>
       <h2 className="edit-title">Modifica i tuoi dati</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p style={{ color: "red" }} aria-live="assertive">{error}</p>}
       <form className="edit-form" onSubmit={salva}>
         <div className="edit-content">
           <div className="image-edit-section">
-            <img src={defaultImage} alt="User" />
+            <img src={defaultImage} alt="Foto profilo utente" />
           </div>
           <div className="data-edit-section">
-            <label>Username</label>
+            <label htmlFor="username">Username</label>
             <input
               type="text"
               placeholder={user.username}
@@ -77,22 +77,24 @@ export default function EditPage({ user, setEdit }) {
               required
               minLength={3}
               maxLength={20}
+              id="username"
             />
-            <label>Provincia</label>
-            <select value={provincia} onChange={(e) => setProvincia(e.target.value)}>
+            <label htmlFor="provincia">Provincia</label>
+            <select id="provincia" value={provincia} onChange={(e) => setProvincia(e.target.value)}>
               <option value="">Seleziona una provincia</option>
               {provinceList.map((nome) => (
                 <option key={nome} value={nome}>{nome}</option>
               ))}
 
             </select>
-            <label>Email</label>
+            <label htmlFor="email">Email</label>
             <input
               type="email"
               placeholder={user.email}
               onChange={(e) => setEmail(e.target.value)}
               value={email}
               required
+              id="email"
             />
           </div>
         </div>

@@ -22,6 +22,7 @@
   gap: 4px;
   justify-content: center;
   align-items: center;
+  flex: 0.50;
 }
 
 .post-username {
@@ -43,6 +44,7 @@
   object-fit: cover;
   border-radius: 12px;
   border: 1px solid #ddd;
+  flex: 0.50;
 }
 
 /* ℹ️ Info specie, provincia, descrizione */
@@ -73,6 +75,7 @@
   /* 🔁 Compatibilità */
   max-width: 80vw;
   text-align: center;
+  flex: 2.75;
 }
 
 /* ❤️ Like section */
@@ -80,6 +83,7 @@
   display: flex;
   justify-content: center;
   margin-top: 12px;
+  flex-direction: 0.25;
 }
 
 .like-sectionj button {

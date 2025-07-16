@@ -67,7 +67,7 @@ export default function CaptureCard({ specie, user, setShowCapture, showCapture 
 
       <div className="capture-card" onClick={(e) => e.stopPropagation()} >
         {loading && <Loader />}
-        {error && <p className="error-message">{error}</p>}
+        {error && <p className="error-message" aria-live="assertive">{error}</p>}
         {!loading && catturaData && (
           <div className="button-section-button-card">
             <div className="capture-card-data">
@@ -84,8 +84,8 @@ export default function CaptureCard({ specie, user, setShowCapture, showCapture 
               {alertCard && <AlertConfermaEliminazione setConfermaEliminazione={setConfermaEliminazione} setAlertCard={setAlertCard} />}
 
             </div>
-            <button onClick={() => { setAlertCard(true) }}>elimina</button>
-            <button className="close-capture-card-button" onClick={() => { setShowCapture(!showCapture) }}>chiudi</button>
+            <button type="button" onClick={() => { setAlertCard(true) }}>elimina</button>
+            <button type="button" className="close-capture-card-button" onClick={() => { setShowCapture(false) }}>chiudi</button>
           </div>
 
         )}

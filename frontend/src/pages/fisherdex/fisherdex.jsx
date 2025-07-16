@@ -110,12 +110,12 @@ export default function Fisherdex() {
     <div className="fisherdex-wrapper">
       <h1 className="fisherdex-title">Your Fisherdex</h1>
       {loading && <Loader />}
-      {error && <p className="error-message">{error}</p>}
+      {error && <p className="error-message" aria-live="assertive">{error}</p>}
       {!loading && !error && (
         <>
           <FisherdexFilters search={search} setSearch={setSearch} setSoloNonCatturati={setSoloNonCatturati} />
           <div className="fisherdex-container">
-            {filteredSpecies.length === 0 && <p className="no-results">No results found</p>}
+            {filteredSpecies.length === 0 && <p className="no-results">nessun risultato trovato</p>}
             {filteredSpecies.map((specie) => {
               const catturata = postList?.some(post => post.specie?.id === specie.id);
               return (

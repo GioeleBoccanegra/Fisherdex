@@ -27,12 +27,12 @@ export default function Fishcard({ specie, catturata, user, setModifica }) {
         <div className="description">
           <h2 className="fishcard-name">{specie.name}</h2>
         </div>
-        <img src={rarity_img} alt="rarità pesce :`${specie.rarita}`" className="rarity-img"></img>
+        <img src={rarity_img} alt={`rarità pesce :${specie.rarita}`} className="rarity-img" />
       </div>
 
 
       <div className="image-section">
-        <img src={specie.imageUrl} alt="fish" className="fishcard-image"></img>
+        <img src={specie.imageUrl} alt={`immagine di ${specie.name}`} className="fishcard-image"></img>
 
       </div>
 
@@ -40,10 +40,14 @@ export default function Fishcard({ specie, catturata, user, setModifica }) {
       <div className="captured-section">
         {catturata && (
           <div className="captured-div">
-            <button onClick={() => { setShowCapture(!showCapture) }}>visualizza cattura</button>
+            <button onClick={() => { setShowCapture(!showCapture) }} className="visualizza-cattura">visualizza cattura</button>
           </div>)}
-        {!catturata && <p className="fishcard-non-captured">non catturata</p> && <button className="upload-image" onClick={() => setShowUploadFish(true)}>upload fish</button>}
-
+        {!catturata && (
+          <>
+            <p className="fishcard-non-captured">non catturata</p>
+            <button className="upload-image" onClick={() => setShowUploadFish(true)}>carica cattura</button>
+          </>
+        )}
 
       </div>
     </div>

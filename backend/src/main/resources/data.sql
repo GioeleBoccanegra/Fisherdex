@@ -54,7 +54,7 @@ INSERT INTO specie (id,name, scientific_name, rarita, image_url, periodo, descri
   'Bavosa (Blennius)', 
   'Blennius', 
   1, 
-  '/specie_img/Blennis.webp', 
+  '/specie_img/Blennius.webp', 
   'Primavera - Autunno', 
   'La Bavosa fa parte di un gruppo di pesci piccoli molto diffusi nel mediterraneo le cui lunghezze massime vanno da 8 a 10 cm e fa parte della famiglia dei blennidi. Sono specie ovipare, a fecondazione esterna, con uova demerse che vengono rilasciate adese alle pareti di un nido, deposte in un unico strato per facilitarne gli scambi gassosi. I nidi possono essere costituiti da gusci vuoti di bivalvi morti, spaccature o fori nelle rocce. I maschi possono ricevere ovature da parte di più femmine; dopo la deposizione, le cure parentali vengono svolte dal maschio, fino alla schiusa. Tali cure consistono nella protezione delle uova rimanendo a guardia del nido (per più del 95% del tempo), nella ventilazione delle uova, ottenuta con movimenti ritmici delle pinne pettorali, nella pulizia del nido, rimuovendo detriti e uova attaccate da infezioni o morte. Le larve pelagiche, liberamente natanti, non ricevono ulteriori cure. La famiglia dei Blennidae comprende 53 generi per complessive 345 specie. In cucina si usa normalmente per le zuppe di pesce o anche nelle fritture miste.'
 ), (
@@ -160,7 +160,7 @@ INSERT INTO specie (id,name, scientific_name, rarita, image_url, periodo, descri
   'Sarago pizzuto',
   'Diplodus puntazzo',
   3,
-  '/specie_img/Duplodus_puntazzo.webp',
+  '/specie_img/Diplodus_puntazzo.webp',
   'Tutto l''anno',
   'Il Sarago pizzuto è molto simile al Sarago maggiore ma se ne distingue per il profilo del muso molto più allungato (da qui il nome) ed arriva anch''esso a pesare più di 2 Kg e 48 cm di lunghezza ma non è buono come l''altro anche perché è pieno di lische tanto che non è molto ricercato. Il colore del corpo è sempre argentato, con riflessi più scuri sul dorso e 8 o 10 bande verticali sui fianchi che possono scomparire negli esemplari più grossi. Anch''esso è gregario da giovane, successivamente diviene solitario. E'' ermafrodita, ma non sono sporadici i casi in cui il sesso è primario. Anche questo pesce, come gli altri saraghi è buono sia alla griglia che al forno ma anche in umido in padella con un tritato di prezzemolo, aglio, olio e cotto con un bicchiere di vino a fuoco medio è ottimo.'
 ),
@@ -424,7 +424,7 @@ INSERT INTO specie (id,name, scientific_name, rarita, image_url, periodo, descri
   'Leccia amia',
   'Lichia amia',
   4,
-  '/specie_img/Lichia_Amia.webp',
+  '/specie_img/Lichia_amia.webp',
   'Primavera - Estate',
   'La Leccia  è una specie abbastanza comune nel Mediterraneo ha il corpo allungato di forma romboidale molto compresso ai fianchi ed il muso acuto. Ha 2 pinne dorsali la prima piccola e spinosa, la seconda contigua e con la parte anteriore più ampia di quella posteriore. La pinna anale speculare rispetto alla seconda dorsale, anche come andamento dell''ampiezza della pinna, pettorali e ventrali piccole e poco allungate, caudale a due lobi ma non molto ampia. Le pinne sono di colore grigio con le estremità nere. Il corpo è di colore grigio-verdastro sul dorso, fianchi argentei e linea laterale nerastra. Arriva fino a due metri di lunghezza e a 50 kg di peso, molto frequente la taglia commerciale di qualche kg (tra 40 e 100cm). Predilige sia i fondali sabbiosi, ma spesso si porta intorno alle secche rocciose per cacciare, che le acque portuali e le foci dei fiumi che può risalire anche per lunghi tratti. La Leccia è carnivora e le sue prede preferite sono cefali (soprattutto vivi), triglie, cefalopodi, sardine. Si cattura sia con le reti a strascico, con i le volanti e con i palangari.'
 ),
@@ -480,7 +480,7 @@ INSERT INTO specie (id,name, scientific_name, rarita, image_url, periodo, descri
   'Ricciola',
   'Seriola dumerili',
   5,
-  '/specie_img/Seriola_dumerili1.webp',
+  '/specie_img/Seriola_dumerili.webp',
   'Estate - Autunno',
   'La Ricciola  è un bellissimo pesce dal corpo allungato, la bocca ampia con mandibola inferiore prominente, linea laterale incurvata con 2 pinne dorsali di cui la prima piccola e spinosa la seconda lunga con parte anteriore più alta rispetto alla parte finale, pinna caudale è bilobata ed appuntita, pinne pettorali e ventrali piccole. Il colore è grigio-azzurro con riflessi rosei sul dorso e presenta una banda giallastra che percorre i fianchi, ed un''altra scura sulla testa, il ventre è argenteo. Può raggiungere i due metri di lunghezza (comunemente e'' tra i 30-50 cm) e pesare fino a 50 kg. Specie pelagica che vive generalmente tra 20 e 70 metri di profondità, si avvicina alle coste nei periodi di riproduzione. Specie pelagica che vive generalmente tra 20 e 70 metri di profondità, si avvicina alle coste nei periodi di riproduzione. Presente in tutto il Mediterraneo e si pesca tutto l''anno, ma in modo particolare nei mesi primaverili ed estivi quando si avvicina alle coste con   reti a strascico, reti volanti e palangari. Le sue carni sono ottime e sui nostri mercati è presente abbastanza regolarmente e viene commercializzata fresca, congelata, affumicata e salata ed essiccata.'
 ),

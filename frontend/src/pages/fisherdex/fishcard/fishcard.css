@@ -31,7 +31,7 @@
 .rarity-img {
   margin: 0;
   width: 80px;
-  height: 40px;
+  height: 80px;
   object-fit: cover;
 
 }
@@ -115,6 +115,11 @@
   color: black;
 }
 
+.visualizza-cattura {
+  background-color: green;
+
+}
+
 @media (min-width: 768px) {
   .fishcard {
     flex-direction: row;
@@ -122,6 +127,12 @@
     align-items: center;
     gap: 20px;
     max-width: 700px;
+  }
+
+
+
+  .image-section {
+    flex: 0.75;
   }
 
   .description {
@@ -133,13 +144,20 @@
     min-width: 160px;
   }
 
+  .fishcard-name {
+    text-align: center;
+  }
+
   .captured-section {
     align-items: flex-end;
     min-width: 130px;
+    flex: 0.5;
+
   }
 
   .fishdex-position {
     min-width: 70px;
+    flex: 0.5;
   }
 
   .fishcard-image {

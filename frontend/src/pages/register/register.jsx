@@ -63,18 +63,19 @@ function Register() {
 
   return (
     <div className='register-page'>
-      <h1>registrati</h1>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      <h1>Registrati</h1>
+      {error && <p style={{ color: "red" }} aria-live="assertive">{error}</p>}
 
       <div className="registerContainer">
         <form className="registerForm" onSubmit={handleRegister}>
           <div>
-            <label >Username</label>
-            <input className="username-input" type="text" placeholder="pescatore126" value={username} onChange={(e) => setUsername(e.target.value)}></input>
+            <label htmlFor="username">Username</label>
+            <input id="username" className="username-input" type="text" placeholder="pescatore126" value={username} onChange={(e) => setUsername(e.target.value)} required />
           </div>
           <div>
-            <label>Provincia</label>
+            <label htmlFor="provincia">Provincia</label>
             <select
+              id="provincia"
               className="form-select"
               value={selectedProvince}
               onChange={(e) => setSelectedProvince(e.target.value)}
@@ -88,19 +89,19 @@ function Register() {
             </select>
           </div>
           <div>
-            <label>Email</label>
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}></input>
+            <label htmlFor="email">Email</label>
+            <input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
           </div>
           <div>
-            <label>password</label>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
+            <label htmlFor="password">Password</label>
+            <input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
           </div>
-          <button type="submit" >register</button>
+          <button type="submit" >Registrati</button>
         </form>
       </div>
       {loading && <Loader />}
       <div className="login-link">
-        <p>Hai già un account? <Link to="/login">Login</Link></p>
+        <p>Hai già un account? <Link to="/login">Accedi</Link></p>
       </div>
 
 

@@ -3,17 +3,24 @@ import logo from "../assets/logo-fisherdex.jpeg";
 import "./navbar.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { logout } from "../features/authSlice";
+import { useSelector } from "react-redux";
 
-export default function Navbar({ setIsAuthenticated, isAuthenticated }) {
+
+export default function Navbar() {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+  const dispatch = useDispatch();
 
 
 
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    setIsAuthenticated(false);
+    dispatch(logout());
+
     navigate("/login");
   }
 
@@ -44,7 +51,7 @@ export default function Navbar({ setIsAuthenticated, isAuthenticated }) {
 
             <Link to="/user" onClick={() => { setMenuOpen(false) }}>User</Link>
             <Link to="/fisherdex" onClick={() => { setMenuOpen(false) }}>Fisherdex</Link>
-            < div className="logout-navbar-button"> <button onClick={() => handleLogout(setIsAuthenticated)}>logout</button></div>
+            < div className="logout-navbar-button"> <button onClick={() => handleLogout()}>logout</button></div>
           </div>
 
 

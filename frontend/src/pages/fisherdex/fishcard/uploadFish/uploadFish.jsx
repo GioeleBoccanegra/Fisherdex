@@ -110,10 +110,11 @@ export default function UploadFish({ setShowUploadFish, specie, user, setModific
 
           <form onSubmit={handleSubmit}>
             <div className="upload-fish-form-image">
-              <label>Upload Fish</label>
+              <label htmlFor="immagine-pesce">carica cattura</label>
 
               <div className="upload-fish-form-image-input">
                 <input
+                  id="immagine-pesce"
                   type="file"
                   accept="image/*"
                   capture="environment"
@@ -149,8 +150,8 @@ export default function UploadFish({ setShowUploadFish, specie, user, setModific
               )}
 
 
-              <label>Provincia</label>
-              <select value={provinciaFoto} onChange={(e) => setProvinciaFoto(e.target.value)}>
+              <label htmlFor="provincia">Provincia</label>
+              <select id="provincia" value={provinciaFoto} onChange={(e) => setProvinciaFoto(e.target.value)}>
                 <option value="">Seleziona una provincia</option>
                 {provinceList.map((nome) => (
                   <option key={nome} value={nome}>{nome}</option>
@@ -171,7 +172,7 @@ export default function UploadFish({ setShowUploadFish, specie, user, setModific
                 />
               </div>
 
-              {error && <p className="error-message">{error}</p>}
+              {error && <p className="error-message" aria-live="assertive">{error}</p>}
 
 
 
@@ -180,8 +181,8 @@ export default function UploadFish({ setShowUploadFish, specie, user, setModific
 
               {!loading && <div className="button-section-form">
 
-                <button type="submit" >Upload</button>
-                <button onClick={() => setShowUploadFish(false)} >Close</button>
+                <button type="submit" >Carica</button>
+                <button type="button" onClick={() => setShowUploadFish(false)} >Chiudi</button>
               </div>}
 
             </div>
@@ -193,6 +194,6 @@ export default function UploadFish({ setShowUploadFish, specie, user, setModific
 
 
       </div>
-    </ div>
+    </div>
   );
 }

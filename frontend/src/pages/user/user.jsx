@@ -56,14 +56,16 @@ export default function User() {
   }
 
 
-
+  //aria-live="assertive" dice al browser e al lettore di schermo:
+  //Appena questo contenuto cambia, annuncialo subito, anche interrompendo ciò che stai leggendo”.
 
 
   return (
 
 
     <div className="user-container">
-      {error && <div className="error-message">{error}</div>}
+
+      {error && <div className="error-message" aria-live="assertive">{error}</div>}
       <h1>User</h1>
       {loading && <Loader />}
       {!loading && !error && <div className="user-card">
@@ -75,7 +77,7 @@ export default function User() {
         <p className="user-data">username: {user?.username}</p>
         <p className="user-data">provincia: {user?.provincia?.nome}</p>
         <p className="user-data">email: {user?.email}</p>
-        <button onClick={() => editData()} className="edit-data">Edit data</button>
+        <button type="button" onClick={() => editData()} className="edit-data">Edit data</button>
 
       </div>}
 

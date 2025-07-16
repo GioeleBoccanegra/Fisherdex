@@ -78,9 +78,10 @@ export default function Apost({ post, user }) {
         <p><strong>Provincia:</strong> {post.provincia?.nome}</p>
         <p className="post-desc">{post.descrizione}</p>
       </div>
-      {error && <div className="error-message">{error}</div>}
+      {error && <div className="error-message" aria-live="assertive">{error}</div>}
       <div className="like-sectionj">
         <button
+          type="button"
           className={hasLiked ? "liked" : ""}
           onClick={handleLike}
           aria-label={hasLiked ? "Togli Mi Piace" : "Metti Mi Piace"}
