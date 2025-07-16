@@ -1,7 +1,7 @@
 import "./Apost.css";
 import { useEffect, useState } from "react";
 import { fetchGetLikeCount } from "../../../api/fetchGetLikeCount"
-import { fetchGetHasLiked } from "../../../api/fetchgetHasLike";
+import { fetchGetHasLiked } from "../../../api/fetchGetHasLike";
 import { fetchPostToggleLike } from "../../../api/fetchPostToggleLike"
 import { getValidToken } from "../../../utils/getValidToken";
 import { useNavigate } from "react-router-dom";
