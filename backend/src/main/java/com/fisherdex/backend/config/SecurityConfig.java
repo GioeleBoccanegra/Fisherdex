@@ -95,7 +95,9 @@ public class SecurityConfig {
     CorsConfiguration configuration = new CorsConfiguration();
 
     // Permetti le richieste provenienti da questa origine (il tuo frontend React)
-    configuration.setAllowedOrigins(List.of("http://localhost:5173"));
+    configuration.setAllowedOrigins(List.of(
+        "http://localhost:5173",
+        "https://fisherdex.netlify.app"));
 
     // Permetti questi metodi HTTP
     configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));

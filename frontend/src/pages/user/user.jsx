@@ -77,7 +77,7 @@ export default function User() {
         <p className="user-data">username: {user?.username}</p>
         <p className="user-data">provincia: {user?.provincia?.nome}</p>
         <p className="user-data">email: {user?.email}</p>
-        <button type="button" onClick={() => editData()} className="edit-data">Edit data</button>
+        <button type="button" onClick={() => editData()} className="edit-data">Modifica dati</button>
 
       </div>}
 
