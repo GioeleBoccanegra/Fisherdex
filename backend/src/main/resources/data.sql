@@ -494,13 +494,12 @@ INSERT INTO specie (id,name, scientific_name, rarita, image_url, periodo, descri
   Il colore è blu metallico o grigio piombo sul dorso, con riflessi brillanti, mentre i fianchi sono più chiari, tendenti all''argento. Può raggiungere i 2 metri di lunghezza e superare i 30 kg di peso, anche se la taglia media è inferiore. Nuotatore rapido e potente, è una specie pelagica, che vive in acque aperte e profonde, ma si avvicina alla costa nei mesi estivi, soprattutto durante la stagione riproduttiva.
   Presente in tutto il bacino del Mediterraneo, l''Aguglia imperiale viene catturata principalmente con palangari, reti da posta e tecniche sportive di traina e drifting. Le sue carni sono compatte e di ottima qualità, dal sapore delicato, e si prestano bene alla griglia, al forno o anche per piatti crudi come carpacci e tartare. Sebbene non sia tra le specie più comuni sul mercato, è molto apprezzata tra i pescatori sportivi e dagli intenditori di pesce pregiato.'
 )
-ON DUPLICATE KEY UPDATE
-  name = VALUES(name),
-  rarita = VALUES(rarita),
-  image_url = VALUES(image_url),
-  periodo = VALUES(periodo),
-  descrizione = VALUES(descrizione);
-
+ON CONFLICT (id) DO UPDATE SET
+ name = EXCLUDED.name,
+rarita = EXCLUDED.rarita,
+image_url = EXCLUDED.image_url,
+periodo = EXCLUDED.periodo,
+descrizione = EXCLUDED.descrizione;
 
 
 INSERT INTO provincia (id, nome, regione) VALUES
@@ -610,6 +609,6 @@ INSERT INTO provincia (id, nome, regione) VALUES
 (104, 'Vibo Valentia', 'Calabria'),
 (105, 'Vicenza', 'Veneto'),
 (106, 'Viterbo', 'Lazio')
-ON DUPLICATE KEY UPDATE
-nome=VALUES(nome),
-regione=VALUES(regione);
+ON CONFLICT (id) DO UPDATE SET
+nome=EXCLUDED.nome,
+regione=EXCLUDED.regione;
