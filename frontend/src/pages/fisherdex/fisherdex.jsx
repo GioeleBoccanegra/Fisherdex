@@ -98,7 +98,8 @@ export default function Fisherdex() {
       result = result.filter(specie => !postList?.some(post => post.specie.id === specie.id));
     }
 
-    return result.filter((specie) => specie.name.toLowerCase().startsWith(search.toLowerCase()));
+    result = result.filter((specie) => specie.name.toLowerCase().startsWith(search.toLowerCase()));
+    return result.slice().sort((a, b) => a.id - b.id);
 
   }, [species, postList, search, soloNonCatturati])
 
