@@ -1,6 +1,6 @@
 export const fetchRecuperaProvince = async () => {
   try {
-    const res = await fetch("http://localhost:8080/api/province/names");
+    const res = await fetch("https://fisherdex-backend1-5eecdf4a0aac.herokuapp.com/api/province/names");
 
     if (!res.ok) {
       throw new Error(`Errore HTTP: ${res.status}`);

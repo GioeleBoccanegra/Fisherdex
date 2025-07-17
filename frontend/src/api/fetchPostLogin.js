@@ -1,7 +1,7 @@
 export const fetchPostLogin = async (email, password) => {
 
   //chiamata a login per verificare esistenza utente
-  const res = await fetch("http://localhost:8080/api/login", {
+  const res = await fetch("https://fisherdex-backend1-5eecdf4a0aac.herokuapp.com/api/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password })

@@ -1,6 +1,6 @@
 export const fetchGetPostsUser = async (user, token) => {
   try {
-    const res = await fetch(`http://localhost:8080/api/cattura/user/${user.id}`, {
+    const res = await fetch(`https://fisherdex-backend1-5eecdf4a0aac.herokuapp.com/api/cattura/user/${user.id}`, {
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`

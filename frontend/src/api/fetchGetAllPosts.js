@@ -2,7 +2,7 @@ export const fetchGetAllPosts = async (token) => {
 
   try {
 
-    const res = await fetch("http://localhost:8080/api/cattura", {
+    const res = await fetch("https://fisherdex-backend1-5eecdf4a0aac.herokuapp.com/api/cattura", {
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`

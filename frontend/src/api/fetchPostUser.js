@@ -1,7 +1,7 @@
 
 export const fetchPostUser = async (username, provincia, email, password) => {
   try {
-    const res = await fetch("http://localhost:8080/api/users", {
+    const res = await fetch("https://fisherdex-backend1-5eecdf4a0aac.herokuapp.com/api/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

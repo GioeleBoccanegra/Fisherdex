@@ -2,7 +2,7 @@
 
 export const fecthPutUser = async (username, email, provinciaNew, token) => {
   try {
-    const res = await fetch("http://localhost:8080/api/users/me", {
+    const res = await fetch("https://fisherdex-backend1-5eecdf4a0aac.herokuapp.com/api/users/me", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

@@ -1,7 +1,7 @@
 export const fetchGetHasLiked = async (userId, catchId, token) => {
 
   try {
-    const res = await fetch(`http://localhost:8080/api/likes/check/${userId}/${catchId}`, {
+    const res = await fetch(`https://fisherdex-backend1-5eecdf4a0aac.herokuapp.com/api/likes/check/${userId}/${catchId}`, {
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`

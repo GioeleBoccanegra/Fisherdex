@@ -1,6 +1,6 @@
 export const fetchDeleteCatturaSpecie = async (catchId, token) => {
   try {
-    const res = await fetch(`http://localhost:8080/api/cattura/post/${catchId}`, {
+    const res = await fetch(`https://fisherdex-backend1-5eecdf4a0aac.herokuapp.com/api/cattura/post/${catchId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

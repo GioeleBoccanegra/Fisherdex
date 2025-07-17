@@ -1,6 +1,6 @@
 export const fetchGetCatturaSpecie = async (userId, specieId, token) => {
 
-  const res = await fetch(`http://localhost:8080/api/cattura/${userId}/${specieId}`, {
+  const res = await fetch(`https://fisherdex-backend1-5eecdf4a0aac.herokuapp.com/api/cattura/${userId}/${specieId}`, {
     headers: {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${token}`

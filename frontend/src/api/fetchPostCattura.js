@@ -1,7 +1,7 @@
 export const fecthPostCattura = async (user, provincia, specie, dataCattura, descrizione, imageUrl, showUploadFish, token) => {
 
   try {
-    const res = await fetch("http://localhost:8080/api/cattura", {
+    const res = await fetch("https://fisherdex-backend1-5eecdf4a0aac.herokuapp.com/api/cattura", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

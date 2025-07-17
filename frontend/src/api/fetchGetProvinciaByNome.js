@@ -1,6 +1,6 @@
 export const fetchGetProvinciaByNome = async (nome) => {
 
-  const res = await fetch(`http://localhost:8080/api/province/${nome}`, {
+  const res = await fetch(`https://fisherdex-backend1-5eecdf4a0aac.herokuapp.com/api/province/${nome}`, {
     headers: {
       "Content-Type": "application/json"
     },
