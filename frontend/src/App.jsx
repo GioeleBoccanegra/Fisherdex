@@ -8,7 +8,7 @@ import { ProtectedRoute } from './components/ProtectedRoute'
 import User from './pages/user/user'
 import { useEffect, useState } from 'react'
 import Register from './pages/register/register'
-import { jwtDecode } from 'jwt-decode';
+import jwtDecode from 'jwt-decode';
 
 
 import { PublicRoute } from './components/PublicRoute'
