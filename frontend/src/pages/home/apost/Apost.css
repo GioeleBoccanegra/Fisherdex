@@ -84,6 +84,7 @@
   justify-content: center;
   margin-top: 12px;
   flex-direction: 0.25;
+
 }
 
 .like-sectionj button {
@@ -101,6 +102,7 @@
   border-radius: 20px;
   transition: all 0.2s ease-in-out;
   box-shadow: 0 2px 6px rgba(231, 76, 60, 0.1);
+  height: 4vh;
 }
 
 .like-sectionj button:hover {

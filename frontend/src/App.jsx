@@ -8,7 +8,9 @@ import { ProtectedRoute } from './components/ProtectedRoute'
 import User from './pages/user/user'
 import { useEffect, useState } from 'react'
 import Register from './pages/register/register'
-import jwtDecode from 'jwt-decode'
+import { jwtDecode } from 'jwt-decode';
+
+
 import { PublicRoute } from './components/PublicRoute'
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "./features/authSlice"
@@ -18,6 +20,7 @@ function App() {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const [checkingAuth, setCheckingAuth] = useState(true);
   const dispatch = useDispatch();
+
 
 
   //controllo se loggato

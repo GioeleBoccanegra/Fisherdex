@@ -5,12 +5,14 @@ import { fetchGetHasLiked } from "../../../api/fetchGetHasLike";
 import { fetchPostToggleLike } from "../../../api/fetchPostToggleLike"
 import { getValidToken } from "../../../utils/getValidToken";
 import { useNavigate } from "react-router-dom";
+import Loader from "../../../components/Loader";
 
 export default function Apost({ post, user }) {
   const [error, setError] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
   const [hasLiked, setHasLiked] = useState(false);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
 
   function formatSqlDate(dataCattura) {
@@ -47,6 +49,7 @@ export default function Apost({ post, user }) {
 
 
   const handleLike = async () => {
+    setLoading(true);
     const token = getValidToken();
     try {
       await fetchPostToggleLike(user.id, post.id, token);
@@ -58,6 +61,7 @@ export default function Apost({ post, user }) {
     } catch (err) {
       setError(err.message)
     }
+    setLoading(false);
   }
 
 
@@ -80,16 +84,25 @@ export default function Apost({ post, user }) {
       </div>
       {error && <div className="error-message" aria-live="assertive">{error}</div>}
       <div className="like-sectionj">
-        <button
-          type="button"
-          className={hasLiked ? "liked" : ""}
-          onClick={handleLike}
-          aria-label={hasLiked ? "Togli Mi Piace" : "Metti Mi Piace"}
-        >
-          <span className="like-icon">{hasLiked ? "💙" : "🤍"}</span>
-          <span className="like-label">{hasLiked ? "" : "Like"}</span>
-          <span className="like-count">({likeCount})</span>
-        </button>
+        {loading && <Loader />}
+        {!loading && (
+          <>
+            <button
+              type="button"
+              className={hasLiked ? "liked" : ""}
+              onClick={handleLike}
+              aria-label={hasLiked ? "Togli Mi Piace" : "Metti Mi Piace"}
+            >
+
+
+
+              <span className="like-icon">{hasLiked ? "💙" : "🤍"}</span>
+              <span className="like-label">{hasLiked ? "" : "Like"}</span>
+              <span className="like-count">({likeCount})</span>
+            </button>
+          </>
+        )}
+
       </div>
 
     </div>
