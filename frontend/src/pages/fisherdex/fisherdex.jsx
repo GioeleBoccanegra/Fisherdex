@@ -108,7 +108,7 @@ export default function Fisherdex() {
 
   return (
     <div className="fisherdex-wrapper">
-      <h1 className="fisherdex-title">Your Fisherdex</h1>
+      <h1 className="fisherdex-title">Il tuo Fisherdex</h1>
       {loading && <Loader />}
       {error && <p className="error-message" aria-live="assertive">{error}</p>}
       {!loading && !error && (

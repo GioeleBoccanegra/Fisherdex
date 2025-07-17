@@ -66,7 +66,7 @@ export default function User() {
     <div className="user-container">
 
       {error && <div className="error-message" aria-live="assertive">{error}</div>}
-      <h1>User</h1>
+      <h1>Utente</h1>
       {loading && <Loader />}
       {!loading && !error && <div className="user-card">
 
