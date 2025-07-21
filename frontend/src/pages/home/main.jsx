@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useState, useCallback } from "react";
 import Loader from "../../components/Loader";
-import { fetchGetAllPosts } from "../../api/fetchGetAllPosts";
+import { fetchGetOtherPosts } from "../../api/fetchGetOtherPosts";
 import { fetchUserData } from "../../api/fetchUserData"
 import Apost from "./apost/Apost"
 import { getValidToken } from "../../utils/getValidToken"; import "./main.css";
@@ -17,6 +17,8 @@ export default function Main() {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
   const dispatch = useDispatch();
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(50);
 
   const now = new Date();
   const sevenDaysAgo = new Date(now);
@@ -33,8 +35,10 @@ export default function Main() {
       }
       setUser(userData);
 
-      const tuttiPosts = await fetchGetAllPosts(token);
+      const tuttiPosts = await fetchGetOtherPosts(token, user.id, user.provincia, page, size);
       setPosts(tuttiPosts);
+      setPage(page + 1);
+
     } catch (err) {
       if (err.message === "Unauthorized") {
         localStorage.removeItem("token");
@@ -44,7 +48,7 @@ export default function Main() {
         setError(err.message);
       }
     }
-  }, [dispatch, navigate])
+  }, [dispatch, navigate, page, size, user.id, user.provincia])
 
 
 
@@ -96,4 +100,6 @@ export default function Main() {
 
     </div>
   );
+
+
 }

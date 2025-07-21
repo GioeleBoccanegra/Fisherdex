@@ -16,4 +16,6 @@ public interface CatturaRepository extends JpaRepository<Cattura, Long> {
 
   Optional<Cattura> findByUserIdAndSpecieId(Long userId, Long specieId);
 
+  List<Cattura> findByUserIdNot(Long userId);
+
 }

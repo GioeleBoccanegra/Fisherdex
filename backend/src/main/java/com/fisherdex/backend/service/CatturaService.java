@@ -120,4 +120,8 @@ public class CatturaService {
 
   }
 
+  public List<Cattura> getAllExcludingUser(Long userId) {
+    return catturaRepository.findByUserIdNot(userId);
+  }
+
 }
