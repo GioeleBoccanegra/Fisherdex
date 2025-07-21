@@ -18,7 +18,7 @@ export default function Main() {
   const [user, setUser] = useState(null);
   const dispatch = useDispatch();
   const [page, setPage] = useState(0);
-  const [size, setSize] = useState(50);
+  const [size] = useState(50);
 
   const now = new Date();
   const sevenDaysAgo = new Date(now);
@@ -35,7 +35,7 @@ export default function Main() {
       }
       setUser(userData);
 
-      const tuttiPosts = await fetchGetOtherPosts(token, user.id, user.provincia, page, size);
+      const tuttiPosts = await fetchGetOtherPosts(token, userData.id, userData.provincia, page, size);
       setPosts(tuttiPosts);
       setPage(page + 1);
 
@@ -48,7 +48,7 @@ export default function Main() {
         setError(err.message);
       }
     }
-  }, [dispatch, navigate, page, size, user.id, user.provincia])
+  }, [dispatch, navigate, page, size])
 
 
 
