@@ -19,6 +19,7 @@ export default function Main() {
   const dispatch = useDispatch();
   const [page, setPage] = useState(0);
   const [size] = useState(50);
+  const [totalPages, setTotalPages] = useState(0);
 
   const now = new Date();
   const sevenDaysAgo = new Date(now);
@@ -38,6 +39,7 @@ export default function Main() {
       const tuttiPosts = await fetchGetOtherPosts(token, userData.id, userData.provincia.id, page, size);
       setPosts(tuttiPosts.content);
       setPage(0);
+      setTotalPages(tuttiPosts.totalPages)
 
 
     } catch (err) {
@@ -95,9 +97,11 @@ export default function Main() {
           {posts.map(post => (
             <Apost key={post.id} post={post} user={user} />
           ))}
-          <button onClick={morePosts}>
-            Carica altri
-          </button>
+          {page < totalPages - 1 &&
+            <button onClick={morePosts}>
+              Carica altri
+            </button>
+          }
         </>
       )
       }
