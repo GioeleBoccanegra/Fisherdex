@@ -118,8 +118,14 @@ public class CattureController {
 
     int start = page * size;
     if (start >= totalElements) {
-      // pagina oltre i dati disponibili
-      return ResponseEntity.noContent().build();
+      // pagina oltre i dati disponibili: ritorna lista vuota ma con metadata
+      PagedResponse<CatturaResponseDTO> emptyResponse = new PagedResponse<>();
+      emptyResponse.setContent(new ArrayList<>());
+      emptyResponse.setPage(page);
+      emptyResponse.setSize(size);
+      emptyResponse.setTotalElements(totalElements);
+      emptyResponse.setTotalPages(totalPages);
+      return ResponseEntity.ok(emptyResponse);
     }
     int end = Math.min(start + size, totalElements);
 

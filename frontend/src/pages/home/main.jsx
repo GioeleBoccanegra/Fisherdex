@@ -37,7 +37,8 @@ export default function Main() {
 
       const tuttiPosts = await fetchGetOtherPosts(token, userData.id, userData.provincia.id, page, size);
       setPosts(tuttiPosts.content);
-      setPage(page + 1);
+      setPage(0);
+
 
     } catch (err) {
       if (err.message === "Unauthorized") {
@@ -58,9 +59,25 @@ export default function Main() {
       setLoading(true);
       await getPosts();
       setLoading(false);
+
     }
     loadData();
   }, [getPosts])
+
+  const morePosts = async () => {
+    if (!user) return;
+    const token = getValidToken();
+    const nextPage = page + 1;
+
+
+    try {
+      const tuttiPosts = await fetchGetOtherPosts(token, user.id, user.provincia.id, nextPage, size);
+      setPosts([...posts, ...tuttiPosts.content]);
+      setPage(nextPage);
+    } catch (err) {
+      setError(err.message);
+    }
+  }
 
 
 
@@ -74,13 +91,19 @@ export default function Main() {
       {!loading && posts.length === 0 ? (
         <p>Nessun post trovato</p>
       ) : (
-        posts.map(post => (
-          <Apost key={post.id} post={post} user={user} />
-        ))
-      )}
+        <>
+          {posts.map(post => (
+            <Apost key={post.id} post={post} user={user} />
+          ))}
+          <button onClick={morePosts}>
+            Carica altri
+          </button>
+        </>
+      )
+      }
 
 
-    </div>
+    </div >
   );
 
 
