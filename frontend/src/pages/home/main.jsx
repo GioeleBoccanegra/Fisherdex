@@ -62,25 +62,7 @@ export default function Main() {
     loadData();
   }, [getPosts])
 
-  const recentSameProvincePosts = posts
-    .filter(post =>
-      post.user?.id !== user.id &&
-      post.provincia?.id === user.provincia?.id &&
-      new Date(post.dataCattura) >= sevenDaysAgo
-    )
-    .sort((a, b) => new Date(b.dataCattura) - new Date(a.dataCattura));
 
-  const otherPosts = posts
-    .filter(post =>
-      post.user?.id !== user.id &&
-      (
-        post.provincia?.id !== user.provincia?.id ||
-        new Date(post.dataCattura) < sevenDaysAgo
-      )
-    )
-    .sort((a, b) => new Date(b.dataCattura) - new Date(a.dataCattura));
-
-  const filteredPosts = [...recentSameProvincePosts, ...otherPosts];
 
   return (
 
@@ -89,10 +71,10 @@ export default function Main() {
       <h1 className="main-title">Nuove catture</h1>
       {error && <div className="error-message" aria-live="assertive">{error}</div>}
       {loading && <Loader />}
-      {!loading && filteredPosts.length === 0 ? (
+      {!loading && posts.length === 0 ? (
         <p>Nessun post trovato</p>
       ) : (
-        filteredPosts.map(post => (
+        posts.map(post => (
           <Apost key={post.id} post={post} user={user} />
         ))
       )}
