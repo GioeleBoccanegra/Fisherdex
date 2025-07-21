@@ -136,9 +136,12 @@ public class CattureController {
           CatturaResponseDTO dto = new CatturaResponseDTO();
           UserResponseDTO userDTO = new UserResponseDTO(c.getUser().getId(), c.getUser().getUsername());
           dto.setId(c.getCatchId());
-          dto.setDataCattura(c.getDataCattura());
+          dto.setDescrizione(c.getDescrizione());
           dto.setProvincia(c.getProvincia());
+          dto.setImageUrl(c.getImageUrl());
           dto.setUser(userDTO);
+          dto.setSpecie(c.getSpecie());
+          dto.setDataCattura(c.getDataCattura());
           return dto;
         })
         .toList();
