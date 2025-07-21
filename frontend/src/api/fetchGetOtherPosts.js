@@ -21,7 +21,15 @@ export const fetchGetOtherPosts = async (token, userId, provinciaId, page, size)
     }
 
 
-    const data = await res.json();
+    // leggi la risposta come testo prima di fare JSON.parse
+    const text = await res.text();
+
+    if (!text) {
+      // Risposta vuota (es. 204 No Content)
+      return { content: [], totalElements: 0, totalPages: 0, page, size };
+    }
+
+    const data = JSON.parse(text);
 
 
     return data
