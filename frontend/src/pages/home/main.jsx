@@ -36,7 +36,7 @@ export default function Main() {
       setUser(userData);
 
       const tuttiPosts = await fetchGetOtherPosts(token, userData.id, userData.provincia.id, page, size);
-      setPosts(tuttiPosts);
+      setPosts(tuttiPosts.content);
       setPage(page + 1);
 
     } catch (err) {
