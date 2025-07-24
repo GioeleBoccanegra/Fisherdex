@@ -38,7 +38,6 @@ export default function Main() {
 
       const tuttiPosts = await fetchGetOtherPosts(token, userData.id, userData.provincia.id, page, size);
       setPosts(tuttiPosts.content);
-      setPage(0);
       setTotalPages(tuttiPosts.totalPages)
 
 
