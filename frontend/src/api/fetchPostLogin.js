@@ -1,7 +1,8 @@
+const BACKEND_URL = import.meta.env.VITE_CLOUDINARY_URL_BACKEND;
 export const fetchPostLogin = async (email, password) => {
 
   //chiamata a login per verificare esistenza utente
-  const res = await fetch("https://fisherdex-backend1-5eecdf4a0aac.herokuapp.com/api/login", {
+  const res = await fetch("${BACKEND_URL}/api/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password })

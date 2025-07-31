@@ -1,8 +1,8 @@
-
+const BACKEND_URL = import.meta.env.VITE_CLOUDINARY_URL_BACKEND;
 
 export const fecthPutUser = async (username, email, provinciaNew, token) => {
   try {
-    const res = await fetch("https://fisherdex-backend1-5eecdf4a0aac.herokuapp.com/api/users/me", {
+    const res = await fetch("${BACKEND_URL}/api/users/me", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

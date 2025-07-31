@@ -1,9 +1,10 @@
+const BACKEND_URL = import.meta.env.VITE_CLOUDINARY_URL_BACKEND;
 export const fetchGetOtherPosts = async (token, userId, provinciaId, page, size) => {
 
 
   try {
 
-    const url = new URL("https://fisherdex-backend1-5eecdf4a0aac.herokuapp.com/api/cattura/filtrate");
+    const url = new URL("${BACKEND_URL}/api/cattura/filtrate");
     url.searchParams.append("userId", userId);
     url.searchParams.append("provinciaId", provinciaId);
     url.searchParams.append("page", page);

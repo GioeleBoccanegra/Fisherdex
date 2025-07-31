@@ -1,14 +1,15 @@
 import Navbar from './components/navbar'
 import './App.css'
-import Main from './pages/home/main'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import Fisherdex from './pages/fisherdex/fisherdex'
-import Login from './pages/Login/login'
 import { ProtectedRoute } from './components/ProtectedRoute'
-import User from './pages/user/user'
-import { useEffect, useState } from 'react'
-import Register from './pages/register/register'
+import { useEffect, useState, lazy, Suspense } from 'react'
 import jwtDecode from 'jwt-decode';
+
+const Main = lazy(() => import('./pages/home/main'))
+const Fisherdex = lazy(() => import('./pages/fisherdex/fisherdex'))
+const Login = lazy(() => import('./pages/Login/login'))
+const User = lazy(() => import('./pages/user/user'))
+const Register = lazy(() => import('./pages/register/register'))
 
 
 import { PublicRoute } from './components/PublicRoute'
@@ -70,22 +71,24 @@ Solo dopo aver controllato il token (quindi quando checkingAuth diventa false) v
 
     <Router>
       <Navbar isAuthenticated={isAuthenticated} />
-      <Routes>
-        <Route path='/login' element={<PublicRoute isAuthenticated={isAuthenticated}> <Login /></PublicRoute>} />
-        <Route
-          path="/register"
-          element={
-            <PublicRoute isAuthenticated={isAuthenticated}>
-              <Register />
-            </PublicRoute>
-          }
-        />
-        <Route path='/' element={<ProtectedRoute isAuthenticated={isAuthenticated}><Main /></ProtectedRoute>} />
-        <Route path='/fisherdex' element={<ProtectedRoute isAuthenticated={isAuthenticated}><Fisherdex /></ProtectedRoute>} />
-        <Route path='/user' element={<ProtectedRoute isAuthenticated={isAuthenticated}><User /></ProtectedRoute>} />
+      <Suspense fallback={<div>Caricamento pagina...</div>}>
+        <Routes>
+          <Route path='/login' element={<PublicRoute isAuthenticated={isAuthenticated}> <Login /></PublicRoute>} />
+          <Route
+            path="/register"
+            element={
+              <PublicRoute isAuthenticated={isAuthenticated}>
+                <Register />
+              </PublicRoute>
+            }
+          />
+          <Route path='/' element={<ProtectedRoute isAuthenticated={isAuthenticated}><Main /></ProtectedRoute>} />
+          <Route path='/fisherdex' element={<ProtectedRoute isAuthenticated={isAuthenticated}><Fisherdex /></ProtectedRoute>} />
+          <Route path='/user' element={<ProtectedRoute isAuthenticated={isAuthenticated}><User /></ProtectedRoute>} />
 
-      </Routes>
-    </Router>
+        </Routes>
+      </Suspense>
+    </Router >
 
   )
 }

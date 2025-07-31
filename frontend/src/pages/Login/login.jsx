@@ -53,14 +53,14 @@ function Login() {
         <form onSubmit={handleSubmit}>
           <div className='email-forum-data'>
             <label htmlFor='email'>Email:</label>
-            <input id='email' value={email} type='email' onChange={(e) => setEmail(e.target.value)} required />
+            <input id='email' value={email} type='email' onChange={(e) => setEmail(e.target.value)} required disabled={loading} />
           </div>
           <div className='password-forum-data'>
             <label htmlFor='password'>Password:</label>
-            <input id='password' value={password} type='password' onChange={(e) => setPassword(e.target.value)} required />
+            <input id='password' value={password} type='password' onChange={(e) => setPassword(e.target.value)} required disabled={loading} />
           </div>
           <div className='button-forum'>
-            <button type='submit'>Accedi</button>
+            <button type='submit' disabled={loading}>Accedi</button>
           </div>
           {loading && <Loader />}
 

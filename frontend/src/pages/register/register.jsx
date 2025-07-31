@@ -70,7 +70,7 @@ function Register() {
         <form className="registerForm" onSubmit={handleRegister}>
           <div>
             <label htmlFor="username">Username</label>
-            <input id="username" className="username-input" type="text" placeholder="pescatore126" value={username} onChange={(e) => setUsername(e.target.value)} required />
+            <input id="username" className="username-input" type="text" placeholder="pescatore126" value={username} onChange={(e) => setUsername(e.target.value)} required disabled={loading} />
           </div>
           <div>
             <label htmlFor="provincia">Provincia</label>
@@ -79,6 +79,7 @@ function Register() {
               className="form-select"
               value={selectedProvince}
               onChange={(e) => setSelectedProvince(e.target.value)}
+              disabled={loading}
             >
               <option value="">Seleziona una provincia</option>
               {provinceList.map((nome) => (
@@ -90,13 +91,13 @@ function Register() {
           </div>
           <div>
             <label htmlFor="email">Email</label>
-            <input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+            <input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required disabled={loading} />
           </div>
           <div>
             <label htmlFor="password">Password</label>
-            <input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+            <input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required disabled={loading} />
           </div>
-          <button type="submit" >Registrati</button>
+          <button type="submit" disabled={loading} >Registrati</button>
         </form>
       </div>
       {loading && <Loader />}

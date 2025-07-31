@@ -114,6 +114,7 @@ export default function UploadFish({ setShowUploadFish, specie, user, setModific
 
               <div className="upload-fish-form-image-input">
                 <input
+                  disabled={loading}
                   id="immagine-pesce"
                   type="file"
                   accept="image/*"
@@ -151,7 +152,7 @@ export default function UploadFish({ setShowUploadFish, specie, user, setModific
 
 
               <label htmlFor="provincia">Provincia</label>
-              <select id="provincia" value={provinciaFoto} onChange={(e) => setProvinciaFoto(e.target.value)}>
+              <select id="provincia" value={provinciaFoto} onChange={(e) => setProvinciaFoto(e.target.value)} disabled={loading}>
                 <option value="">Seleziona una provincia</option>
                 {provinceList.map((nome) => (
                   <option key={nome} value={nome}>{nome}</option>
@@ -169,6 +170,7 @@ export default function UploadFish({ setShowUploadFish, specie, user, setModific
                   rows={4}
                   cols={50}
                   className="input-descrizione"
+                  disabled={loading}
                 />
               </div>
 
@@ -181,8 +183,8 @@ export default function UploadFish({ setShowUploadFish, specie, user, setModific
 
               {!loading && <div className="button-section-form">
 
-                <button type="submit" >Carica</button>
-                <button type="button" onClick={() => setShowUploadFish(false)} >Chiudi</button>
+                <button type="submit" disabled={loading} >Carica</button>
+                <button type="button" onClick={() => setShowUploadFish(false)} disabled={loading}>Chiudi</button>
               </div>}
 
             </div>

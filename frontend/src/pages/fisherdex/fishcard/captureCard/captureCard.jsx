@@ -6,7 +6,7 @@ import AlertConfermaEliminazione from "./alertConfermaEliminazione/alertConfermE
 import { fetchDeleteCatturaSpecie } from "../../../../api/fetchDeleteCatturaSpecie"
 import { getValidToken } from "../../../../utils/getValidToken";
 
-export default function CaptureCard({ specie, user, setShowCapture, showCapture }) {
+export default function CaptureCard({ specie, user, setShowCapture }) {
   const [error, setError] = useState();
   const [catturaData, setCatturaData] = useState();
   const [loading, setLoading] = useState(false);
@@ -46,9 +46,10 @@ export default function CaptureCard({ specie, user, setShowCapture, showCapture 
       }
       catch (err) {
         setError(err.message);
-      }
+      } finally {
 
-      setLoading(false);
+        setLoading(false);
+      }
     }
     fetchCattura();
     return () => {
@@ -84,8 +85,8 @@ export default function CaptureCard({ specie, user, setShowCapture, showCapture 
               {alertCard && <AlertConfermaEliminazione setConfermaEliminazione={setConfermaEliminazione} setAlertCard={setAlertCard} />}
 
             </div>
-            <button type="button" onClick={() => { setAlertCard(true) }}>elimina</button>
-            <button type="button" className="close-capture-card-button" onClick={() => { setShowCapture(false) }}>chiudi</button>
+            <button type="button" onClick={() => { setAlertCard(true) }} disabled={loading}>elimina</button>
+            <button type="button" className="close-capture-card-button" onClick={() => { setShowCapture(false) }} disabled={loading}>chiudi</button>
           </div>
 
         )}

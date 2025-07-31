@@ -1,6 +1,7 @@
+const BACKEND_URL = import.meta.env.VITE_CLOUDINARY_URL_BACKEND;
 export const fetchGetProvinciaByNome = async (nome) => {
 
-  const res = await fetch(`https://fisherdex-backend1-5eecdf4a0aac.herokuapp.com/api/province/${nome}`, {
+  const res = await fetch(`${BACKEND_URL}/api/province/${nome}`, {
     headers: {
       "Content-Type": "application/json"
     },

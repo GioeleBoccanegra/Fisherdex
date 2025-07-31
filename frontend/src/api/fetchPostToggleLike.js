@@ -1,6 +1,7 @@
+const BACKEND_URL = import.meta.env.VITE_CLOUDINARY_URL_BACKEND;
 export const fetchPostToggleLike = async (userId, catchId, token) => {
   try {
-    const res = await fetch(`https://fisherdex-backend1-5eecdf4a0aac.herokuapp.com/api/likes/${userId}/${catchId}`, {
+    const res = await fetch(`${BACKEND_URL}/api/likes/${userId}/${catchId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

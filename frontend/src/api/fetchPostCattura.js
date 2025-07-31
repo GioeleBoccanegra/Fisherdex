@@ -1,7 +1,8 @@
+const BACKEND_URL = import.meta.env.VITE_CLOUDINARY_URL_BACKEND;
 export const fecthPostCattura = async (user, provincia, specie, dataCattura, descrizione, imageUrl, showUploadFish, token) => {
 
   try {
-    const res = await fetch("https://fisherdex-backend1-5eecdf4a0aac.herokuapp.com/api/cattura", {
+    const res = await fetch("${BACKEND_URL}/api/cattura", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

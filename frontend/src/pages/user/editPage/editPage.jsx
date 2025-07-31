@@ -9,6 +9,7 @@ import { getValidToken } from "../../../utils/getValidToken"
 import { useDispatch } from "react-redux";
 import { logout } from "../../../features/authSlice";
 import { useNavigate } from "react-router-dom";
+import Loader from "../../components/Loader"
 
 export default function EditPage({ user, setEdit }) {
   const [username, setUsername] = useState(user.username);
@@ -18,6 +19,7 @@ export default function EditPage({ user, setEdit }) {
   const [provinceList, setProvinceList] = useState([]);
   const dispatch = useDispatch()
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
 
 
@@ -26,6 +28,7 @@ export default function EditPage({ user, setEdit }) {
   const salva = async (e) => {
     e.preventDefault();
     setError(null);
+    setLoading(true);
     const provinciaNew = await fetchGetProvinciaByNome(provincia);
     const token = getValidToken();
     try {
@@ -39,6 +42,8 @@ export default function EditPage({ user, setEdit }) {
       } else {
         setError(err.message)
       }
+    } finally {
+      setLoading(false)
     }
 
 
@@ -78,9 +83,10 @@ export default function EditPage({ user, setEdit }) {
               minLength={3}
               maxLength={20}
               id="username"
+              disabled={loading}
             />
             <label htmlFor="provincia">Provincia</label>
-            <select id="provincia" value={provincia} onChange={(e) => setProvincia(e.target.value)}>
+            <select id="provincia" value={provincia} onChange={(e) => setProvincia(e.target.value)} disabled={loading} >
               <option value="">Seleziona una provincia</option>
               {provinceList.map((nome) => (
                 <option key={nome} value={nome}>{nome}</option>
@@ -95,14 +101,17 @@ export default function EditPage({ user, setEdit }) {
               value={email}
               required
               id="email"
+              disabled={loading}
             />
           </div>
         </div>
 
         <div className="button-section">
-          <button type="button" onClick={() => esci()}>Annulla</button>
-          <button type="submit" >Salva</button>
+
+          <button type="button" onClick={() => esci()} disabled={loading} >Annulla</button>
+          <button type="submit" disabled={loading}  >Salva</button>
         </div>
+        {loading && <Loader />}
       </form>
     </div>
 
