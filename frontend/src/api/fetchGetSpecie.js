@@ -1,7 +1,7 @@
 const BACKEND_URL = import.meta.env.VITE_CLOUDINARY_URL_BACKEND;
 export const fetchGetSpecie = async (token) => {
   try {
-    const res = await fetch("${BACKEND_URL}/api/specie", {
+    const res = await fetch(`${BACKEND_URL}/api/specie`, {
       headers: { "Authorization": `Bearer ${token}` }
     });
     if (res.status === 401 || res.status === 403) {

@@ -1,7 +1,7 @@
 const BACKEND_URL = import.meta.env.VITE_CLOUDINARY_URL_BACKEND;
 export const fetchRecuperaProvince = async () => {
   try {
-    const res = await fetch("${BACKEND_URL}/api/province/names");
+    const res = await fetch(`${BACKEND_URL}/api/province/names`);
 
     if (!res.ok) {
       throw new Error(`Errore HTTP: ${res.status}`);

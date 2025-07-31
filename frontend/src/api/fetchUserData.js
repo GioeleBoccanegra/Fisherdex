@@ -3,7 +3,7 @@ export const fetchUserData = async (token) => {
 
 
   try {
-    const res = await fetch("${BACKEND_URL}/api/users/me", {
+    const res = await fetch(`${BACKEND_URL}/api/users/me`, {
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`

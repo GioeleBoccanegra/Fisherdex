@@ -2,7 +2,7 @@
 const BACKEND_URL = import.meta.env.VITE_CLOUDINARY_URL_BACKEND;
 export const fetchPostUser = async (username, provincia, email, password) => {
   try {
-    const res = await fetch("${BACKEND_URL}/api/users", {
+    const res = await fetch(`${BACKEND_URL}/api/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
