@@ -9,7 +9,7 @@ import { getValidToken } from "../../../utils/getValidToken"
 import { useDispatch } from "react-redux";
 import { logout } from "../../../features/authSlice";
 import { useNavigate } from "react-router-dom";
-import Loader from "../../components/Loader"
+import Loader from "../../../components/Loader"
 
 export default function EditPage({ user, setEdit }) {
   const [username, setUsername] = useState(user.username);
