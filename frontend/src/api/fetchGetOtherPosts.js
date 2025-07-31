@@ -4,7 +4,7 @@ export const fetchGetOtherPosts = async (token, userId, provinciaId, page, size)
 
   try {
 
-    const url = new URL("${BACKEND_URL}/api/cattura/filtrate");
+    const url = new URL(`${BACKEND_URL}/api/cattura/filtrate`);
     url.searchParams.append("userId", userId);
     url.searchParams.append("provinciaId", provinciaId);
     url.searchParams.append("page", page);
