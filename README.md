@@ -44,7 +44,6 @@ Fisherdex è un'applicazione web che permette agli utenti di registrare, condivi
 ## 🌐 Deploy
 
 - **Frontend**: [https://fisherdex.netlify.app](https://fisherdex.netlify.app)
-- **Backend**: [https://fisherdex-backend1-...herokuapp.com](https://fisherdex-backend1-...herokuapp.com)
 
 ---
 
